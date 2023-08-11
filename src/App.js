@@ -6,6 +6,8 @@ import iconSprite from './img/icon/sprite.svg';
 import playlist1 from './img/playlist01.png';
 import playlist2 from './img/playlist02.png';
 import playlist3 from './img/playlist03.png';
+import { NavMenu } from './components/NavMenu';
+import { AudioPlayer } from './components/Player';
 
 function App() {
   return (
@@ -14,29 +16,8 @@ function App() {
       <div className="wrapper">
       <div className="container">
         <main className="main">
-          <nav className="main__nav nav">
-            <div className="nav__logo logo">
-              <img className="logo__image" src={logo} alt="logo" />
-            </div>
-            <div className="nav__burger burger">
-              <span className="burger__line"></span>
-              <span className="burger__line"></span>
-              <span className="burger__line"></span>
-            </div>
-            <div className="nav__menu menu">
-              <ul className="menu__list">
-                <li className="menu__item">
-                  <a href="#" className="menu__link">Главное</a>
-                </li>
-                <li className="menu__item">
-                  <a href="#" className="menu__link">Мой плейлист</a>
-                </li>
-                <li className="menu__item">
-                  <a href="../signin.html" className="menu__link">Войти</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          <NavMenu></NavMenu>
+
           <div className="main__centerblock centerblock">
             <div className="centerblock__search search">
               <svg className="search__svg">
@@ -658,7 +639,7 @@ function App() {
             </div>
           </div>
         </main>
-        <div className="bar">
+        {/* <div className="bar">
           <div className="bar__content">
             <div className="bar__player-progress"></div>
             <div className="bar__player-block">
@@ -742,7 +723,8 @@ function App() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <AudioPlayer></AudioPlayer>
         <footer className="footer"></footer>
       </div>
     </div>
