@@ -3,6 +3,7 @@ import playlist2 from "../img/playlist02.png";
 import playlist3 from "../img/playlist03.png";
 import iconSprite from "../img/icon/sprite.svg";
 import "./rightPanel.css";
+import { NamePlaylist } from "./NamePlaylist";
 
 export function Panelplaylist() {
   return (
@@ -17,33 +18,9 @@ export function Panelplaylist() {
       </div>
       <div className="sidebar__block">
         <div className="sidebar__list">
-          <div className="sidebar__item">
-            <a className="sidebar__link" href="#">
-              <img
-                className="sidebar__img"
-                src={playlist1}
-                alt="day's playlist"
-              />
-            </a>
-          </div>
-          <div className="sidebar__item">
-            <a className="sidebar__link" href="#">
-              <img
-                className="sidebar__img"
-                src={playlist2}
-                alt="day's playlist"
-              />
-            </a>
-          </div>
-          <div className="sidebar__item">
-            <a className="sidebar__link" href="#">
-              <img
-                className="sidebar__img"
-                src={playlist3}
-                alt="day's playlist"
-              />
-            </a>
-          </div>
+          <NamePlaylist src={playlist1} />
+          <NamePlaylist src={playlist2} />
+          <NamePlaylist src={playlist3} />
         </div>
       </div>
     </div>
