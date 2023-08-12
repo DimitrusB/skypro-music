@@ -11,26 +11,31 @@ export function AudioPlayer (){
               <div className="player__controls">
                 <div className="player__btn-prev">
                   <svg className="player__btn-prev-svg" alt="prev">
+                  <title>Предыдущий трек</title>
                     <use xlinkHref={`${iconSprite}#icon-prev`}></use>
                   </svg>
                 </div>
                 <div className="player__btn-play _btn">
-                  <svg className="player__btn-play-svg" alt="play">
-                    <use xlinkHref={`${iconSprite}#icon-play`}></use>
+                  <svg className="player__btn-play-svg" alt="play" >
+                  <title>Воспроизведение</title>
+                    <use xlinkHref={`${iconSprite}#icon-play`} ></use>
                   </svg>
                 </div>
                 <div className="player__btn-next">
                   <svg className="player__btn-next-svg" alt="next">
+                  <title>Следующий трек</title>
                     <use xlinkHref={`${iconSprite}#icon-next`}></use>
                   </svg>
                 </div>
                 <div className="player__btn-repeat _btn-icon">
                   <svg className="player__btn-repeat-svg" alt="repeat">
+                  <title>Повтор</title>
                     <use xlinkHref={`${iconSprite}#icon-repeat`}></use>
                   </svg>
                 </div>
                 <div className="player__btn-shuffle _btn-icon">
                   <svg className="player__btn-shuffle-svg" alt="shuffle">
+                  <title>Случайный порядок</title>
                     <use xlinkHref={`${iconSprite}#icon-shuffle`}></use>
                   </svg>
                 </div>
