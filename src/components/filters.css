@@ -1,3 +1,4 @@
+
 .filter__choose {
     font-style: normal;
     font-weight: 400;
@@ -5,6 +6,9 @@
     line-height: 24px;
     background: transparent;
     color: white;
+  }
+  .filter__choose::after{
+    color: #B672FF;
   }
   .filter__option{
     display: inline-flex;
@@ -20,8 +24,6 @@
   select {
     border: none;
     outline: none;
-    color: #B672FF;
-
   }
 
   .filter__title {
@@ -46,3 +48,4 @@
     margin-right: 10px;
     width: 144px;
   }  
+ 

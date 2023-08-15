@@ -2,6 +2,7 @@ import iconSprite from "../img/icon/sprite.svg";
 import { NameTrack } from "./NameTrack";
 import "./center.css";
 import "./filters.css";
+import { GenreFilter } from "./genreFilter";
 import { TrackFilter } from "./trckFilter";
 import { YearFilter } from "./yaerFilter";
 
@@ -25,7 +26,7 @@ export function Center() {
         <div className="filter__title">Искать по:</div>
         <TrackFilter/>
         <YearFilter/>
-        <div className="filter__button button-genre _btn-text">жанру</div>
+        <GenreFilter/>
       </div>
       <div className="centerblock__content">
         <div className="content__title playlist-title">
