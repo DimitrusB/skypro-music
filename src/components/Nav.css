@@ -51,7 +51,13 @@
     visibility: visible;
   }
   .menu__list {
-    padding: 18px 0 10px 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease-in-out;
+  }
+  
+  .menu__list.show {
+    max-height: 100vh;
   }
   .menu__item {
     padding: 5px 0;
