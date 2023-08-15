@@ -1,9 +1,12 @@
 import iconSprite from "../img/icon/sprite.svg";
 import { NameTrack } from "./NameTrack";
 import "./center.css";
+import "./filters.css";
+import { TrackFilter } from "./trckFilter";
 import { YearFilter } from "./yaerFilter";
 
 export function Center() {
+
   return (
     <div className="main__centerblock centerblock">
       <div className="centerblock__search search">
@@ -20,9 +23,7 @@ export function Center() {
       <h2 className="centerblock__h2">Треки</h2>
       <div className="centerblock__filter filter">
         <div className="filter__title">Искать по:</div>
-        <div className="filter__button button-author _btn-text">
-          исполнителю
-        </div>
+        <TrackFilter/>
         <YearFilter/>
         <div className="filter__button button-genre _btn-text">жанру</div>
       </div>

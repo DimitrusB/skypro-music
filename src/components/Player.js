@@ -1,7 +1,19 @@
 import iconSprite from '../img/icon/sprite.svg';
 import './player.css';
+import React, { useState, useEffect } from 'react';
 
 export function AudioPlayer (){
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000); 
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
     return (
         <div className="bar">
         <div className="bar__content">
@@ -43,18 +55,17 @@ export function AudioPlayer (){
 
               <div className="player__track-play track-play">
                 <div className="track-play__contain">
-                  <div className="track-play__image">
-                    <svg className="track-play__svg" alt="music">
+                  <div className={`track-play__image ${isLoading ? "skeleton__image" : ""}`}>
+                    <svg className={`track-play__svg ${isLoading ? "hidden-text" : ""}`} alt="music">
                       <use xlinkHref={`${iconSprite}#icon-note`}></use>
                     </svg>
                   </div>
-                  <div className="track-play__author">
-                    <a className="track-play__author-link" href="http://"
-                      >Ты та...</a
-                    >
+                  <div className={`track-play__author ${isLoading ? "skeleton__authorpl" : ""}`}>
+                    <a className={`track-play__author-link ${isLoading ? "hidden-text" : ""}`} href="http://"
+                      >Баста</a>
                   </div>
-                  <div className="track-play__album">
-                    <a className="track-play__album-link" href="http://">Баста</a>
+                  <div className={`track-play__album ${isLoading ? "skeleton__albumpl" : ""}`}>
+                    <a className={`track-play__album-link ${isLoading ? "hidden-text" : ""}`} href="http://">Ты та...</a>
                   </div>
                 </div>
 

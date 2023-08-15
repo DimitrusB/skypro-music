@@ -186,27 +186,6 @@
   line-height: 24px;
 }
 
-.filter__title {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  margin-right: 15px;
-}
-
-.filter__button {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  border: 1px solid #ffffff;
-  border-radius: 60px;
-  padding: 6px 20px;
-}
-
-.filter__button:not(:last-child) {
-  margin-right: 10px;
-}
 
 .content__title {
   display: -webkit-box;
@@ -392,26 +371,4 @@
   line-height: 24px;
   text-align: right;
   color: #696969;
-}
-.filter__choose {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  background: transparent;
-  color: white;
-}
-.filter__option{
-  display: inline-flex;
-padding: 34px;
-flex-direction: column;
-align-items: flex-start;
-gap: 10px;
-border-radius: 12px;
-background: #313131;
-}
-
-select {
-  border: none;
-  outline: none;
 }
