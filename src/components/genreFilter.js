@@ -1,24 +1,42 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export function GenreFilter() {
-  const [to, setTo] = useState('');
+  const [to, setTo] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const genres = [
+    { value: "all", label: "Все" },
+    { value: "Shanson", label: "Шансон" },
+    { value: "HH", label: "Хип-Хоп" },
+    { value: "Jazz", label: "Джаз" },
+    { value: "Reggy", label: "Регги" },
+  ];
 
   return (
     <div className="filter__button button-genre _btn-text">
-      <select
-        value={to}
-        onChange={(e) => setTo(e.target.value)}
-        className="filter__choose"
+      <div
+        type="button"
+        onClick={() => setOpen(!open)}
+        className={`filter__choose${open ? " _active" : ""}`}
       >
-        <option hidden disabled value="">
-            Жанру
-        </option>
-        <option className="filter__option" value="all">Все</option>
-        <option className="filter__option" value="Shanson">Шансон</option>
-        <option className="filter__option" value="HH">Хип-Хоп</option>
-        <option className="filter__option" value="Jazz">Джаэ</option>
-        <option className="filter__option" value="Reggy">Регги</option>
-      </select>
+        {to || "Жанру"}
+      </div>
+      {open && (
+        <ul className="filter__options">
+          {genres.map((genre) => (
+            <li
+              key={genre.value}
+              className="filter__option"
+              onClick={() => {
+                setTo(genre.label);
+                setOpen(false);
+              }}
+            >
+              {genre.label}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

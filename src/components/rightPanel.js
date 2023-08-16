@@ -9,7 +9,7 @@ export function Panelplaylist() {
   return (
     <div className="main__sidebar sidebar">
       <div className="sidebar__personal">
-        <p className="sidebar__personal-name">Sergey.Ivanov</p>
+        <p className="sidebar__personal-name">Dmitriy.Borisevich</p>
         <div className="sidebar__icon">
           <svg alt="logout">
             <use xlinkHref={`${iconSprite}#logout`}></use>
