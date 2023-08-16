@@ -5,6 +5,7 @@ import { Center } from "./components/center";
 import { Panelplaylist } from "./components/rightPanel";
 
 function App() {
+
   return (
     <div className="App">
       <header className="App-header">

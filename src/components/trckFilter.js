@@ -1,27 +1,47 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 
 export function TrackFilter() {
-  const [to, setTo] = useState('');
+
+
+
+  const [to, setTo] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const genres = [
+    { value: "all", label: "Все" },
+    { value: "Nero", label: "Nero" },
+    { value: "Dynoro", label: "Dynoro" },
+    { value: "Ali Bakgor", label: "Ali Bakgor" },
+    { value: "Стоункат, Psychopath", label: "Стоункат, Psychopath" },
+    { value: "Jaded", label: "Jaded" },
+    { value: "Outwork", label: "Outwork" },
+  ];
 
   return (
     <div className="filter__button button-year _btn-text">
-      <select
-        value={to}
-        onChange={(e) => setTo(e.target.value)}
-        className="filter__choose"
+      <div 
+        type="button"
+        onClick={() => setOpen(!open)}
+        className={`filter__choose${open ? " _active" : ""}`}
       >
-        <option hidden disabled value="">
-        Исполнителю
-        </option>
-        <option className="filter__option" value="all">Все</option>
-        <option className="filter__option" value="Nero">Nero</option>
-        <option className="filter__option" value="Dynoro, Outwork, Mr. Gee">Dynoro, Outwork, Mr. Gee</option>
-        <option className="filter__option" value="Ali Bakgor">Ali Bakgor</option>
-        <option className="filter__option" value="Стоункат, Psychopath">Стоункат, Psychopath</option>
-        <option className="filter__option" value="Jaded, Will Clarke, AR/CO, Psychopath">Jaded, Will Clarke, AR/CO</option>
-        <option className="filter__option" value="Blue Foundation, Zeds Dead">Blue Foundation, Zeds Deadh</option>
-        <option className="filter__option" value="Dynoro, Outwork, Mr. Gee">Dynoro, Outwork, Mr. Gee</option>
-      </select>
+        {to || "Исполнителю"}
+      </div>
+      {open && (
+        <ul className="filter__options">
+          {genres.map((genre) => (
+            <li
+              key={genre.value}
+              className="filter__option"
+              onClick={() => {
+                setTo(genre.label);
+                setOpen(false);
+              }}
+            >
+              {genre.label}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

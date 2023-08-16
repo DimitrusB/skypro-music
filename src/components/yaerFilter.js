@@ -1,24 +1,48 @@
 import { useState } from 'react';
 
 export function YearFilter() {
-  const [to, setTo] = useState('');
+  
+  const [to, setTo] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const genres = [
+    { value: "all", label: "Все" },
+    { value: "2001", label: "2001" },
+    { value: "2003", label: "2003" },
+    { value: "2008", label: "2008" },
+    { value: "2010", label: "2010" },
+    { value: "2015", label: "2015" },
+    { value: "2018", label: "2018" },
+    { value: "2023", label: "2023" },
+  ];
 
   return (
+
     <div className="filter__button button-year _btn-text">
-      <select
-        value={to}
-        onChange={(e) => setTo(e.target.value)}
-        className="filter__choose"
+      <div
+        type="button"
+        onClick={() => setOpen(!open)}
+        className={`filter__choose${open ? " _active" : ""}`}
       >
-        <option hidden disabled value="">
-          Год выпуска
-        </option>
-        <option className="filter__option" value="all">Все</option>
-        <option className="filter__option" value="2001">2001</option>
-        <option className="filter__option" value="1995">1995</option>
-        <option className="filter__option" value="2000">2000</option>
-        <option className="filter__option" value="1999">1999</option>
-      </select>
+        {to || "Году выпуска"}
+      </div>
+      {open && (
+        <ul className="filter__options">
+          {genres.map((genre) => (
+            <li
+              key={genre.value}
+              className="filter__option"
+              onClick={() => {
+                setTo(genre.label);
+                setOpen(false);
+              }}
+            >
+              {genre.label}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
+
 }
