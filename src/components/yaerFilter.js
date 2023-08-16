@@ -5,7 +5,7 @@ export function YearFilter() {
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
 
-  const genres = [
+  const years = [
     { value: "all", label: "Все" },
     { value: "2001", label: "2001" },
     { value: "2003", label: "2003" },
@@ -28,16 +28,16 @@ export function YearFilter() {
       </div>
       {open && (
         <ul className="filter__options">
-          {genres.map((genre) => (
+          {years.map((year) => (
             <li
-              key={genre.value}
+              key={year.value}
               className="filter__option"
               onClick={() => {
-                setTo(genre.label);
+                setTo(year.label);
                 setOpen(false);
               }}
             >
-              {genre.label}
+              {year.label}
             </li>
           ))}
         </ul>

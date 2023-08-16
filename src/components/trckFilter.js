@@ -7,7 +7,7 @@ export function TrackFilter() {
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
 
-  const genres = [
+  const tracks = [
     { value: "all", label: "Все" },
     { value: "Nero", label: "Nero" },
     { value: "Dynoro", label: "Dynoro" },
@@ -28,16 +28,16 @@ export function TrackFilter() {
       </div>
       {open && (
         <ul className="filter__options">
-          {genres.map((genre) => (
+          {tracks.map((track) => (
             <li
-              key={genre.value}
+              key={track.value}
               className="filter__option"
               onClick={() => {
-                setTo(genre.label);
+                setTo(track.label);
                 setOpen(false);
               }}
             >
-              {genre.label}
+              {track.label}
             </li>
           ))}
         </ul>
