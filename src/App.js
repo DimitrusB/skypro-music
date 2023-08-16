@@ -1,4 +1,4 @@
-import React, { createRef, useEffect }  from "react";
+import React, { createRef}  from "react";
 import "./App.css";
 import { NavMenu } from "./components/NavMenu";
 import { AudioPlayer } from "./components/Player";
@@ -7,22 +7,6 @@ import { Panelplaylist } from "./components/rightPanel";
 
 function App() {
   const linkRef = createRef();
-
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    console.log('Сработало')
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-      console.log('Сработало')
-    };
-  }, []);
-
-  const handleClickOutside = (event) => {
-    if (linkRef.current && !linkRef.current.contains(event.target)) {
-      this.setOpen(false)
-    }
-  };
 
   return (
     <div className="App">

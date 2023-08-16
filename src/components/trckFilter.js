@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 
 export function TrackFilter() {
 
@@ -7,6 +7,19 @@ export function TrackFilter() {
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
 
+  const handleClickOutside = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    console.log('Сработало')
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      console.log('Сработало')
+    };
+  }, []);
+  
   const tracks = [
     { value: "all", label: "Все" },
     { value: "Nero", label: "Nero" },

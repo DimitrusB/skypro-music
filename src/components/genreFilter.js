@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState,useEffect} from "react";
 
 
 export function GenreFilter() {
@@ -6,7 +6,18 @@ export function GenreFilter() {
 
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
+  const handleClickOutside = () => {
+    setOpen(false);
+  };
 
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    console.log('Сработало')
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      console.log('Сработало')
+    };
+  }, []);
   const genres = [
     { value: "all", label: "Все" },
     { value: "Shanson", label: "Шансон" },

@@ -1,9 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function YearFilter() {
   
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
+
+  const handleClickOutside = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    console.log('Сработало')
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      console.log('Сработало')
+    };
+  }, []);
 
   const years = [
     { value: "all", label: "Все" },
