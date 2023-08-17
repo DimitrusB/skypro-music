@@ -41,10 +41,10 @@ export function YearFilter() {
 
   return (
 
-    <div className="filter__button button-year _btn-text">
+    <div className="filter__button button-year _btn-text"
+    type="button"
+    onClick={toggleDropdown}>
       <div
-        type="button"
-        onClick={toggleDropdown}
         className={`filter__choose${open ? " _active" : ""}`}
       >
         {to || "Году выпуска"}

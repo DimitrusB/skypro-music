@@ -3,12 +3,14 @@ import {  createRef, useEffect, useState } from 'react';
 export function TrackFilter() {
 // const myRef=createRef();
 
+const scrollableElement = document.querySelector('.filter__option');
+scrollableElement.scrollLeft = 100
 
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
 
   // const handleClickOutside = () => {
-  //   if (!myRef){
+  //   if (myRef){
   //   setOpen(false);
   //   }
   // };
@@ -17,10 +19,8 @@ export function TrackFilter() {
   };
   // useEffect(() => {
   //   document.addEventListener("mousedown", handleClickOutside);
-  //   console.log('Сработало')
   //   return () => {
   //     document.removeEventListener("mousedown", handleClickOutside);
-  //     console.log('Сработало')
   //   };
   // }, []);
   
@@ -35,10 +35,10 @@ export function TrackFilter() {
   ];
 
   return (
-    <div className="filter__button button-year _btn-text">
+    <div className="filter__button button-year _btn-text"
+    type="button"
+    onClick={toggleDropdown}>
       <div 
-        type="button"
-        onClick={toggleDropdown}
         className={`filter__choose${open ? " _active" : ""}`}
       >
         {to || "Исполнителю"}
@@ -47,7 +47,7 @@ export function TrackFilter() {
         <ul className="filter__options">
           {tracks.map((track) => (
             <li
-            // ref={myRef}
+            ref={myRef}
               key={track.value}
               className="filter__option"
               onClick={() => {

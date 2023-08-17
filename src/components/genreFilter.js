@@ -29,10 +29,10 @@ export function GenreFilter() {
   ];
 
   return (
-    <div className="filter__button button-genre _btn-text">
+    <div className="filter__button button-genre _btn-text"
+    type="button"
+    onClick={toggleDropdown}>
       <div
-        type="button"
-        onClick={toggleDropdown}
         className={`filter__choose${open ? " _active" : ""}`}
       >
         {to || "Жанру"}
