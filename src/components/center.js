@@ -9,6 +9,7 @@ import { useState } from "react";
 
 export function Center() {
   const [visibleFilter, setVisibleFilter] = useState(null);
+ 
   
   
   return (
@@ -27,9 +28,9 @@ export function Center() {
       <h2 className="centerblock__h2">Треки</h2>
       <div className="centerblock__filter filter">
         <div className="filter__title">Искать по:</div>
-        <TrackFilter/>
-        <YearFilter/>
-        <GenreFilter/>
+        <TrackFilter isVisible={visibleFilter === 'tracks'} onClick={() => setVisibleFilter('tracks')}/>
+        <YearFilter isVisible={visibleFilter === 'years'} onClick={() => setVisibleFilter('years')}/>
+        <GenreFilter isVisible={visibleFilter === 'genres'} onClick={() => setVisibleFilter('genres')}/>
       </div>
       <div className="centerblock__content">
         <div className="content__title playlist-title">
