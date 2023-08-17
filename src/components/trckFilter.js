@@ -37,7 +37,6 @@ export function TrackFilter() {
   return (
     <div className="filter__button button-year _btn-text"
     type="button"
-    isVisible={visibleFilter === 'tracks'}
     onClick={toggleDropdown}>
       <div 
         className={`filter__choose${open ? " _active" : ""}`}

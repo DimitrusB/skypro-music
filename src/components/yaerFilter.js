@@ -45,7 +45,6 @@ export function YearFilter() {
 
     <div className="filter__button button-year _btn-text"
     type="button"
-    isVisible={visibleFilter === 'years'}
     onClick={toggleDropdown}>
       <div
         className={`filter__choose${open ? " _active" : ""}`}
