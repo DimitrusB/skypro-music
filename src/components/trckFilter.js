@@ -1,24 +1,28 @@
-import {  useEffect, useState } from 'react';
+import {  createRef, useEffect, useState } from 'react';
 
 export function TrackFilter() {
-
+// const myRef=createRef();
 
 
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
 
-  const handleClickOutside = () => {
-    setOpen(false);
+  // const handleClickOutside = () => {
+  //   if (!myRef){
+  //   setOpen(false);
+  //   }
+  // };
+  const toggleDropdown = () => {
+    setOpen(!open);
   };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    console.log('Сработало')
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      console.log('Сработало')
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   console.log('Сработало')
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //     console.log('Сработало')
+  //   };
+  // }, []);
   
   const tracks = [
     { value: "all", label: "Все" },
@@ -34,7 +38,7 @@ export function TrackFilter() {
     <div className="filter__button button-year _btn-text">
       <div 
         type="button"
-        onClick={() => setOpen(!open)}
+        onClick={toggleDropdown}
         className={`filter__choose${open ? " _active" : ""}`}
       >
         {to || "Исполнителю"}
@@ -43,6 +47,7 @@ export function TrackFilter() {
         <ul className="filter__options">
           {tracks.map((track) => (
             <li
+            // ref={myRef}
               key={track.value}
               className="filter__option"
               onClick={() => {

@@ -6,18 +6,20 @@ export function GenreFilter() {
 
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
-  const handleClickOutside = () => {
-    setOpen(false);
+  // const handleClickOutside = () => {
+  //   setOpen(false);
+  // };
+  const toggleDropdown = () => {
+    setOpen(!open);
   };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    console.log('Сработало')
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      console.log('Сработало')
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   console.log('Сработало')
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //     console.log('Сработало')
+  //   };
+  // }, []);
   const genres = [
     { value: "all", label: "Все" },
     { value: "Shanson", label: "Шансон" },
@@ -30,7 +32,7 @@ export function GenreFilter() {
     <div className="filter__button button-genre _btn-text">
       <div
         type="button"
-        onClick={() => setOpen(!open)}
+        onClick={toggleDropdown}
         className={`filter__choose${open ? " _active" : ""}`}
       >
         {to || "Жанру"}

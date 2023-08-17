@@ -5,9 +5,12 @@ import "./filters.css";
 import { GenreFilter } from "./genreFilter";
 import { TrackFilter } from "./trckFilter";
 import { YearFilter } from "./yaerFilter";
+import { useState } from "react";
 
 export function Center() {
-
+  const [visibleFilter, setVisibleFilter] = useState(null);
+  
+  
   return (
     <div className="main__centerblock centerblock">
       <div className="centerblock__search search">
