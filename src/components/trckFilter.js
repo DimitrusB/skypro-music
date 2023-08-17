@@ -3,9 +3,6 @@ import {  createRef, useEffect, useState } from 'react';
 export function TrackFilter() {
 // const myRef=createRef();
 
-const scrollableElement = document.querySelector('.filter__option');
-scrollableElement.scrollLeft = 100
-
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -47,7 +44,7 @@ scrollableElement.scrollLeft = 100
         <ul className="filter__options">
           {tracks.map((track) => (
             <li
-            ref={myRef}
+            // ref={myRef}
               key={track.value}
               className="filter__option"
               onClick={() => {
