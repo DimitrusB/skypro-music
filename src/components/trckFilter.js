@@ -1,8 +1,9 @@
-import {  createRef, useEffect, useState } from 'react';
+import {   useEffect, useState } from 'react';
 
 export function TrackFilter() {
 // const myRef=createRef();
 
+  const [visibleFilter, setVisibleFilter] = useState('tracks');
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -13,6 +14,8 @@ export function TrackFilter() {
   // };
   const toggleDropdown = () => {
     setOpen(!open);
+    setVisibleFilter('tracks')
+    console.log(visibleFilter);
   };
   // useEffect(() => {
   //   document.addEventListener("mousedown", handleClickOutside);
@@ -34,13 +37,14 @@ export function TrackFilter() {
   return (
     <div className="filter__button button-year _btn-text"
     type="button"
+    isVisible={visibleFilter === 'tracks'}
     onClick={toggleDropdown}>
       <div 
         className={`filter__choose${open ? " _active" : ""}`}
       >
         {to || "Исполнителю"}
       </div>
-      {open && (
+      {open  &&(
         <ul className="filter__options">
           {tracks.map((track) => (
             <li

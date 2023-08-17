@@ -5,12 +5,21 @@ import "./filters.css";
 import { GenreFilter } from "./genreFilter";
 import { TrackFilter } from "./trckFilter";
 import { YearFilter } from "./yaerFilter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Center() {
   const [visibleFilter, setVisibleFilter] = useState(null);
- 
-  
+
+
+  const handleClickOutside = () => {
+    setVisibleFilter(null);
+  };
+    useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   
   return (
     <div className="main__centerblock centerblock">
@@ -28,8 +37,8 @@ export function Center() {
       <h2 className="centerblock__h2">Треки</h2>
       <div className="centerblock__filter filter">
         <div className="filter__title">Искать по:</div>
-        <TrackFilter isVisible={visibleFilter === 'tracks'} onClick={() => setVisibleFilter('tracks')}/>
-        <YearFilter isVisible={visibleFilter === 'years'} onClick={() => setVisibleFilter('years')}/>
+        <TrackFilter isVisible={visibleFilter === 'tracks'} onClick={() => setVisibleFilter('tracks')}/> 
+        <YearFilter isVisible={visibleFilter === 'years'} onClick={() => setVisibleFilter('years')}/> 
         <GenreFilter isVisible={visibleFilter === 'genres'} onClick={() => setVisibleFilter('genres')}/>
       </div>
       <div className="centerblock__content">

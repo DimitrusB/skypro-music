@@ -1,9 +1,9 @@
-import React, { useState,useEffect} from "react";
+import React, { useState} from "react";
 
 
 export function GenreFilter() {
 
-
+  const [visibleFilter, setVisibleFilter] = useState('genres');
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
   // const handleClickOutside = () => {
@@ -11,6 +11,8 @@ export function GenreFilter() {
   // };
   const toggleDropdown = () => {
     setOpen(!open);
+    setVisibleFilter('genres')
+    console.log(visibleFilter);
   };
   // useEffect(() => {
   //   document.addEventListener("mousedown", handleClickOutside);
@@ -31,6 +33,7 @@ export function GenreFilter() {
   return (
     <div className="filter__button button-genre _btn-text"
     type="button"
+    isVisible={visibleFilter === 'genres'}
     onClick={toggleDropdown}>
       <div
         className={`filter__choose${open ? " _active" : ""}`}

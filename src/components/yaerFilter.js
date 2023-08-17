@@ -1,8 +1,8 @@
-import { render } from '@testing-library/react';
-import { createRef, useEffect, useState } from 'react';
+import {   useState } from 'react';
 
 export function YearFilter() {
   // const myRef=createRef();
+  const [visibleFilter, setVisibleFilter] = useState("years");
   const [to, setTo] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -13,6 +13,8 @@ export function YearFilter() {
   // };
   const toggleDropdown = () => {
     setOpen(!open);
+    setVisibleFilter('years')
+    console.log(visibleFilter);
   };
   // useEffect(() => {
   //   document.addEventListener("mousedown", handleClickOutside);
@@ -43,6 +45,7 @@ export function YearFilter() {
 
     <div className="filter__button button-year _btn-text"
     type="button"
+    isVisible={visibleFilter === 'years'}
     onClick={toggleDropdown}>
       <div
         className={`filter__choose${open ? " _active" : ""}`}
