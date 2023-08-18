@@ -37,7 +37,7 @@
   
   .filter__button:not(:last-child) {
     margin-right: 10px;
-    width: 144px;
+    width: 170px;
   }  
   .filter__button {
     position: relative;

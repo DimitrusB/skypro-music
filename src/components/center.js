@@ -5,23 +5,31 @@ import "./filters.css";
 import { GenreFilter } from "./genreFilter";
 import { TrackFilter } from "./trckFilter";
 import { YearFilter } from "./yaerFilter";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function Center() {
-  const [visibleFilter, setVisibleFilter] = useState(null);
 
-
-  const handleClickOutside = () => {
-    setVisibleFilter(null);
-  };
-    useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+const [trackFilterOpen, setTrackFilterOpen] = useState(false);
+const [yearFilterOpen, setYearFilterOpen] = useState(false);
+const [genreFilterOpen, setGenreFilterOpen] = useState(false);
   
-  return (
+const handleFilterToggle = (filter) => {
+  if (filter === "track") {
+    setTrackFilterOpen(!trackFilterOpen);
+    setYearFilterOpen(false);
+    setGenreFilterOpen(false);
+  } else if (filter === "year") {
+    setYearFilterOpen(!yearFilterOpen);
+    setGenreFilterOpen(false);
+    setTrackFilterOpen(false);
+  } else if (filter === "genre") {
+    setGenreFilterOpen(!genreFilterOpen);
+    setYearFilterOpen(false);
+    setTrackFilterOpen(false);
+  }
+};
+
+return (
     <div className="main__centerblock centerblock">
       <div className="centerblock__search search">
         <svg className="search__svg">
@@ -36,10 +44,11 @@ export function Center() {
       </div>
       <h2 className="centerblock__h2">Треки</h2>
       <div className="centerblock__filter filter">
-        <div className="filter__title">Искать по:</div>
-        <TrackFilter isVisible={visibleFilter === 'tracks'} onClick={() => setVisibleFilter('tracks')}/> 
-        <YearFilter isVisible={visibleFilter === 'years'} onClick={() => setVisibleFilter('years')}/> 
-        <GenreFilter isVisible={visibleFilter === 'genres'} onClick={() => setVisibleFilter('genres')}/>
+        <div className="filter__title">Искать по:</div> 
+        <TrackFilter name="По исполнителю" onClick={() => handleFilterToggle("track")} isOpen={trackFilterOpen}/>
+        <YearFilter name = "Году выпуска" onClick={() => handleFilterToggle("year")} isOpen={yearFilterOpen} />
+        <GenreFilter name = "Жанру" onClick={() => handleFilterToggle("genre")} isOpen={genreFilterOpen} />
+        {/* <Filter></Filter> */}
       </div>
       <div className="centerblock__content">
         <div className="content__title playlist-title">

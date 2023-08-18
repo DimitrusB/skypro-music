@@ -1,34 +1,12 @@
 import {   useState } from 'react';
 
-export function YearFilter() {
-  // const myRef=createRef();
-  const [visibleFilter, setVisibleFilter] = useState("years");
+export function YearFilter(props) {
+  const { id, name, onClick, isOpen } = props;
   const [to, setTo] = useState("");
-  const [open, setOpen] = useState(false);
 
-  // const handleClickOutside = () => {
-  //   if (!dropdown || !dropdownMenu){
-  //   setOpen(open);
-  //   }
-  // };
   const toggleDropdown = () => {
-    setOpen(!open);
-    setVisibleFilter('years')
-    console.log(visibleFilter);
+    onClick(id);
   };
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
-
-  // const dropdown = document.querySelectorAll('.filter__options');
-  // const dropdownMenu = document.querySelectorAll('.filter__option');
-  
-
-
-
 
   const years = [
     { value: "all", label: "Все" },
@@ -47,20 +25,18 @@ export function YearFilter() {
     type="button"
     onClick={toggleDropdown}>
       <div
-        className={`filter__choose${open ? " _active" : ""}`}
+        className={`filter__choose${isOpen ? " _active" : ""}`}
       >
-        {to || "Году выпуска"}
+        {to || name}
       </div>
-      {open && (
+      {isOpen && (
         <ul className="filter__options" id='1'>
           {years.map((year) => (
             <li
-              // ref={myRef}
               key={year.value}
               className="filter__option"
               onClick={() => {
                 setTo(year.label);
-                setOpen(false);
               }}
             >
               {year.label}

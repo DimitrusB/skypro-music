@@ -1,29 +1,14 @@
-import {   useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-export function TrackFilter() {
-// const myRef=createRef();
-
-  const [visibleFilter, setVisibleFilter] = useState('tracks');
+export function TrackFilter(props) {
+  const { id, name, onClick, isOpen } = props;
   const [to, setTo] = useState("");
-  const [open, setOpen] = useState(false);
 
-  // const handleClickOutside = () => {
-  //   if (myRef){
-  //   setOpen(false);
-  //   }
-  // };
   const toggleDropdown = () => {
-    setOpen(!open);
-    setVisibleFilter('tracks')
-    console.log(visibleFilter);
+    onClick(id);
   };
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
-  
+
+
   const tracks = [
     { value: "all", label: "Все" },
     { value: "Nero", label: "Nero" },
@@ -35,24 +20,22 @@ export function TrackFilter() {
   ];
 
   return (
-    <div className="filter__button button-year _btn-text"
-    type="button"
-    onClick={toggleDropdown}>
-      <div 
-        className={`filter__choose${open ? " _active" : ""}`}
-      >
-        {to || "Исполнителю"}
+    <div
+      className="filter__button button-year _btn-text"
+      type="button"
+      onClick={toggleDropdown}
+    >
+      <div className={`filter__choose${isOpen ? " _active" : ""}`}>
+        {to || name} {/* Используем name здесь как плейсхолдер */}
       </div>
-      {open  &&(
+      {isOpen && (
         <ul className="filter__options">
           {tracks.map((track) => (
             <li
-            // ref={myRef}
               key={track.value}
               className="filter__option"
               onClick={() => {
                 setTo(track.label);
-                setOpen(false);
               }}
             >
               {track.label}

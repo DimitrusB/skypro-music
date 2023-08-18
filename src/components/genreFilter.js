@@ -1,27 +1,15 @@
 import React, { useState} from "react";
 
 
-export function GenreFilter() {
+export function GenreFilter(props) {
 
-  const [visibleFilter, setVisibleFilter] = useState('genres');
+  const { id, name, onClick, isOpen } = props;
   const [to, setTo] = useState("");
-  const [open, setOpen] = useState(false);
-  // const handleClickOutside = () => {
-  //   setOpen(false);
-  // };
+
   const toggleDropdown = () => {
-    setOpen(!open);
-    setVisibleFilter('genres')
-    console.log(visibleFilter);
+    onClick(id);
   };
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   console.log('Сработало')
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //     console.log('Сработало')
-  //   };
-  // }, []);
+
   const genres = [
     { value: "all", label: "Все" },
     { value: "Shanson", label: "Шансон" },
@@ -35,11 +23,11 @@ export function GenreFilter() {
     type="button"
     onClick={toggleDropdown}>
       <div
-        className={`filter__choose${open ? " _active" : ""}`}
+        className={`filter__choose${isOpen ? " _active" : ""}`}
       >
-        {to || "Жанру"}
+        {to || name}
       </div>
-      {open && (
+      {isOpen && (
         <ul className="filter__options">
           {genres.map((genre) => (
             <li
@@ -47,7 +35,6 @@ export function GenreFilter() {
               className="filter__option"
               onClick={() => {
                 setTo(genre.label);
-                setOpen(false);
               }}
             >
               {genre.label}
