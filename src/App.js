@@ -1,22 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createRef}  from "react";
+import "./App.css";
+import { NavMenu } from "./components/NavMenu";
+import { AudioPlayer } from "./components/Player";
+import { Center } from "./components/center";
+import { Panelplaylist } from "./components/rightPanel";
 
 function App() {
+  const linkRef = createRef();
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-        Здесь скоро будет Skypro.Music
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div className="wrapper">
+          <div className="container" ref={linkRef} >
+            <main className="main">
+              <NavMenu></NavMenu>
+              <Center ></Center>
+              <Panelplaylist></Panelplaylist>
+            </main>
+            <AudioPlayer></AudioPlayer>
+            <footer className="footer"></footer>
+          </div>
+        </div>
       </header>
     </div>
   );
