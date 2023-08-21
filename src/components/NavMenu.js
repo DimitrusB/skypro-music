@@ -54,14 +54,19 @@ const StyledNavMenuLink = styled.a`
   font-size: 16px;
   line-height: 24px;
   `
-const StyledNavMenuShowMenu = styled.div`
+const StyledNavMenu = styled.div`
 display: block;
 visibility: visible;
 `
-const StyledNavMenuList = styled.ul`
+const StyledMenuList = styled.ul`
 max-height: 0;
 overflow: hidden;
 transition: max-height 1s ease-in-out;
+  ${({ showMore }) => showMore &&
+    `
+    max-height: 100vh;
+    `
+  }
 `
 export function NavMenu() {
 
@@ -82,8 +87,8 @@ export function NavMenu() {
         <StyledBurgerLine></StyledBurgerLine>
         <StyledBurgerLine></StyledBurgerLine>
       </StyledNavBurger>
-      <div className={`nav__menu menu${showMore ? " show" : ""}`}>
-      <ul className={`menu__list${showMore ? " show" : ""}`}>  
+      <StyledNavMenu>
+      <StyledMenuList showMore={showMore}>  
           <StyledNavMenuItem>
             <StyledNavMenuLink href="#">
               Главное
@@ -99,8 +104,8 @@ export function NavMenu() {
               Войти
             </StyledNavMenuLink>
           </StyledNavMenuItem>
-        </ul>
-      </div> 
+        </StyledMenuList>
+      </StyledNavMenu> 
     </StyledMainNav>
   );
 }
