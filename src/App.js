@@ -1,4 +1,3 @@
-import "./App.css";
 import { NavMenu } from "./components/NavMenu";
 import { AudioPlayer } from "./components/Player";
 import { Center } from "./components/center";
