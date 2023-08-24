@@ -1,6 +1,5 @@
 import React, { useState} from "react";
-
-
+import * as S from "./styled/Filters.style"
 export function GenreFilter(props) {
 
   const { id, name, onClick, isOpen } = props;
@@ -19,29 +18,26 @@ export function GenreFilter(props) {
   ];
 
   return (
-    <div className="filter__button button-genre _btn-text"
+    <S.Button
     type="button"
     onClick={toggleDropdown}>
-      <div
-        className={`filter__choose${isOpen ? " _active" : ""}`}
-      >
+      <S.Choose isOpen={isOpen}>
         {to || name}
-      </div>
+      </S.Choose>
       {isOpen && (
-        <ul className="filter__options">
+        <S.Options>
           {genres.map((genre) => (
-            <li
+            <S.Option
               key={genre.value}
-              className="filter__option"
               onClick={() => {
                 setTo(genre.label);
               }}
             >
               {genre.label}
-            </li>
+            </S.Option>
           ))}
-        </ul>
+        </S.Options>
       )}
-    </div>
+    </S.Button>
   );
 }

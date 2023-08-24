@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
+import * as S from "./styled/Filters.style"
 export function TrackFilter(props) {
   const { id, name, onClick, isOpen } = props;
   const [to, setTo] = useState("");
@@ -20,29 +20,27 @@ export function TrackFilter(props) {
   ];
 
   return (
-    <div
-      className="filter__button button-year _btn-text"
+    <S.Button
       type="button"
       onClick={toggleDropdown}
     >
-      <div className={`filter__choose${isOpen ? " _active" : ""}`}>
+      <S.Choose isOpen={isOpen}>
         {to || name} {/* Используем name здесь как плейсхолдер */}
-      </div>
+      </S.Choose>
       {isOpen && (
-        <ul className="filter__options">
+        <S.Options>
           {tracks.map((track) => (
-            <li
+            <S.Option
               key={track.value}
-              className="filter__option"
               onClick={() => {
                 setTo(track.label);
               }}
             >
               {track.label}
-            </li>
+            </S.Option>
           ))}
-        </ul>
+        </S.Options>
       )}
-    </div>
+    </S.Button>
   );
 }
