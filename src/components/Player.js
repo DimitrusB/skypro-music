@@ -103,6 +103,16 @@ height: 12px;
 fill: transparent;
 stroke: #696969;
 `};
+&:hover {
+  fill: transparent;
+  stroke: #acacac;
+  cursor: pointer;
+}
+&:active{
+  fill: transparent;
+  stroke: #ffffff;
+  cursor: pointer;
+}
 `
 const StyledPlayerBtn = styled.div`
 padding: 5px;
@@ -342,16 +352,50 @@ padding: 5px;
 margin-left: 28.5px;
 `
 const StyledTracPlayLikeSvg = styled.svg`
-width: 14px;
-height: 12px;
-fill: transparent;
-stroke: #696969;
-`
+  width: 14px;
+  height: 12px;
+  fill: transparent;
+  stroke: #696969;
+  cursor: pointer;
+
+  &:hover{
+    fill: transparent;
+    stroke: #acacac;
+    cursor: pointer;
+  }
+  &:active{
+    fill: transparent;
+    stroke: #ffffff;
+    cursor: pointer;
+  
+  &:active {
+    fill: #696969;
+    stroke: #ffffff;
+    cursor: pointer;
+  }
+  }
+  `
 const StyledTracPlayDisSvg = styled.svg`
 width: 14.34px;
 height: 13px;
 fill: transparent;
 stroke: #696969;
+&:hover{
+  fill: transparent;
+  stroke: #acacac;
+  cursor: pointer;
+}
+&:active{
+  fill: transparent;
+  stroke: #ffffff;
+  cursor: pointer;
+
+&:active {
+  fill: #696969;
+  stroke: #ffffff;
+  cursor: pointer;
+}
+}
 `
 export function AudioPlayer (){
 
