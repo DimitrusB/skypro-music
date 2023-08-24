@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import "./Nav.css";
 import logo from "../img/logo.png";
 import styled from 'styled-components';
 
