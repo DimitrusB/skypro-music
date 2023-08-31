@@ -3,12 +3,14 @@ import { AudioPlayer } from "./components/Player";
 import { Center } from "./components/center";
 import { Panelplaylist } from "./components/rightPanel";
 import * as S from "./components/styled/Main.style" 
+import { AppRoutes } from "./routes";
 
 
 function App() {
 
   return (
     <div className="App">
+      <AppRoutes/>
       <header className="App-header">
         <S.Wrapper>
           <S.Container >
