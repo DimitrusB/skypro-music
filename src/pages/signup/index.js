@@ -1,40 +1,39 @@
-// import * as S from "./styled/signup.Style"
+import { Link } from "react-router-dom";
+import * as S from "../../components/styled/signup.Style";
+import logo_modal from '../../img/logo_modal.png'
 
 export function SignUp() {
   return (
     <div className="wrapper">
-      <div className="container-signup">
-        <div className="modal__block">
-          <form className="modal__form-login">
-            <a href="../">
-              <div className="modal__logo">
-                <img src="../img/logo_modal.png" alt="logo" />
-              </div>
-            </a>
-            <input
-              className="modal__input login"
+      <S.ContainerSignup>
+        <S.ModalBlock>
+          <S.ModalFormLogin>
+            <Link to="/">
+              <S.ModalLogo>
+                <S.ModalLogoImg src={logo_modal} alt="logo" />
+              </S.ModalLogo>
+            </Link>
+            <S.ModalInput
               type="text"
               name="login"
               placeholder="Почта"
             />
-            <input
-              className="modal__input password-first"
+            <S.ModalInput
               type="password"
               name="password"
               placeholder="Пароль"
             />
-            <input
-              className="modal__input password-double"
+            <S.ModalInput
               type="password"
               name="password"
               placeholder="Повторите пароль"
             />
-            <button className="modal__btn-signup-ent">
-              <a href="../index.html">Зарегистрироваться</a>
-            </button>
-          </form>
-        </div>
-      </div>
+            <S.ModalBtnSignupEnt>
+              <S.ModalBtnSignupEntA href="../index.html">Зарегистрироваться</S.ModalBtnSignupEntA>
+            </S.ModalBtnSignupEnt>
+          </S.ModalFormLogin>
+        </S.ModalBlock>
+      </S.ContainerSignup>
     </div>
   );
 }

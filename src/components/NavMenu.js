@@ -25,9 +25,9 @@ export function NavMenu() {
       <S.NavMenu>
       <S.MenuList showMore={showMore}>  
           <S.NavMenuItem>
-            <S.NavMenuLink href="#">
+            <Link className={S.NavMenuLink} to="/">
               Главное
-            </S.NavMenuLink>
+            </Link>
           </S.NavMenuItem>
           <S.NavMenuItem>
             <S.NavMenuLink href="#">
