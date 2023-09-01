@@ -9,11 +9,11 @@ export function SignIn() {
 <S.ContainerEnter>
   <S.ModalBlock>
     <S.ModalFormLogin action="#">
-      <a href="../">
+      <Link to="/" >
         <S.ModalLogo>
           <S.ModalLogoImg src={logo_modal} alt="logo" />
         </S.ModalLogo>
-      </a>
+      </Link>
       <S.ModalInput
         type="text"
         name="login"
