@@ -1,22 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { NavMenu } from "./components/NavMenu";
+import { AudioPlayer } from "./components/Player";
+import { Center } from "./components/center";
+import { Panelplaylist } from "./components/rightPanel";
+import * as S from "./components/styled/Main.style" 
+
 
 function App() {
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-        Здесь скоро будет Skypro.Music
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <S.Wrapper>
+          <S.Container >
+            <S.Main>
+              <NavMenu></NavMenu>
+              <Center ></Center>
+              <Panelplaylist></Panelplaylist>
+            </S.Main>
+            <AudioPlayer></AudioPlayer>
+            <footer className="footer"></footer>
+          </S.Container>
+        </S.Wrapper>
       </header>
     </div>
   );
