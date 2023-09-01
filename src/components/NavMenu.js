@@ -35,7 +35,7 @@ export function NavMenu() {
             </S.NavMenuLink>
           </S.NavMenuItem>
           <S.NavMenuItem>
-          <Link className={S.NavMenuLink} to="/signup">
+          <Link className={S.NavMenuLink} to="/signin">
               Войти
             </Link>
           </S.NavMenuItem>

@@ -4,7 +4,7 @@ import logo_modal from '../../img/logo_modal.png'
 
 export function SignUp() {
   return (
-    <div className="wrapper">
+    <S.Wrapper>
       <S.ContainerSignup>
         <S.ModalBlock>
           <S.ModalFormLogin>
@@ -34,6 +34,6 @@ export function SignUp() {
           </S.ModalFormLogin>
         </S.ModalBlock>
       </S.ContainerSignup>
-    </div>
+    </S.Wrapper>
   );
 }
