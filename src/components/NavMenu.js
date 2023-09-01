@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import logo from "../img/logo.png";
-import * as S from './styled/NavMenu.Style'
+import * as S from './styled/NavMenu.Style';
+import { Link } from 'react-router-dom';
+
 export function NavMenu() {
 
   const [showMore, setShowMore] = useState(false);
@@ -33,9 +35,9 @@ export function NavMenu() {
             </S.NavMenuLink>
           </S.NavMenuItem>
           <S.NavMenuItem>
-            <S.NavMenuLink href="../signin.html">
+          <Link className={S.NavMenuLink} to="/signup">
               Войти
-            </S.NavMenuLink>
+            </Link>
           </S.NavMenuItem>
         </S.MenuList>
       </S.NavMenu> 
