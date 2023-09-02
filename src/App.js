@@ -3,10 +3,13 @@
 // import { Center } from "./components/center";
 // import { Panelplaylist } from "./components/rightPanel";
 // import * as S from "./components/styled/Main.style" 
+import { useState } from "react";
 import { AppRoutes } from "./routes";
 import { BrowserRouter } from 'react-router-dom';
 
 function App() {
+
+  const [user, setUser] = useState({ name: "Dmitriy" });
   return (
     <BrowserRouter>
       <div className="App">
@@ -23,7 +26,7 @@ function App() {
             </S.Container>
           </S.Wrapper>
         </header> */}
-           <AppRoutes /> 
+           <AppRoutes user={user} /> 
       </div>
     </BrowserRouter>
   );

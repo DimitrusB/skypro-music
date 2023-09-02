@@ -10,7 +10,7 @@ flex-grow: 3;
 padding: 20px 40px 20px 111px;
 `
 export const MainCenterblockSearch = styled.div`
-width: 100%;
+width: 1293px;
 border-bottom: 1px solid #4e4e4e;
 margin-bottom: 51px;
 display: -webkit-box;

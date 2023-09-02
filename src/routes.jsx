@@ -6,6 +6,7 @@ import { NotFoundPage } from "./pages/not_found";
 import { ProtectedRoute } from "./components/navigate";
 
 export const AppRoutes = ({ user }) => {
+
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoute user={user} element={<MainPage />} />} />
