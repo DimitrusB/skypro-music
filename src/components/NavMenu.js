@@ -25,19 +25,19 @@ export function NavMenu() {
       <S.NavMenu>
       <S.MenuList showMore={showMore}>  
           <S.NavMenuItem>
-            <Link className={S.NavMenuLink} to="/">
+            <S.NavMenuLink to="/">
               Главное
-            </Link>
+            </S.NavMenuLink>
           </S.NavMenuItem>
           <S.NavMenuItem>
-            <S.NavMenuLink href="#">
+            <S.NavMenuLink to="/favorites">
               Мой плейлист
             </S.NavMenuLink>
           </S.NavMenuItem>
           <S.NavMenuItem>
-          <Link className={S.NavMenuLink} to="/signin">
+          <S.NavMenuLink to="/signin">
               Войти
-            </Link>
+            </S.NavMenuLink>
           </S.NavMenuItem>
         </S.MenuList>
       </S.NavMenu> 
