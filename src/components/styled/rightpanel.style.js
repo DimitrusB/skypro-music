@@ -19,6 +19,7 @@ align-items: center;
 -ms-flex-pack: end;
 justify-content: flex-end;
 padding: 12px 0 15px 0;
+
 `
 export const PersonalName = styled.p`
 font-style: normal;
@@ -48,6 +49,7 @@ flex-direction: column;
 -webkit-box-pack: start;
 -ms-flex-pack: start;
 justify-content: flex-start;
+
 `
 export const SidebarList = styled.div`
 display: -webkit-box;
@@ -60,4 +62,5 @@ flex-direction: column;
 -webkit-box-align: center;
 -ms-flex-align: center;
 align-items: center;
+gap: 30px;
 `
