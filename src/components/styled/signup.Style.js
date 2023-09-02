@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -111,7 +112,7 @@ export const ModalBtnSignupEnt = styled.button `
             justify-content: center;
   `
   
-export const ModalBtnSignupEntA =styled.a `
+export const ModalBtnSignupEntA =styled(NavLink)`
     width: 100%;
     height: 100%;
     font-style: normal;

@@ -4,7 +4,8 @@ import { GenreFilter } from "./genreFilter";
 import { TrackFilter } from "./trckFilter";
 import { YearFilter } from "./yaerFilter";
 import { useState } from "react";
-import * as S from "./styled/Center.style"
+import * as S from "./styled/Center.style";
+import { Link } from "react-router-dom";
 
 
 export function Center() {
@@ -32,9 +33,11 @@ const handleFilterToggle = (filter) => {
 return (
     <S.MainCenterblock>
       <S.MainCenterblockSearch>
+        <Link to="/">
         <S.MainSearchSvg>
           <use xlinkHref={`${iconSprite}#icon-search`}></use>
         </S.MainSearchSvg>
+        </Link>
         <S.MainSearchText
           type="search"
           placeholder="Поиск"

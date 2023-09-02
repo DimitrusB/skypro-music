@@ -1,10 +1,9 @@
-
 import { NavMenu } from "../../components/NavMenu";
 import { AudioPlayer } from "../../components/Player";
 import * as S from "../../components/styled/404.style" 
 import iconSprite from "../../img/icon/sprite.svg";
 import smile from "../../img/crying.png"
-import { Link } from "react-router-dom";
+
 
 export function NotFoundPage (){
     return(
@@ -41,7 +40,7 @@ export function NotFoundPage (){
                 <S.TextDel>Возможно, она была удалена 
 или перенесена на другой адрес</S.TextDel>
                 <S.ButtonBackMain>
-                <Link className={S.ButtonBackMainA} to="/">Вернуться на главную</Link>
+                <S.ButtonBackMainA to="/">Вернуться на главную</S.ButtonBackMainA>
                 </S.ButtonBackMain>
               </S.CenterError>
               <AudioPlayer />

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -121,7 +122,7 @@ export const Wrapper = styled.div`
            }
   `
   
- export const ModalBtnEnterA = styled.a `
+ export const ModalBtnEnterA = styled(NavLink) `
     width: 100%;
     height: 100%;
     font-style: normal;
@@ -171,7 +172,7 @@ export const Wrapper = styled.div`
 
   `
   
- export const ModalBtnSignupA = styled.a `
+ export const ModalBtnSignupA = styled(NavLink) `
     width: 100%;
     height: 100%;
     font-style: normal;

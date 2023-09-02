@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { NavLink } from "react-router-dom";
 
 
 export const MainCenterblock = styled.div`
@@ -175,7 +176,7 @@ margin-top:36px;`
 
 
 
-export const ButtonBackMainA =styled.a `
+export const ButtonBackMainA =styled(NavLink) `
     width: 100%;
     height: 100%;
     font-style: normal;

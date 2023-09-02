@@ -37,8 +37,8 @@ ul li {
 @font-face {
   font-family: "StratosSkyeng";
   src: local("StratosSkyeng"), local("StratosSkyeng"),
-    url("/src/fonts/StratosSkyeng.woff2") format("woff2"),
-    url("/src/fonts/StratosSkyeng.woff") format("woff");
+    url("/fonts/StratosSkyeng.woff2") format("woff2"),
+    url("/fonts/StratosSkyeng.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }

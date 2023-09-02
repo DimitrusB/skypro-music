@@ -25,10 +25,10 @@ export function SignIn() {
         placeholder="Пароль"
       />
       <S.ModalBtnEnter>
-        <Link className={S.ModalBtnEnterA} to="/">Войти</Link>
+        <S.ModalBtnEnterA to="/">Войти</S.ModalBtnEnterA>
       </S.ModalBtnEnter>
       <S.ModalBtnSignup>
-        <Link className={S.ModalBtnSignupA} to="/signup">Зарегистрироваться</Link>
+        <S.ModalBtnSignupA to="/signup">Зарегистрироваться</S.ModalBtnSignupA>
       </S.ModalBtnSignup>
     </S.ModalFormLogin>
   </S.ModalBlock>
