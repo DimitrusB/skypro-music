@@ -63,9 +63,6 @@ export function Category (){
       <S.SidebarBlock>
       </S.SidebarBlock>
     </S.MainSidebar>
-
-
-
               </S.Main>
               <AudioPlayer />
               <footer className="footer"></footer>

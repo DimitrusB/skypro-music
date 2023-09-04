@@ -7,9 +7,12 @@ import { ProtectedRoute } from "./components/navigate";
 import { FavoritesTracks } from "./pages/favorites";
 import { Category } from "./pages/category";
 
+
+
 export const AppRoutes = ({ user }) => {
 
   return (
+    
     <Routes>
       <Route path="/" element={<ProtectedRoute user={user} element={<MainPage />} />} />
       <Route path="/signup" element={<SignUp />} />
