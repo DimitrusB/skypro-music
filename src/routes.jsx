@@ -9,6 +9,7 @@ import { Category } from "./pages/category";
 
 
 
+
 export const AppRoutes = ({ user }) => {
 
   return (
@@ -18,10 +19,8 @@ export const AppRoutes = ({ user }) => {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/favorites" element={<ProtectedRoute user={user} element={<FavoritesTracks />} />}/>
-      <Route path="/category/1" element={<ProtectedRoute user={user} element={<Category />} />}/>
-      <Route path="/category/2" element={<ProtectedRoute user={user} element={<Category />} />}/>
-      <Route path="/category/3" element={<ProtectedRoute user={user} element={<Category />} />}/>
       <Route path="*" element={<NotFoundPage />} />
+      <Route path="/category/:id" element={<ProtectedRoute user={user} element={<Category />} />}/>
     </Routes>
   );
 };

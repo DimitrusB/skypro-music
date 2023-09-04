@@ -4,9 +4,18 @@ import { AudioPlayer } from "../../components/Player";
 import * as S from "../../components/styled/favorite.style" 
 import { NameTrackFavorites } from "../../components/NameTrackFavorites";
 import iconSprite from "../../img/icon/sprite.svg";
+import { useParams } from "react-router-dom";
+import { musicCategory } from "../../components/constants";
 
 
 export function Category (){
+  const params = useParams();
+
+  const category = musicCategory.find((category) => category.id === parseInt(params.id, 10));
+
+  if (!category) {
+    return <div>Плейлист не найден</div>;
+  }
 
     return(
         <header className="App-header">
@@ -27,7 +36,7 @@ export function Category (){
           name="search"
         />
       </S.MainCenterblockSearch>
-      <S.CentralblockH2>Плэйлист</S.CentralblockH2>
+      <S.CentralblockH2>{category.alt}</S.CentralblockH2>
       <S.CentralblockContent>
         <S.FContentTitle>
           <S.FPlaylistTitleCol col = 'col01'>Трек</S.FPlaylistTitleCol>
