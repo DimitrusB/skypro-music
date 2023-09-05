@@ -4,18 +4,23 @@
 import iconSprite from "../img/icon/sprite.svg";
 import { NamePlaylist } from "./NamePlaylist";
 import * as S from "./styled/rightpanel.style"
-
+import UserContext from '../components/UserContext';
+import { useContext } from "react";
 
 
 export function Panelplaylist() {
+  const { email, setEmail, resetEmail } = useContext(UserContext);
 
+  const handleResetClick = () => {
+    resetEmail();
+  };
   return (
     <S.MainSidebar>
       <S.PersonalSidebar>
         <S.PersonalName>Dmitriy.Borisevich</S.PersonalName>
         <S.SidebarIcon>
           <svg alt="logout">
-            <use xlinkHref={`${iconSprite}#logout`}></use>
+            <use xlinkHref={`${iconSprite}#logout`} onClick={handleResetClick}></use>
           </svg>
         </S.SidebarIcon>
       </S.PersonalSidebar>
