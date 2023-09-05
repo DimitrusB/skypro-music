@@ -1,12 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import logo_modal from '../../img/logo_modal.png';
 import * as S from '../../components/styled/signin.style';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import UserContext from '../../components/UserContext';
 
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { setEmail: setUserEmail } = useContext(UserContext);
   
   const handleLogin = (e) => {
     e.preventDefault();
@@ -14,7 +16,8 @@ export function SignIn() {
     if (storedUser) {
       const user = JSON.parse(storedUser);
       if (user.password === password) {
-        navigate('/')
+        setUserEmail(email); // Обновление email в контексте
+        navigate('/');
       } else {
         alert('Неверный пароль!');
       }
@@ -22,7 +25,7 @@ export function SignIn() {
       alert('Пользователь не найден!');
     }
   };
-console.log(email);
+
   return (
     <S.Wrapper>
       <S.ContainerEnter>
