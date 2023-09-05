@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { AppRoutes } from "./routes";
+import { BrowserRouter } from "react-router-dom";
+import UserContext from '../src/components/UserContext';
 
 function App() {
+  const [email, setEmail] = useState('');
+  const resetEmail = () => {
+    setEmail('');
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-        Здесь скоро будет Skypro.Music
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{ email, setEmail,resetEmail }}>
+    <BrowserRouter>
+      <div className="App">
+        <AppRoutes user={email}/>
+      </div>
+    </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 
 export default App;
+
