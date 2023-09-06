@@ -1,22 +1,11 @@
 
 import { NavMenu } from "../../components/NavMenu";
 import { AudioPlayer } from "../../components/Player";
-import * as S from "../../components/styled/favorite.style" 
+import * as S from "./favorite.style" 
 import { NameTrackFavorites } from "../../components/NameTrackFavorites";
 import iconSprite from "../../img/icon/sprite.svg";
-import { useParams } from "react-router-dom";
-import { musicCategory } from "../../components/constants";
 
-
-export function Category (){
-  const params = useParams();
-
-  const category = musicCategory.find((category) => category.id === parseInt(params.id, 10));
-
-  if (!category) {
-    return <div>Плейлист не найден</div>;
-  }
-
+export function FavoritesTracks (){
     return(
         <header className="App-header">
           <S.Wrapper>
@@ -36,7 +25,7 @@ export function Category (){
           name="search"
         />
       </S.MainCenterblockSearch>
-      <S.CentralblockH2>{category.alt}</S.CentralblockH2>
+      <S.CentralblockH2>Мои треки</S.CentralblockH2>
       <S.CentralblockContent>
         <S.FContentTitle>
           <S.FPlaylistTitleCol col = 'col01'>Трек</S.FPlaylistTitleCol>
@@ -72,6 +61,9 @@ export function Category (){
       <S.SidebarBlock>
       </S.SidebarBlock>
     </S.MainSidebar>
+
+
+
               </S.Main>
               <AudioPlayer />
               <footer className="footer"></footer>

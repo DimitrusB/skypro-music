@@ -1,6 +1,6 @@
 import { NavMenu } from "../../components/NavMenu";
 import { AudioPlayer } from "../../components/Player";
-import * as S from "../../components/styled/404.style" 
+import * as S from "./404.style" 
 import iconSprite from "../../img/icon/sprite.svg";
 import smile from "../../img/crying.png"
 

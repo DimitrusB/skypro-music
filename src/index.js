@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import { createGlobalStyle } from "styled-components";
 
-const GlobalsStyeProject = createGlobalStyle`
+export const GlobalsStyeProject = createGlobalStyle`
 * {
   margin: 0;
   padding: 0;

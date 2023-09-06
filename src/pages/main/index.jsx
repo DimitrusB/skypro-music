@@ -3,7 +3,7 @@ import { NavMenu } from "../../components/NavMenu";
 import { AudioPlayer } from "../../components/Player";
 import { Center } from "../../components/center";
 import { Panelplaylist } from "../../components/rightPanel";
-import * as S from "../../components/styled/Main.style" 
+import * as S from "./Main.style" 
 
 export function MainPage (){
     return(

@@ -12,15 +12,15 @@ export function Panelplaylist() {
   const { email, setEmail, resetEmail } = useContext(UserContext);
 
   const handleResetClick = () => {
-    resetEmail();
+    resetEmail(email);
   };
   return (
     <S.MainSidebar>
       <S.PersonalSidebar>
         <S.PersonalName>Dmitriy.Borisevich</S.PersonalName>
         <S.SidebarIcon>
-          <svg alt="logout">
-            <use xlinkHref={`${iconSprite}#logout`} onClick={handleResetClick}></use>
+          <svg alt="logout" onClick={handleResetClick}>
+            <use xlinkHref={`${iconSprite}#logout`} ></use>
           </svg>
         </S.SidebarIcon>
       </S.PersonalSidebar>

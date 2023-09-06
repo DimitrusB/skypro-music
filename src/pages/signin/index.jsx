@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import logo_modal from '../../img/logo_modal.png';
-import * as S from '../../components/styled/signin.style';
+import * as S from './signin.style';
 import { useContext, useState } from 'react';
 import UserContext from '../../components/UserContext';
 

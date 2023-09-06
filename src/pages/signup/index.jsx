@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo_modal from '../../img/logo_modal.png';
-import * as S from '../../components/styled/signup.Style';
+import * as S from './signup.Style';
 
 export function SignUp() {
   const [email, setEmail] = useState('');
