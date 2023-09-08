@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import logo from "../img/logo.png";
 import * as S from './styled/NavMenu.Style';
+import { Link } from 'react-router-dom';
 
 
 export function NavMenu() {
@@ -15,7 +16,9 @@ export function NavMenu() {
   return (
     <S.MainNav>
       <S.NavLogo>
+      <Link to="/">
         <S.NavImage src={logo} alt="logo" />
+        </Link>
       </S.NavLogo>
       <S.NavBurger onClick={handleMoreClick}>
         <S.BurgerLine></S.BurgerLine>
