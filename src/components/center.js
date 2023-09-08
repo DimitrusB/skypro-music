@@ -66,7 +66,12 @@ return (
         </S.FContentTitle>
         <S.FPlaylistContent>
           {trackNames.map((tracks) =>(
-        <NameTrack track={tracks.track} mix={tracks.mix} author={tracks.author} album={tracks.album} time={tracks.time} />
+        <NameTrack 
+        track={tracks.track} 
+        mix={tracks.mix} 
+        author={tracks.author} 
+        album={tracks.album} 
+        time={tracks.time} />
         ))}
         </S.FPlaylistContent>
       </S.CentralblockContent>
