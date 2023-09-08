@@ -6,6 +6,7 @@ import { YearFilter } from "./yaerFilter";
 import { useState } from "react";
 import * as S from "./styled/Center.style";
 import { Link } from "react-router-dom";
+import { trackNames } from "./constants";
 
 
 export function Center() {
@@ -64,23 +65,9 @@ return (
           </S.FPlaylistTitleCol>
         </S.FContentTitle>
         <S.FPlaylistContent>
-        <NameTrack track="Guilt" author="Nero" album="Welcome Reality" time="4:44" />
-        <NameTrack track="Elektro" author="Dynoro, Outwork, Mr. Gee" album="Elektro" time="2:22" />
-        <NameTrack track="I’m Fire" author="Ali Bakgor" album="I’m Fire" time="2:22" />
-        <NameTrack track="Non Stop" author="Стоункат, Psychopath" album="Non Stop" time="4:12" />
-        <NameTrack track="Run Run" author="Jaded, Will Clarke, AR/CO" album="Run Run" time="2:54" />
-        <NameTrack track="Eyes on Fire" author="Blue Foundation, Zeds Dead" album="Eyes on Fire" time="5:20" />
-        <NameTrack track="Mucho Bien" mix="(Hi Profile Remix)" author="HYBIT, Mr. Black, Offer Nissim, Hi Profile" album="Mucho Bien" time="3:41" />
-        <NameTrack track="Knives n Cherries" author="minthaze" album="Captivating" time="1:48" />
-        <NameTrack track="Knives n Cherries" author="minthaze" album="Captivating" time="1:48" />
-        <NameTrack track="Knives n Cherries" author="minthaze" album="Captivating" time="1:48" />
-        <NameTrack track="Knives n Cherries" author="minthaze" album="Captivating" time="1:48" />
-        <NameTrack track="Knives n Cherries" author="minthaze" album="Captivating" time="1:48" />
-        <NameTrack track="Knives n Cherries" author="minthaze" album="Captivating" time="1:48" />
-        <NameTrack track="Knives n Cherries" author="minthaze" album="Captivating" time="1:48" />
-        <NameTrack track="How Deep Is Your Love" author="Calvin Harris, Disciples" album="How Deep Is Your Love" time="3:32" />
-        <NameTrack track="Morena" author="Tom Boxer" album="Soundz Made in Romania" time="3:36" />
-        <NameTrack track="" author="" album="" time="" />
+          {trackNames.map((tracks) =>(
+        <NameTrack track={tracks.track} mix={tracks.mix} author={tracks.author} album={tracks.album} time={tracks.time} />
+        ))}
         </S.FPlaylistContent>
       </S.CentralblockContent>
     </S.MainCenterblock>
