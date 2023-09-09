@@ -25,19 +25,28 @@ export function MainPage() {
       console.error(`Error fetching data: ${error}`);
     });
 
-    return(
-<header className="App-header">
-          <S.Wrapper>
-            <S.Container>
-              <S.Main>
-                <NavMenu />
-                <Center />
-                <Panelplaylist />
-              </S.Main>
-              <AudioPlayer />
-              <footer className="footer"></footer>
-            </S.Container>
-          </S.Wrapper>
-        </header>
-    )
+  if (setSelectedTrack) {
+    console.log(selectedTrack);
+  }
+  if (selectedAuthor) {
+    console.log(selectedAuthor);
+  }
+
+  return (
+    <header className="App-header">
+      <S.Wrapper>
+        <S.Container>
+          <S.Main>
+            <NavMenu />
+            <Center onTrackSelection={handleTrackSelection} />
+            <Panelplaylist />
+          </S.Main>
+          {selectedTrack && selectedAuthor && (
+            <AudioPlayer track={selectedTrack} author={selectedAuthor} />
+          )}
+          <footer className="footer"></footer>
+        </S.Container>
+      </S.Wrapper>
+    </header>
+  );
 }
