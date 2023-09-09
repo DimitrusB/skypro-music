@@ -9,7 +9,13 @@ import { Link } from "react-router-dom";
 import { trackNames } from "./constants";
 
 
-export function Center() {
+export function Center({ onTrackSelection }) {
+  
+
+  const handleTrackClick = (track, author) => {
+    onTrackSelection(track, author);
+    console.log(`Selected track: ${track} by ${author}`);
+  };
 
 const [trackFilterOpen, setTrackFilterOpen] = useState(false);
 const [yearFilterOpen, setYearFilterOpen] = useState(false);
@@ -67,11 +73,13 @@ return (
         <S.FPlaylistContent>
           {trackNames.map((tracks) =>(
         <NameTrack 
+        
         track={tracks.track} 
         mix={tracks.mix} 
         author={tracks.author} 
         album={tracks.album} 
-        time={tracks.time} />
+        time={tracks.time} 
+        onClick={() => handleTrackClick(tracks.track, tracks.author)}/>
         ))}
         </S.FPlaylistContent>
       </S.CentralblockContent>

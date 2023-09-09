@@ -1,4 +1,15 @@
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
+
+const slideUp = keyframes`
+  0% {
+    transform: translateY(300px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
 
 export const MainBar = styled.div`
 position: absolute;
@@ -6,6 +17,7 @@ bottom: 0;
 left: 0;
 width: 100%;
 background: rgba(28, 28, 28, 0.5);
+animation: ${slideUp} 1s ease-out;
 `
 export const MainBarContent = styled.div`
 display: -webkit-box;
