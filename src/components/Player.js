@@ -2,7 +2,7 @@ import iconSprite from '../img/icon/sprite.svg';
 import React, { useState, useEffect } from 'react';
 import * as S from "./styled/player.style"
 
-export function AudioPlayer (){
+export function AudioPlayer ({ author, track }){
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -12,7 +12,8 @@ export function AudioPlayer (){
     }, 5000); 
 
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [author, track]);
+  
 
     return (
         <S.MainBar>
@@ -61,11 +62,11 @@ export function AudioPlayer (){
                     </S.TrackPlaySvg>
                   </S.TrackPlayImage>
                   <S.TrackPlayAuthor isLoading={isLoading}>
-                    <S.TrackPlayAuthorLink isLoading={isLoading}  href="http://"
-                      >Баста</S.TrackPlayAuthorLink>
+                    <S.TrackPlayAuthorLink isLoading={isLoading}
+                      >{author}</S.TrackPlayAuthorLink>
                   </S.TrackPlayAuthor>
                   <S.TrackPlayAlbum isLoading={isLoading}>
-                    <S.TrackPlayAlbumLink isLoading={isLoading}href="http://">Ты та...</S.TrackPlayAlbumLink>
+                    <S.TrackPlayAlbumLink isLoading={isLoading}>{track}</S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.PlayerTrackPlayContain>
 
