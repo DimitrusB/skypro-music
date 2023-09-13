@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { NavMenu } from "../../components/NavMenu";
 import { AudioPlayer } from "../../components/Player";
-import { getAllTracks } from "../../components/api";
 import { Center } from "../../components/center";
 import { Panelplaylist } from "../../components/rightPanel";
 import * as S from "./Main.style";
@@ -14,16 +13,6 @@ export function MainPage() {
     setSelectedTrack(track);
     setSelectedAuthor(author);
   };
-
-
-  // Получение данных из API.
-  getAllTracks()
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error(`Error fetching data: ${error}`);
-    });
 
   if (setSelectedTrack) {
     console.log(selectedTrack);

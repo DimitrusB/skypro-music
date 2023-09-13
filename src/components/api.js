@@ -1,4 +1,4 @@
-const allTracks = "https://painassassin.online/catalog/track/all"
+const allTracks = "https://skypro-music-api.skyeng.tech/catalog/track/all/"
 
 export async function getAllTracks() {
     const response = await fetch(allTracks);
