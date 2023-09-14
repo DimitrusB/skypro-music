@@ -6,7 +6,7 @@ import { YearFilter } from "./yaerFilter";
 import { useEffect, useState } from "react";
 import * as S from "./styled/Center.style";
 import { Link } from "react-router-dom";
-import { getAllTracks } from "./api";
+import { getAllTracks } from "../api";
 
 export function Center({ onTrackSelection }) {
   const [todos, setTodos] = useState([]);
