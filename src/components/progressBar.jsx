@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 export const StyledProgressInput = styled.input`
@@ -63,7 +62,6 @@ function formatTime(timeInSeconds) {
 }
 
 export default function ProgressBar({ currentTime, duration }) {
-  const progressPercentage = (currentTime / duration) * 100;
 
   const currentTimeFormatted = formatTime(currentTime);
   const durationFormatted = formatTime(duration);

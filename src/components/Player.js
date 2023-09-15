@@ -11,15 +11,6 @@ export function AudioPlayer({ author, track, trackfile }) {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
 
-  // const handleStart = () => {
-  //   audioRef.current.play();
-  //   setIsPlaying(true);
-  // };
-  // const handleStop = () => {
-  //   audioRef.current.pause();
-  //   setIsPlaying(false);
-  // };
-
   const handleChangeVolume = (event) => {
     setVolume(event.target.value);
     audioRef.current.volume = event.target.value; 
