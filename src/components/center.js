@@ -95,7 +95,7 @@ export function Center({ onTrackSelection }) {
               mix={tracks.mix}
               author={tracks.author}
               album={tracks.album}
-              time={tracks.time}
+              time={tracks.duration_in_seconds}
               trackfile={tracks.track_file}
               onClick={() => handleTrackClick(tracks.name, tracks.author, tracks.track_file)}
             />

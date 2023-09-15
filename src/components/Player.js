@@ -7,6 +7,8 @@ export function AudioPlayer({ author, track, trackfile }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
 
   // const handleStart = () => {
@@ -23,7 +25,9 @@ export function AudioPlayer({ author, track, trackfile }) {
     audioRef.current.volume = event.target.value; 
   };
 
-
+  const updateCurrentTime = () => {
+    setCurrentTime(audioRef.current.currentTime);
+  };
 
   const togglePlay = async () => {
     if (!isPlaying) {
@@ -57,12 +61,14 @@ export function AudioPlayer({ author, track, trackfile }) {
   ref={audioRef}
   onPlay={() => setIsPlaying(true)}
   onPause={() => setIsPlaying(false)}
+  onLoadedMetadata={() => setDuration(audioRef.current.duration)}
+  onTimeUpdate={updateCurrentTime}
 >
   <source src={trackfile} type="audio/mpeg" />
 </audio>
       <S.MainBar>
           <S.MainBarContent>
-            <ProgressBar></ProgressBar>
+            <ProgressBar currentTime={currentTime} duration={duration}></ProgressBar>
             <S.BarPlayerProgress></S.BarPlayerProgress>
             <S.BarPlayerBlock>
               <S.BarPlayer>

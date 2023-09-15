@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import iconSprite from "../img/icon/sprite.svg";
 import * as S from "./styled/NameTracks.Style"
+
+function formatTime(timeInSeconds) {
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = Math.floor(timeInSeconds % 60);
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
 export function NameTrack ({track , author , mix , album, time, onClick, trackfile}) {
 
-  
+  const formattedTime = formatTime(time);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -43,7 +50,7 @@ export function NameTrack ({track , author , mix , album, time, onClick, trackfi
             <S.TrackTimeSvg alt="time">
               <use xlinkHref={`${iconSprite}#icon-note`}></use>
             </S.TrackTimeSvg>
-            <S.TrackTimeText>{time}</S.TrackTimeText>
+            <S.TrackTimeText>{formattedTime}</S.TrackTimeText>
           </div>
         </S.PlaylistTrack>
       </S.PlaylistItem>

@@ -56,20 +56,32 @@ export const StyledProgressInput = styled.input`
     height: var(--progress-height);
   }
 `
+function formatTime(timeInSeconds) {
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = Math.floor(timeInSeconds % 60);
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
 
-export default function ProgressBar() {
-  const [currentTime, setCurrentTime] = useState(70);
-  const duration = 230;
+export default function ProgressBar({ currentTime, duration }) {
+  const progressPercentage = (currentTime / duration) * 100;
+
+  const currentTimeFormatted = formatTime(currentTime);
+  const durationFormatted = formatTime(duration);
 
   return (
-    <StyledProgressInput
-      type="range"
-      min={0}
-      max={duration}
-      value={currentTime}
-      step={0.01}
-      onChange={(event) => setCurrentTime(event.target.value)}
-      $color="#ff0000"
-    />
+    <div>
+      <StyledProgressInput
+        type="range"
+        min={0}
+        max={duration}
+        value={currentTime}
+        step={0.01}
+        $color="#B672FF"
+        style={{ width: `100%` }}
+      />
+      <div className="timeDisplay">
+        <span>{currentTimeFormatted}</span> / <span>{durationFormatted}</span>
+      </div>
+    </div>
   );
 }
