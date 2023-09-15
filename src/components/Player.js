@@ -28,6 +28,10 @@ export function AudioPlayer({ author, track, trackfile }) {
     }
   };
   
+  useEffect(() => {
+    setIsPlaying(false);
+    audioRef.current.load();
+  }, [trackfile]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -40,9 +44,15 @@ export function AudioPlayer({ author, track, trackfile }) {
 
     return (
       <>
-      <audio controls ref={audioRef}>
-        <source src={trackfile} type="audio/mpeg" />
-      </audio>
+<audio
+  key={trackfile}
+  controls
+  ref={audioRef}
+  onPlay={() => setIsPlaying(true)}
+  onPause={() => setIsPlaying(false)}
+>
+  <source src={trackfile} type="audio/mpeg" />
+</audio>
       <S.MainBar>
           <S.MainBarContent>
             <ProgressBar></ProgressBar>
@@ -58,9 +68,8 @@ export function AudioPlayer({ author, track, trackfile }) {
                   </S.PlayerBtn>
                   <S.PlayerBtn butt={isPlaying ? 'pause' : 'play'} onClick={togglePlay}>
                   <S.PlayerBtnSvg
-    butsvg={isPlaying ? 'pause' : 'play'}
-    alt={isPlaying ? 'Пауза' : 'Воспроизведение'}
-  >
+                  butsvg={isPlaying ? 'pause' : 'play'}
+                  alt={isPlaying ? 'Пауза' : 'Воспроизведение'}>
                     <title>{isPlaying ? "Пауза" : "Воспроизведение"}</title>
                     <use
                       xlinkHref={`${iconSprite}${isPlaying ? "#icon-pause" : "#icon-play"}`}
