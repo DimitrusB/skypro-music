@@ -3,6 +3,7 @@ import logo_modal from '../../img/logo_modal.png';
 import * as S from './signin.style';
 import { useContext, useState } from 'react';
 import UserContext from '../../components/UserContext';
+import { signIn } from '../../api';
 
 export function SignIn() {
   const [email, setEmail] = useState('');
@@ -10,21 +11,29 @@ export function SignIn() {
   const navigate = useNavigate();
   const { setEmail: setUserEmail } = useContext(UserContext);
   
+
   const handleLogin = (e) => {
     e.preventDefault();
-    const storedUser = localStorage.getItem(email);
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      if (user.password === password) {
-        setUserEmail(email); // Обновление email в контексте
+  
+    signIn(email, password)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Ошибка авторизации: ' + response.statusText);
+        }
+      })
+      .then((json) => {
+        setUserEmail(json.email);
         navigate('/');
-      } else {
-        alert('Неверный пароль!');
-      }
-    } else {
-      alert('Пользователь не найден!');
-    }
+      })
+      .catch((error) => {
+        console.error('Ошибка:', error);
+        alert('Ошибка при входе: ' + error.message);
+      });
   };
+  
+
 
   return (
     <S.Wrapper>

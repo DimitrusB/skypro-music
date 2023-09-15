@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signUp } from '../../api';
 import logo_modal from '../../img/logo_modal.png';
 import * as S from './signup.Style';
 
@@ -7,22 +8,26 @@ export function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSignup = (e) => {
     e.preventDefault();
+  
     if (password === confirmPassword) {
-      const storedUser = localStorage.getItem(email);
-      if (!storedUser) {
-        localStorage.setItem(
-          email,
-          JSON.stringify({
-            password: password,
-          })
-        );
-        alert('Успешная регистрация!');
-      } else {
-        alert('Пользователь уже существует!');
-      }
+      signUp(email, password)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+          }
+        })
+        .then((json) => {
+          console.log(json);
+          alert('Успешная регистрация!');
+          navigate('/signin');
+        })
+        .catch((error) => console.log('Ошибка:', error));
     } else {
       alert('Пароли не совпадают!');
     }
