@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 
 export const StyledProgressInput = styled.input`
@@ -61,10 +62,16 @@ function formatTime(timeInSeconds) {
   return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
-export default function ProgressBar({ currentTime, duration }) {
+export default function ProgressBar({ currentTime, duration, onSeek }) {
 
   const currentTimeFormatted = formatTime(currentTime);
   const durationFormatted = formatTime(duration);
+
+  const handleSeek = (e) => {
+    const percent = e.nativeEvent.offsetX / e.currentTarget.offsetWidth;
+    const seekTime = percent * duration;
+    onSeek(seekTime);
+  };
 
   return (
     <div>
@@ -76,6 +83,7 @@ export default function ProgressBar({ currentTime, duration }) {
         step={0.01}
         $color="#B672FF"
         style={{ width: `100%` }}
+        onClick={handleSeek}
       />
       <div className="timeDisplay">
         <span>{currentTimeFormatted}</span> / <span>{durationFormatted}</span>

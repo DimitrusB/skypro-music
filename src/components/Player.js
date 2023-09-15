@@ -7,13 +7,15 @@ export function AudioPlayer({ author, track, trackfile }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
+  const [isLoop, setIsLoop] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const audioRef = useRef(null);
 
   const handleChangeVolume = (event) => {
     setVolume(event.target.value);
-    audioRef.current.volume = event.target.value; 
+    audioRef.current.volume = event.target.value;
   };
 
   const updateCurrentTime = () => {
@@ -29,7 +31,15 @@ export function AudioPlayer({ author, track, trackfile }) {
       setIsPlaying(false);
     }
   };
-  
+
+  const toggleLoop = () => {
+    setIsLoop(!isLoop);
+  };
+
+  const handleSeek = (seekTime) => {
+    audioRef.current.currentTime = seekTime;
+  };
+
   useEffect(() => {
     setIsPlaying(false);
     audioRef.current.load();
@@ -43,7 +53,6 @@ export function AudioPlayer({ author, track, trackfile }) {
     return () => clearTimeout(timeoutId);
   }, [author, track]);
 
-
     return (
       <>
 <audio
@@ -53,13 +62,21 @@ export function AudioPlayer({ author, track, trackfile }) {
   onPlay={() => setIsPlaying(true)}
   onPause={() => setIsPlaying(false)}
   onLoadedMetadata={() => setDuration(audioRef.current.duration)}
+  loop={isLoop}
   onTimeUpdate={updateCurrentTime}
 >
   <source src={trackfile} type="audio/mpeg" />
 </audio>
       <S.MainBar>
           <S.MainBarContent>
-            <ProgressBar currentTime={currentTime} duration={duration}></ProgressBar>
+            <ProgressBar   
+            currentTime={currentTime}
+            duration={duration}
+            onSeek={handleSeek}
+            isDragging={isDragging}
+            onDown={() => setIsDragging(true)}
+            onUp={() => setIsDragging(false)}>
+            </ProgressBar>
             <S.BarPlayerProgress></S.BarPlayerProgress>
             <S.BarPlayerBlock>
               <S.BarPlayer>
@@ -87,7 +104,7 @@ export function AudioPlayer({ author, track, trackfile }) {
                       <use xlinkHref={`${iconSprite}#icon-next`}></use>
                     </S.PlayerBtnSvg>
                   </S.PlayerBtn>
-                  <S.PlayerBtn butt='repeat'>
+                  <S.PlayerBtn butt='repeat' onClick={toggleLoop}>
                     <S.PlayerBtnSvg butsvg='repeat' alt="repeat">
                       <title>Повтор</title>
                       <use xlinkHref={`${iconSprite}#icon-repeat`}></use>
