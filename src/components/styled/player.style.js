@@ -89,6 +89,14 @@ fill: #d9d9d9;
 `};
 
 ${({ butsvg }) =>
+butsvg === 'pause' &&
+`
+width: 22px;
+height: 20px;
+fill: #d9d9d9;
+`};
+
+${({ butsvg }) =>
 butsvg === 'next' &&
 `
 width: 15px;
@@ -140,6 +148,12 @@ margin-right: 23px;
 
 ${({ butt }) =>
 butt === 'play' &&
+`
+margin-right: 23px;
+`};
+
+${({ butt }) =>
+butt === 'pause' &&
 `
 margin-right: 23px;
 `};

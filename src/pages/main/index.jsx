@@ -8,10 +8,12 @@ import * as S from "./Main.style";
 export function MainPage() {
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [selectedAuthor, setSelectedAuthor] = useState(null);
+  const [selectedTrackFile, setSelectedTrackFile] = useState(null);
 
-  const handleTrackSelection = (track, author) => {
+  const handleTrackSelection = (track, author,trackfile) => {
     setSelectedTrack(track);
     setSelectedAuthor(author);
+    setSelectedTrackFile(trackfile);
   };
 
   if (setSelectedTrack) {
@@ -31,7 +33,7 @@ export function MainPage() {
             <Panelplaylist />
           </S.Main>
           {selectedTrack && selectedAuthor && (
-            <AudioPlayer track={selectedTrack} author={selectedAuthor} />
+            <AudioPlayer track={selectedTrack} author={selectedAuthor} trackfile={selectedTrackFile} />
           )}
           <footer className="footer"></footer>
         </S.Container>
