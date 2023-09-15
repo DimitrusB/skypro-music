@@ -1,6 +1,7 @@
 import iconSprite from '../img/icon/sprite.svg';
 import React, { useState, useEffect } from 'react';
 import * as S from "./styled/player.style"
+import ProgressBar from './progressBar';
 
 export function AudioPlayer ({ author, track }){
 
@@ -18,6 +19,7 @@ export function AudioPlayer ({ author, track }){
     return (
         <S.MainBar>
         <S.MainBarContent>
+        <ProgressBar></ProgressBar>
           <S.BarPlayerProgress></S.BarPlayerProgress>
           <S.BarPlayerBlock>
             <S.BarPlayer>
@@ -53,7 +55,6 @@ export function AudioPlayer ({ author, track }){
                   </S.PlayerBtnSvg>
                 </S.PlayerBtn>
               </S.BarPlayerControls>
-
               <S.PlayerTrackPlay>
                 <S.PlayerTrackPlayContain>
                 <S.TrackPlayImage isLoading={isLoading}>
@@ -85,6 +86,7 @@ export function AudioPlayer ({ author, track }){
                   </S.TracPlayDis>
                 </S.TrackDislike>
               </S.PlayerTrackPlay>
+
             </S.BarPlayer>
             <S.BarVolumeBlock>
               <S.VolumeContent>

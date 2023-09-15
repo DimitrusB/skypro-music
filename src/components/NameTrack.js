@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import iconSprite from "../img/icon/sprite.svg";
 import * as S from "./styled/NameTracks.Style"
-export function NameTrack ({track , author , mix , album, time, onClick  }) {
+export function NameTrack ({track , author , mix , album, time, onClick}) {
 
   
   const [isLoading, setIsLoading] = useState(true);
