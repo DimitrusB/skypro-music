@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import iconSprite from "../img/icon/sprite.svg";
 import * as S from "./styled/NameTracks.Style"
-export function NameTrack ({track , author , mix , album, time, onClick}) {
+export function NameTrack ({track , author , mix , album, time, onClick, trackfile}) {
 
   
   const [isLoading, setIsLoading] = useState(true);
@@ -35,7 +35,7 @@ export function NameTrack ({track , author , mix , album, time, onClick}) {
             </S.TrackAuthorLink>
           </S.TrackAuthor>
           <S.TrackAlbum isLoading={isLoading}>
-            <S.TrackAlbumLink isLoading={isLoading} href="http://">
+          <S.TrackAlbumLink isLoading={isLoading} href="http://">
               {album}
             </S.TrackAlbumLink>
           </S.TrackAlbum>

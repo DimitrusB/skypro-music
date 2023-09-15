@@ -22,9 +22,9 @@ export function Center({ onTrackSelection }) {
       });
   }, []);
 
-  const handleTrackClick = (track, author) => {
-    onTrackSelection(track, author);
-    console.log(`Selected track: ${track} by ${author}`);
+  const handleTrackClick = (track, author,trackfile) => {
+    onTrackSelection(track, author, trackfile);
+    console.log(`Selected track: ${track} by ${author} ${trackfile}`);
   };
 
   const [trackFilterOpen, setTrackFilterOpen] = useState(false);
@@ -96,7 +96,8 @@ export function Center({ onTrackSelection }) {
               author={tracks.author}
               album={tracks.album}
               time={tracks.time}
-              onClick={() => handleTrackClick(tracks.name, tracks.author)}
+              trackfile={tracks.track_file}
+              onClick={() => handleTrackClick(tracks.name, tracks.author, tracks.track_file)}
             />
           ))}
         </S.FPlaylistContent>
