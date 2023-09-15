@@ -6,17 +6,24 @@ import ProgressBar from "./progressBar";
 export function AudioPlayer({ author, track, trackfile }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.5);
   const audioRef = useRef(null);
 
-  const handleStart = () => {
-    audioRef.current.play();
-    setIsPlaying(true);
+  // const handleStart = () => {
+  //   audioRef.current.play();
+  //   setIsPlaying(true);
+  // };
+  // const handleStop = () => {
+  //   audioRef.current.pause();
+  //   setIsPlaying(false);
+  // };
+
+  const handleChangeVolume = (event) => {
+    setVolume(event.target.value);
+    audioRef.current.volume = event.target.value; 
   };
 
-  const handleStop = () => {
-    audioRef.current.pause();
-    setIsPlaying(false);
-  };
+
 
   const togglePlay = async () => {
     if (!isPlaying) {
@@ -139,7 +146,12 @@ export function AudioPlayer({ author, track, trackfile }) {
                   <S.VolumeProgress>
                     <S.VolumeProgressLine
                       type="range"
-                      name="range" />
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      value={volume}
+                      name="range" 
+                      onChange={handleChangeVolume}/>
                   </S.VolumeProgress>
                 </S.VolumeContent>
               </S.BarVolumeBlock>
