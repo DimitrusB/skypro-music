@@ -3,9 +3,11 @@ import { AudioPlayer } from "../../components/Player";
 import * as S from "./404.style" 
 import iconSprite from "../../img/icon/sprite.svg";
 import smile from "../../img/crying.png"
-
+import UserContext from '../../components/UserContext';
+import { useContext } from "react";
 
 export function NotFoundPage (){
+  const { email} = useContext(UserContext);
     return(
 <header className="App-header">
           <S.Wrapper>
@@ -23,7 +25,7 @@ export function NotFoundPage (){
                     />
                     </S.MainCenterblockSearch>
                 <S.PersonalSidebar>
-                <S.PersonalName>Dmitriy.Borisevich</S.PersonalName>
+                <S.PersonalName>{email}</S.PersonalName>
                 <S.SidebarIcon>
                 <svg alt="logout">
                 <use xlinkHref={`${iconSprite}#logout`}></use>

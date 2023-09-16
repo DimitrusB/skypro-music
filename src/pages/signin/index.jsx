@@ -9,13 +9,16 @@ export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const { setEmail: setUserEmail } = useContext(UserContext);
   
 
   const handleLogin = (e) => {
+    setIsLoading(true);
     e.preventDefault();
-  
+    
     signIn(email, password)
+    
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -26,12 +29,15 @@ export function SignIn() {
       .then((json) => {
         setUserEmail(json.email);
         navigate('/');
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error('Ошибка:', error);
         alert('Ошибка при входе: ' + error.message);
+        setIsLoading(false);
       });
   };
+  
   
 
 
@@ -59,9 +65,11 @@ export function SignIn() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <S.ModalBtnEnter>
-              <S.ModalBtnEnterA onClick={handleLogin}>
-                Войти
+            <S.ModalBtnEnter onClick={handleLogin}  disabled={isLoading}>
+              <S.ModalBtnEnterA 
+              style={{ cursor: isLoading ? "not-allowed" : "pointer", opacity: isLoading ? 0.5 : 1 }}>
+                
+              {isLoading ? "Загрузка..." : "Войти"}
               </S.ModalBtnEnterA>
             </S.ModalBtnEnter>
             <S.ModalBtnSignup>

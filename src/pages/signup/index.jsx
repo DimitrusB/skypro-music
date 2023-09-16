@@ -13,6 +13,11 @@ export function SignUp() {
   const handleSignup = (e) => {
     e.preventDefault();
   
+    if (password.length < 8){
+      alert('Длина пароля должна быть не менее 8 символов')
+      return
+    }
+
     if (password === confirmPassword) {
       signUp(email, password)
         .then((response) => {
