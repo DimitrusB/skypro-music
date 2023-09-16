@@ -107,7 +107,7 @@ export function AudioPlayer({ author, track, trackfile }) {
                   <S.PlayerBtn butt='repeat' onClick={toggleLoop}>
                     <S.PlayerBtnSvg butsvg='repeat' alt="repeat">
                       <title>Повтор</title>
-                      <use xlinkHref={`${iconSprite}#icon-repeat`}></use>
+                      <use xlinkHref={`${iconSprite}${isLoop ? "#icon-repeatActive":"#icon-repeat"}`}></use>
                     </S.PlayerBtnSvg>
                   </S.PlayerBtn>
                   <S.PlayerBtn butt='shuffle'>
