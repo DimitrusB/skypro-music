@@ -9,7 +9,7 @@ import { useContext } from "react";
 
 
 export function Panelplaylist() {
-  const { email, setEmail, resetEmail } = useContext(UserContext);
+  const { email,  resetEmail } = useContext(UserContext);
 
   const handleResetClick = () => {
     resetEmail(email);
@@ -17,7 +17,7 @@ export function Panelplaylist() {
   return (
     <S.MainSidebar>
       <S.PersonalSidebar>
-        <S.PersonalName>Dmitriy.Borisevich</S.PersonalName>
+        <S.PersonalName>{email}</S.PersonalName>
         <S.SidebarIcon>
           <svg alt="logout" onClick={handleResetClick}>
             <use xlinkHref={`${iconSprite}#logout`} ></use>

@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import * as S from "./styled/player.style";
 import ProgressBar from "./progressBar";
 
-export function AudioPlayer({ author, track, trackfile }) {
+
+export function AudioPlayer({ author, track, trackfile}) {
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
@@ -38,6 +39,10 @@ export function AudioPlayer({ author, track, trackfile }) {
 
   const handleSeek = (seekTime) => {
     audioRef.current.currentTime = seekTime;
+  };
+
+  const notUsed = () => {
+    alert('Еще не реализовано');
   };
 
   useEffect(() => {
@@ -81,7 +86,7 @@ export function AudioPlayer({ author, track, trackfile }) {
             <S.BarPlayerBlock>
               <S.BarPlayer>
                 <S.BarPlayerControls>
-                  <S.PlayerBtn butt='prev'>
+                  <S.PlayerBtn butt='prev' onClick={notUsed}>
                     <S.PlayerBtnSvg butsvg='prev' alt="prev">
                       <title>Предыдущий трек</title>
                       <use xlinkHref={`${iconSprite}#icon-prev`}></use>
@@ -98,7 +103,7 @@ export function AudioPlayer({ author, track, trackfile }) {
                   </S.PlayerBtnSvg>
                 </S.PlayerBtn>
 
-                  <S.PlayerBtn butt='next'>
+                  <S.PlayerBtn butt='next' onClick={notUsed}>
                     <S.PlayerBtnSvg butsvg='next' alt="next">
                       <title>Следующий трек</title>
                       <use xlinkHref={`${iconSprite}#icon-next`}></use>
@@ -110,7 +115,7 @@ export function AudioPlayer({ author, track, trackfile }) {
                       <use xlinkHref={`${iconSprite}${isLoop ? "#icon-repeatActive":"#icon-repeat"}`}></use>
                     </S.PlayerBtnSvg>
                   </S.PlayerBtn>
-                  <S.PlayerBtn butt='shuffle'>
+                  <S.PlayerBtn butt='shuffle' onClick={notUsed}>
                     <S.PlayerBtnSvg butsvg='shuffle' alt="shuffle">
                       <title>Случайный порядок</title>
                       <use xlinkHref={`${iconSprite}#icon-shuffle`}></use>

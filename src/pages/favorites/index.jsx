@@ -4,8 +4,11 @@ import { AudioPlayer } from "../../components/Player";
 import * as S from "./favorite.style" 
 import { NameTrackFavorites } from "../../components/NameTrackFavorites";
 import iconSprite from "../../img/icon/sprite.svg";
+import { useContext } from "react";
+import UserContext from '../../components/UserContext';
 
 export function FavoritesTracks (){
+  const { email} = useContext(UserContext);
     return(
         <header className="App-header">
           <S.Wrapper>
@@ -51,7 +54,7 @@ export function FavoritesTracks (){
 
     <S.MainSidebar>
       <S.PersonalSidebar>
-        <S.PersonalName>Dmitriy.Borisevich</S.PersonalName>
+        <S.PersonalName>{email}</S.PersonalName>
         <S.SidebarIcon>
           <svg alt="logout">
             <use xlinkHref={`${iconSprite}#logout`}></use>
