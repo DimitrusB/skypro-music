@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { NavMenu } from "../../components/NavMenu";
-import { AudioPlayer } from "../../components/Player";
-import { Center } from "../../components/center";
-import { Panelplaylist } from "../../components/rightPanel";
+import { NavMenu } from "../../components/NavMenu/NavMenu";
+import { AudioPlayer } from "../../components/player/Player";
+import { Center } from "../../components/center/center";
+import { Panelplaylist } from "../../components/righPanel/rightPanel";
 import * as S from "./Main.style";
 
 export function MainPage() {

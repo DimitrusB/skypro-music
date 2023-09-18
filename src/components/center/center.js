@@ -1,12 +1,12 @@
-import iconSprite from "../img/icon/sprite.svg";
-import { NameTrack } from "./NameTrack";
-import { GenreFilter } from "./genreFilter";
-import { TrackFilter } from "./trckFilter";
-import { YearFilter } from "./yaerFilter";
+import iconSprite from "../../img/icon/sprite.svg";
+import { NameTrack } from "../NameTracks/NameTrack";
+import { GenreFilter } from "../filters/genreFilter";
+import { TrackFilter } from "../filters/trckFilter";
+import { YearFilter } from "../filters/yaerFilter";
 import { useEffect, useState } from "react";
-import * as S from "./styled/Center.style";
+import * as S from "./Center.style";
 import { Link } from "react-router-dom";
-import { getAllTracks } from "../api";
+import { getAllTracks } from "../../api";
 
 export function Center({ onTrackSelection }) {
   const [todos, setTodos] = useState([]);
@@ -22,7 +22,7 @@ export function Center({ onTrackSelection }) {
       });
   }, []);
 
-  const handleTrackClick = (track, author,trackfile) => {
+  const handleTrackClick = (track, author, trackfile) => {
     onTrackSelection(track, author, trackfile);
   };
 
@@ -96,7 +96,9 @@ export function Center({ onTrackSelection }) {
               album={tracks.album}
               time={tracks.duration_in_seconds}
               trackfile={tracks.track_file}
-              onClick={() => handleTrackClick(tracks.name, tracks.author, tracks.track_file)}
+              onClick={() =>
+                handleTrackClick(tracks.name, tracks.author, tracks.track_file)
+              }
             />
           ))}
         </S.FPlaylistContent>

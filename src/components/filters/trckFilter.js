@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { getAllTracks } from "../api";
-import * as S from "./styled/Filters.style";
+import { useEffect, useState } from "react";
+import { getAllTracks } from "../../api";
+import * as S from "./Filters.style";
 
-export function GenreFilter(props) {
+export function TrackFilter(props) {
   const { id, name, onClick, isOpen } = props;
   const [to, setTo] = useState("");
-  const [genres, setGenres] = useState([]);
+  const [tracks, setTracks] = useState([]);
 
   const toggleDropdown = () => {
     onClick(id);
@@ -15,8 +15,9 @@ export function GenreFilter(props) {
     // Получение данных из API.
     getAllTracks()
       .then((data) => {
-        const uniqueGenres = [...new Set(data.map((genre) => genre.genre))];
-        setGenres(uniqueGenres);
+        const uniqueTracks = [...new Set(data.map((track) => track.author))];
+        const sortedUniqueTracks = uniqueTracks.sort((a, b) => a.localeCompare(b));
+        setTracks(sortedUniqueTracks);
       })
       .catch((error) => {
         alert(`Ошибка получения данных с сервера: ${error}`);
@@ -31,19 +32,19 @@ export function GenreFilter(props) {
           <S.Option
             key="all"
             onClick={() => {
-              setTo("all");
+              setTo("Все");
             }}
           >
             Все
           </S.Option>
-          {genres.map((genre) => (
+          {tracks.map((track) => (
             <S.Option
-              key={genre}
+              key={track}
               onClick={() => {
-                setTo(genre);
+                setTo(track);
               }}
             >
-              {genre}
+              {track}
             </S.Option>
           ))}
         </S.Options>

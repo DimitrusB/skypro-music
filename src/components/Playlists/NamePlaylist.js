@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import playlistnull from "../img/playlistnull.png"
-import * as S from "./styled/NamePlaylist.Style"
-import { musicCategory } from './constants';
-import { useParams, NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import playlistnull from "../../img/playlistnull.png";
+import * as S from "./NamePlaylist.Style";
+import { musicCategory } from "../constants";
+import {  NavLink } from "react-router-dom";
 
 export function NamePlaylist(props) {
-  const params = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
   const [loadedCategories, setLoadedCategories] = useState({});
@@ -13,7 +12,7 @@ export function NamePlaylist(props) {
   const handleImageLoad = (categoryId) => {
     setLoadedCategories((prevState) => ({
       ...prevState,
-      [categoryId]: true
+      [categoryId]: true,
     }));
   };
 
@@ -32,7 +31,11 @@ export function NamePlaylist(props) {
           <NavLink to={`/category/${category.id}`}>
             <S.SidebarImg
               isLoading={isLoading}
-              src={isLoading || !loadedCategories[category.id] ? playlistnull : category.playlist}
+              src={
+                isLoading || !loadedCategories[category.id]
+                  ? playlistnull
+                  : category.playlist
+              }
               alt={category.alt}
               onLoad={() => handleImageLoad(category.id)}
             />
