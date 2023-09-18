@@ -63,7 +63,6 @@ export function AudioPlayer({ author, track, trackfile}) {
       <>
 <audio
   key={trackfile}
-  controls
   ref={audioRef}
   onPlay={() => setIsPlaying(true)}
   onPause={() => setIsPlaying(false)}
