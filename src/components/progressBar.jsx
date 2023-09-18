@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { formatTime } from "./func";
 
 export const StyledProgressInput = styled.input`
   --progress-height: 8px;
@@ -55,11 +56,7 @@ export const StyledProgressInput = styled.input`
     height: var(--progress-height);
   }
 `
-function formatTime(timeInSeconds) {
-  const minutes = Math.floor(timeInSeconds / 60);
-  const seconds = Math.floor(timeInSeconds % 60);
-  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-}
+
 
 export default function ProgressBar({ currentTime, duration, onSeek }) {
 

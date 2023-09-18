@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import iconSprite from "../img/icon/sprite.svg";
+import { formatTime } from './func';
 import * as S from "./styled/NameTracks.Style"
 
-function formatTime(timeInSeconds) {
-  const minutes = Math.floor(timeInSeconds / 60);
-  const seconds = Math.floor(timeInSeconds % 60);
-  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-}
 
 export function NameTrack ({track , author , mix , album, time, onClick, trackfile}) {
 
