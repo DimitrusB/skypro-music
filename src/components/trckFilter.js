@@ -1,42 +1,49 @@
-import { useState } from "react";
-import * as S from "./styled/Filters.style"
+import { useEffect, useState } from "react";
+import { getAllTracks } from "../api";
+import * as S from "./styled/Filters.style";
+
 export function TrackFilter(props) {
   const { id, name, onClick, isOpen } = props;
   const [to, setTo] = useState("");
+  const [tracks, setTracks] = useState([]);
 
   const toggleDropdown = () => {
     onClick(id);
   };
 
-
-  const tracks = [
-    { value: "all", label: "Все" },
-    { value: "Nero", label: "Nero" },
-    { value: "Dynoro", label: "Dynoro" },
-    { value: "Ali Bakgor", label: "Ali Bakgor" },
-    { value: "Стоункат, Psychopath", label: "Стоункат, Psychopath" },
-    { value: "Jaded", label: "Jaded" },
-    { value: "Outwork", label: "Outwork" },
-  ];
+  useEffect(() => {
+    // Получение данных из API.
+    getAllTracks()
+      .then((data) => {
+        const uniqueTracks = [...new Set(data.map((track) => track.author))];
+        setTracks(uniqueTracks);
+      })
+      .catch((error) => {
+        alert(`Ошибка получения данных с сервера: ${error}`);
+      });
+  }, []);
 
   return (
-    <S.Button
-      type="button"
-      onClick={toggleDropdown}
-    >
-      <S.Choose isOpen={isOpen}>
-        {to || name} {/* Используем name здесь как плейсхолдер */}
-      </S.Choose>
+    <S.Button type="button" onClick={toggleDropdown}>
+      <S.Choose isOpen={isOpen}>{to || name}</S.Choose>
       {isOpen && (
         <S.Options>
+          <S.Option
+            key="all"
+            onClick={() => {
+              setTo("all");
+            }}
+          >
+            Все
+          </S.Option>
           {tracks.map((track) => (
             <S.Option
-              key={track.value}
+              key={track}
               onClick={() => {
-                setTo(track.label);
+                setTo(track);
               }}
             >
-              {track.label}
+              {track}
             </S.Option>
           ))}
         </S.Options>
