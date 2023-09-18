@@ -16,7 +16,7 @@ export function MainPage() {
     setSelectedTrackFile(trackfile);
   };
 
-  if (setSelectedTrack) {
+  if (selectedTrack) {
     console.log(selectedTrack);
   }
   if (selectedAuthor) {
