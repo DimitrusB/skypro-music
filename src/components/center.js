@@ -24,7 +24,6 @@ export function Center({ onTrackSelection }) {
 
   const handleTrackClick = (track, author,trackfile) => {
     onTrackSelection(track, author, trackfile);
-
   };
 
   const [trackFilterOpen, setTrackFilterOpen] = useState(false);
