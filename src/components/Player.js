@@ -1,7 +1,8 @@
 import iconSprite from "../img/icon/sprite.svg";
 import React, { useState, useEffect, useRef } from "react";
 import * as S from "./styled/player.style";
-import ProgressBar from "./progressBar";
+import ProgressBar from "./progressBar/progressBar";
+
 
 
 export function AudioPlayer({ author, track, trackfile}) {

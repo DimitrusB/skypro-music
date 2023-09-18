@@ -10,7 +10,7 @@ export function MainPage() {
   const [selectedAuthor, setSelectedAuthor] = useState(null);
   const [selectedTrackFile, setSelectedTrackFile] = useState(null);
 
-  const handleTrackSelection = (track, author,trackfile) => {
+  const handleTrackSelection = (track, author, trackfile) => {
     setSelectedTrack(track);
     setSelectedAuthor(author);
     setSelectedTrackFile(trackfile);
@@ -33,7 +33,11 @@ export function MainPage() {
             <Panelplaylist />
           </S.Main>
           {selectedTrack && selectedAuthor && (
-            <AudioPlayer track={selectedTrack} author={selectedAuthor} trackfile={selectedTrackFile} />
+            <AudioPlayer
+              track={selectedTrack}
+              author={selectedAuthor}
+              trackfile={selectedTrackFile}
+            />
           )}
           <footer className="footer"></footer>
         </S.Container>
