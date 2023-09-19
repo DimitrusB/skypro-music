@@ -1,24 +1,17 @@
 const initialState = {
-  tracks: [],
-  currentTrackIndex: 0,
-  isPlaying: false
-}
+  todos: [],
+  error: null,
+};
 
-const playerReducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'NEXT_TRACK':
-      return {
-        ...state,
-        isPlaying: true,
-        currentTrackIndex: state.currentTrackIndex + 1
-      }
-    case 'PREV_TRACK':
-      return {
-        ...state,
-        isPlaying: true,
-        currentTrackIndex: state.currentTrackIndex - 1
-      }
+    case "GET_TRACK_LIST":
+      return { ...state, todos: action.payload };
+    case "GET_TRACK_LIST_SET_ERROR":
+      return { ...state, error: action.payload };
     default:
-      return state
+      return state;
   }
-}
+};
+
+export default rootReducer;

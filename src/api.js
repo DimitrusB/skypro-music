@@ -5,7 +5,6 @@ export async function getAllTracks() {
     const data = await response.json();
     return data;
   }
-
   
   export function signIn(email, password) {
     return fetch("https://skypro-music-api.skyeng.tech/user/login/", {

@@ -12,6 +12,7 @@ export function AudioPlayer({ author, track, trackfile }) {
   const [duration, setDuration] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const audioRef = useRef(null);
+  
 
   const handleChangeVolume = (event) => {
     setVolume(event.target.value);

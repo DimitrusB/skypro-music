@@ -7,20 +7,23 @@ import { useEffect, useState } from "react";
 import * as S from "./Center.style";
 import { Link } from "react-router-dom";
 import { getAllTracks } from "../../api";
+import { useDispatch, useSelector } from "react-redux";
+import { getTrackList, getTrackListError } from "../../store/actions/trackActions";
 
 export function Center({ onTrackSelection }) {
-  const [todos, setTodos] = useState([]);
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state.todos || []);
+  // const error = useSelector((state) => state.error);
 
   useEffect(() => {
-    // Получение данных из API.
     getAllTracks()
-      .then((data) => {
-        setTodos(data);
+      .then((response) => {
+        dispatch(getTrackList(response));
       })
       .catch((error) => {
-        alert(`Ошибка получения данных с сервера: ${error}`);
+        dispatch(getTrackListError(`Error fetching data from the server: ${error}`));
       });
-  }, []);
+  }, [dispatch]);
 
   const handleTrackClick = (track, author, trackfile) => {
     onTrackSelection(track, author, trackfile);

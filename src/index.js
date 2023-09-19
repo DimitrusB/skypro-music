@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { createGlobalStyle } from "styled-components";
+import { Provider } from 'react-redux';
+import store from './store';
 
 export const GlobalsStyeProject = createGlobalStyle`
 * {
@@ -58,7 +60,9 @@ root.render(
 
   <React.StrictMode>
     <GlobalsStyeProject></GlobalsStyeProject>
+    <Provider store={store}>
     <App />
+    </Provider>
   </React.StrictMode>
 );
 
