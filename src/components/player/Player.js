@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
-import { setVolume, toggleLoop, togglePlay } from "../../store/actions/trackActions";
+import { setNextTrack, setPreviousTrack, setVolume, toggleLoop, togglePlay } from "../../store/actions/trackActions";
 
 export function AudioPlayer({ author, track, trackfile }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,6 +18,18 @@ export function AudioPlayer({ author, track, trackfile }) {
   const [duration, setDuration] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const audioRef = useRef(null);
+
+  const currentTrack = useSelector((state) => state.currentTrackIndex);
+
+
+  const handleNextTrack = () => {
+    dispatch(setNextTrack(currentTrack));
+  };
+  
+  const handlePreviousTrack = () => {
+    dispatch(setPreviousTrack(currentTrack));
+  };
+
   
 // --------------------------------------------------VOLUME
   const handleChangeVolume = (event) => {
@@ -121,7 +133,7 @@ export function AudioPlayer({ author, track, trackfile }) {
           <S.BarPlayerBlock>
             <S.BarPlayer>
               <S.BarPlayerControls>
-                <S.PlayerBtn butt="prev" onClick={notUsed}>
+                <S.PlayerBtn butt="prev" onClick={handlePreviousTrack}>
                   <S.PlayerBtnSvg butsvg="prev" alt="prev">
                     <title>Предыдущий трек</title>
                     <use xlinkHref={`${iconSprite}#icon-prev`}></use>
@@ -144,7 +156,7 @@ export function AudioPlayer({ author, track, trackfile }) {
                   </S.PlayerBtnSvg>
                 </S.PlayerBtn>
 
-                <S.PlayerBtn butt="next" onClick={notUsed}>
+                <S.PlayerBtn butt="next" onClick={handleNextTrack}>
                   <S.PlayerBtnSvg butsvg="next" alt="next">
                     <title>Следующий трек</title>
                     <use xlinkHref={`${iconSprite}#icon-next`}></use>

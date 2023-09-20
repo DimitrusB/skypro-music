@@ -26,3 +26,11 @@ export const toggleLoop = () => ({
 export const togglePlay = () => ({
   type: 'TOGGLE_PLAY'
 })
+
+export const setNextTrack = () => ({
+  type: "SET_NEXT_TRACK"
+});
+
+export const setPreviousTrack = () => ({
+  type: "SET_PREVIOUS_TRACK"
+});
