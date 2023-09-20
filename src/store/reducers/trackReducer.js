@@ -4,7 +4,6 @@ const initialState = {
   volume: 0.5,
   isLoop: false,
   isPlaying: false,
-  currentTrackIndex: 0,
 };
 
 const rootReducer = (state = initialState, action) => {
