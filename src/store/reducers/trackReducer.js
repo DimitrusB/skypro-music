@@ -3,6 +3,7 @@ const initialState = {
   error: null,
   volume: 0.5,
   isLoop: false,
+  isPlaying: false,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -15,6 +16,8 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, volume: action.payload };
     case 'TOGGLE_LOOP':
       return {...state, isLoop: !state.isLoop};
+    case 'TOGGLE_PLAY':
+      return{...state, isPlaying: !state.isPlaying}
     default:
       return state;
   }

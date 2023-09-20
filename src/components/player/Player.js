@@ -3,14 +3,15 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
-import { setVolume, toggleLoop } from "../../store/actions/trackActions";
+import { setVolume, toggleLoop, togglePlay } from "../../store/actions/trackActions";
 
 export function AudioPlayer({ author, track, trackfile }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [isPlaying, setIsPlaying] = useState(false);
   // const [volume, setVolume] = useState(0.5);
   const volume = useSelector((state) => state.volume);
   const isLoop = useSelector((state) => state.isLoop);
+  const isPlaying = useSelector((state) => state.isPlaying);
   const dispatch = useDispatch();
   // const [isLoop, setIsLoop] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -41,15 +42,17 @@ export function AudioPlayer({ author, track, trackfile }) {
     setCurrentTime(audioRef.current.currentTime);
   };
 
-  const togglePlay = async () => {
+// --------------------------------------------------PLAY
+  const handleTogglePlay = async () => {
     if (!isPlaying) {
       await audioRef.current.play();
-      setIsPlaying(true);
     } else {
       audioRef.current.pause();
-      setIsPlaying(false);
     }
+    dispatch(togglePlay());
   };
+
+// --------------------------------------------------
 
 
 // --------------------------------------------------REPEAT
@@ -70,10 +73,10 @@ export function AudioPlayer({ author, track, trackfile }) {
     audioRef.current.currentTime = seekTime;
   };
 
-  useEffect(() => {
-    setIsPlaying(false);
-    audioRef.current.load();
-  }, [trackfile]);
+  // useEffect(() => {
+  //   setIsPlaying(false);
+  //   audioRef.current.load();
+  // }, [trackfile]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -93,8 +96,8 @@ export function AudioPlayer({ author, track, trackfile }) {
       <audio
         key={trackfile}
         ref={audioRef}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
+        onPlay={() => dispatch(togglePlay(true))}
+        onPause={() => dispatch(togglePlay(false))}
         onLoadedMetadata={() => setDuration(audioRef.current.duration)}
         loop={isLoop}
         onTimeUpdate={updateCurrentTime}
@@ -123,7 +126,7 @@ export function AudioPlayer({ author, track, trackfile }) {
                 </S.PlayerBtn>
                 <S.PlayerBtn
                   butt={isPlaying ? "pause" : "play"}
-                  onClick={togglePlay}
+                  onClick={handleTogglePlay}
                 >
                   <S.PlayerBtnSvg
                     butsvg={isPlaying ? "pause" : "play"}

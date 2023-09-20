@@ -22,3 +22,7 @@ export const setVolume = (value) => ({
 export const toggleLoop = () => ({
   type: 'TOGGLE_LOOP'
 });
+
+export const togglePlay = () => ({
+  type: 'TOGGLE_PLAY'
+})
