@@ -1,23 +1,41 @@
 import iconSprite from "../../img/icon/sprite.svg";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
+import { useDispatch, useSelector } from "react-redux";
+import { setVolume, toggleLoop } from "../../store/actions/trackActions";
 
 export function AudioPlayer({ author, track, trackfile }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
-  const [isLoop, setIsLoop] = useState(false);
+  // const [volume, setVolume] = useState(0.5);
+  const volume = useSelector((state) => state.volume);
+  const isLoop = useSelector((state) => state.isLoop);
+  const dispatch = useDispatch();
+  // const [isLoop, setIsLoop] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const audioRef = useRef(null);
   
-
+// --------------------------------------------------VOLUME
   const handleChangeVolume = (event) => {
-    setVolume(event.target.value);
-    audioRef.current.volume = event.target.value;
+    const value = parseFloat(event.target.value);
+    dispatch(setVolume(value));
   };
+
+  const updateAudioVolume = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
+  useEffect(() => {
+    updateAudioVolume();
+  }, [volume, updateAudioVolume]);
+// --------------------------------------------------
+
+
 
   const updateCurrentTime = () => {
     setCurrentTime(audioRef.current.currentTime);
@@ -33,16 +51,23 @@ export function AudioPlayer({ author, track, trackfile }) {
     }
   };
 
-  const toggleLoop = () => {
-    setIsLoop(!isLoop);
+
+// --------------------------------------------------REPEAT
+  const handleToggleLoop = () => {
+    dispatch(toggleLoop());
   };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.loop = isLoop;
+    }
+  }, [isLoop]);
+// --------------------------------------------------
+
+
 
   const handleSeek = (seekTime) => {
     audioRef.current.currentTime = seekTime;
-  };
-
-  const notUsed = () => {
-    alert("Еще не реализовано");
   };
 
   useEffect(() => {
@@ -57,6 +82,11 @@ export function AudioPlayer({ author, track, trackfile }) {
 
     return () => clearTimeout(timeoutId);
   }, [author, track]);
+  
+  const notUsed = () => {
+    alert("Еще не реализовано");
+  };
+
 
   return (
     <>
@@ -114,7 +144,7 @@ export function AudioPlayer({ author, track, trackfile }) {
                     <use xlinkHref={`${iconSprite}#icon-next`}></use>
                   </S.PlayerBtnSvg>
                 </S.PlayerBtn>
-                <S.PlayerBtn butt="repeat" onClick={toggleLoop}>
+                <S.PlayerBtn butt="repeat" onClick={handleToggleLoop}>
                   <S.PlayerBtnSvg butsvg="repeat" alt="repeat">
                     <title>Повтор</title>
                     <use

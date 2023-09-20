@@ -13,3 +13,12 @@ export const getTrackListError = (error) => {
     payload: error,
   };
 };
+
+export const setVolume = (value) => ({
+  type: 'SET_VOLUME',
+  payload: value,
+});
+
+export const toggleLoop = () => ({
+  type: 'TOGGLE_LOOP'
+});
