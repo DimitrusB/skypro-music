@@ -1,15 +1,16 @@
 const initialState = {
-  todos: [],
+  track: [],
   error: null,
   volume: 0.5,
   isLoop: false,
   isPlaying: false,
+  currentTrackIndex: 0,
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case "GET_TRACK_LIST":
-      return { ...state, todos: action.payload };
+      return { ...state, track: action.payload };
     case "GET_TRACK_LIST_SET_ERROR":
       return { ...state, error: action.payload };
     case "SET_VOLUME":

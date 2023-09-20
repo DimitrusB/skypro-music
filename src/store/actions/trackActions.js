@@ -1,9 +1,9 @@
 
 
-export const getTrackList = (todos) => {
+export const getTrackList = (track) => {
   return {
     type: 'GET_TRACK_LIST',
-    payload: todos,
+    payload: track,
   };
 };
 

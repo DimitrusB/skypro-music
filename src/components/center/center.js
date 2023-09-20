@@ -12,7 +12,7 @@ import { getTrackList, getTrackListError } from "../../store/actions/trackAction
 
 export function Center({ onTrackSelection }) {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todos || []);
+  const todos = useSelector((state) => state.track || []);
   // const error = useSelector((state) => state.error);
 
   useEffect(() => {
