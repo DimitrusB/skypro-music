@@ -46,11 +46,14 @@ export function AudioPlayer({ author, track, trackfile }) {
   const handleTogglePlay = async () => {
     if (!isPlaying) {
       await audioRef.current.play();
+      dispatch(togglePlay(true));
     } else {
       audioRef.current.pause();
+      dispatch(togglePlay(false));
     }
     dispatch(togglePlay());
   };
+
 
 // --------------------------------------------------
 
