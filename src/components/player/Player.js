@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
-import { setNextTrack, setPreviousTrack, setVolume, toggleLoop, togglePlay } from "../../store/actions/trackActions";
+import { setNextTrack, setPlaying, setPreviousTrack, setVolume, toggleLoop } from "../../store/actions/trackActions";
 
 export function AudioPlayer({ author, track, trackfile }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -11,6 +11,7 @@ export function AudioPlayer({ author, track, trackfile }) {
   const isLoop = useSelector((state) => state.isLoop);
   const isPlaying = useSelector((state) => state.isPlaying);
   const dispatch = useDispatch();
+  // const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -52,19 +53,40 @@ export function AudioPlayer({ author, track, trackfile }) {
   };
 
 // --------------------------------------------------PLAY
-  const handleTogglePlay = async () => {
-    if (!isPlaying) {
-      await audioRef.current.play();
-      dispatch(togglePlay(true));
-    } else {
-      audioRef.current.pause();
-      dispatch(togglePlay(false));
-    }
-    dispatch(togglePlay());
-  };
+const handleTogglePlay = async () => {
+  if (!isPlaying) {
+    await audioRef.current.play();
+    dispatch(setPlaying(true));
+  } else {
+    audioRef.current.pause();
+    dispatch(setPlaying(false));
+  }
+};
+useEffect(() => {
+  if (isPlaying) {
+    audioRef.current.play();
+  } else {
+    audioRef.current.pause();
+  }
+}, [isPlaying, trackfile]);
 
+  // const handleTogglePlay = async () => {
+  //   if (!isPlaying) {
+  //     await audioRef.current.play();
+  //     setIsPlaying(true);
+  //   } else {
+  //     audioRef.current.pause();
+  //     setIsPlaying(false)}
+  //   }
 
+  //   useEffect(() => {
+  //     setIsPlaying(false);
+  //     audioRef.current.load();
+  //   }, [trackfile]);
+  
 // --------------------------------------------------
+
+
 
 
 // --------------------------------------------------REPEAT
@@ -85,10 +107,6 @@ export function AudioPlayer({ author, track, trackfile }) {
     audioRef.current.currentTime = seekTime;
   };
 
-  // useEffect(() => {
-  //   setIsPlaying(false);
-  //   audioRef.current.load();
-  // }, [trackfile]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -108,8 +126,8 @@ export function AudioPlayer({ author, track, trackfile }) {
       <audio
         key={trackfile}
         ref={audioRef}
-        onPlay={() => dispatch(togglePlay(true))}
-        onPause={() => dispatch(togglePlay(false))}
+        onPlay={() => dispatch(setPlaying(true))}
+        onPause={() => dispatch(setPlaying(false))}
         onLoadedMetadata={() => setDuration(audioRef.current.duration)}
         loop={isLoop}
         onTimeUpdate={updateCurrentTime}

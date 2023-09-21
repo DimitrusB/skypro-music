@@ -23,9 +23,10 @@ export const toggleLoop = () => ({
   type: 'TOGGLE_LOOP'
 });
 
-export const togglePlay = () => ({
-  type: 'TOGGLE_PLAY'
-})
+export const setPlaying = (isPlaying) => ({
+  type: 'SET_PLAYING',
+  payload: isPlaying,
+});
 
 export const setNextTrack = () => ({
   type: "SET_NEXT_TRACK"
