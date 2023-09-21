@@ -12,7 +12,7 @@ import { getTrackList, getTrackListError } from "../../store/actions/trackAction
 
 export function Center({ onTrackSelection }) {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.track || []);
+  const tracks = useSelector((state) => state.track || []);
   // const error = useSelector((state) => state.error);
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export function Center({ onTrackSelection }) {
           </S.FPlaylistTitleCol>
         </S.FContentTitle>
         <S.FPlaylistContent>
-          {todos.map((tracks) => (
+          {tracks.map((tracks) => (
             <NameTrack
               track={tracks.name}
               mix={tracks.mix}
@@ -107,5 +107,6 @@ export function Center({ onTrackSelection }) {
         </S.FPlaylistContent>
       </S.CentralblockContent>
     </S.MainCenterblock>
+
   );
 }

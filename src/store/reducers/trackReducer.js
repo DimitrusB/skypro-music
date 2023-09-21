@@ -20,15 +20,19 @@ const rootReducer = (state = initialState, action) => {
     case 'TOGGLE_PLAY':
       return{...state, isPlaying: !state.isPlaying}
     case "SET_NEXT_TRACK":
-      return {...state,currentTrackIndex: (state.currentTrackIndex + 1) % state.track.length
-        };
+  return {
+    ...state,
+    currentTrackIndex: (state.currentTrackIndex + 1) % state.track.length,
+    isPlaying: true
+  };
       case "SET_PREVIOUS_TRACK":
         return {
           ...state,
           currentTrackIndex:
             state.currentTrackIndex > 0
               ? state.currentTrackIndex - 1
-              : state.track.length - 1
+              : state.track.length - 1,
+          isPlaying: true
         };
     default:
       return state;
