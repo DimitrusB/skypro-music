@@ -7,13 +7,10 @@ import { setNextTrack, setPreviousTrack, setVolume, toggleLoop, togglePlay } fro
 
 export function AudioPlayer({ author, track, trackfile }) {
   const [isLoading, setIsLoading] = useState(true);
-  // const [isPlaying, setIsPlaying] = useState(false);
-  // const [volume, setVolume] = useState(0.5);
   const volume = useSelector((state) => state.volume);
   const isLoop = useSelector((state) => state.isLoop);
   const isPlaying = useSelector((state) => state.isPlaying);
   const dispatch = useDispatch();
-  // const [isLoop, setIsLoop] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
