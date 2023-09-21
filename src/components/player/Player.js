@@ -18,6 +18,19 @@ export function AudioPlayer({ author, track, trackfile }) {
   const audioRef = useRef(null);
 
   const currentTrack = useSelector((state) => state.currentTrackIndex);
+  const tracks = useSelector((state) => state.track);
+  const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
+
+  useEffect(() => {
+    if (tracks.length) {
+      const currentTrack = tracks[currentTrackIndex];
+      if (audioRef.current) {
+        // Устанавливаем новый src и загружаем его
+        audioRef.current.src = currentTrack.track_file;
+        audioRef.current.load();
+      }
+    }
+  }, [tracks, currentTrackIndex]);
 
 
   const handleNextTrack = () => {
@@ -132,7 +145,7 @@ useEffect(() => {
         loop={isLoop}
         onTimeUpdate={updateCurrentTime}
       >
-        <source src={trackfile} type="audio/mpeg" />
+        <source src={tracks.length && tracks[currentTrackIndex].track_file} type="audio/mpeg" />
       </audio>
       <S.MainBar>
         <S.MainBarContent>
@@ -203,12 +216,12 @@ useEffect(() => {
                   </S.TrackPlayImage>
                   <S.TrackPlayAuthor isLoading={isLoading}>
                     <S.TrackPlayAuthorLink isLoading={isLoading}>
-                      {author}
+                      {tracks[currentTrackIndex].author}
                     </S.TrackPlayAuthorLink>
                   </S.TrackPlayAuthor>
                   <S.TrackPlayAlbum isLoading={isLoading}>
                     <S.TrackPlayAlbumLink isLoading={isLoading}>
-                      {track}
+                    {tracks[currentTrackIndex].name}
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.PlayerTrackPlayContain>
