@@ -8,7 +8,7 @@ import * as S from "./Center.style";
 import { Link } from "react-router-dom";
 import { getAllTracks } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
-import { getTrackList, getTrackListError } from "../../store/actions/trackActions";
+import { getTrackList, getTrackListError, setCurrentTrack } from "../../store/actions/trackActions";
 
 export function Center({ onTrackSelection }) {
   const dispatch = useDispatch();
@@ -25,8 +25,12 @@ export function Center({ onTrackSelection }) {
       });
   }, [dispatch]);
 
-  const handleTrackClick = (track, author, trackfile) => {
-    onTrackSelection(track, author, trackfile);
+  // const handleTrackClick = (track, author, trackfile) => {
+  //   onTrackSelection(track, author, trackfile);
+  // };
+
+  const handleTrackClick = (index) => {
+    dispatch(setCurrentTrack(index));
   };
 
   const [trackFilterOpen, setTrackFilterOpen] = useState(false);
@@ -91,7 +95,7 @@ export function Center({ onTrackSelection }) {
           </S.FPlaylistTitleCol>
         </S.FContentTitle>
         <S.FPlaylistContent>
-          {tracks.map((tracks) => (
+          {tracks.map((tracks,index) => (
             <NameTrack
               track={tracks.name}
               mix={tracks.mix}
@@ -99,8 +103,9 @@ export function Center({ onTrackSelection }) {
               album={tracks.album}
               time={tracks.duration_in_seconds}
               trackfile={tracks.track_file}
-              onClick={() =>
-                handleTrackClick(tracks.name, tracks.author, tracks.track_file)
+              // onClick={() =>
+                // handleTrackClick(tracks.name, tracks.author, tracks.track_file)
+                onClick={() => handleTrackClick(index)
               }
             />
           ))}

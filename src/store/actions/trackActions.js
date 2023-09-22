@@ -36,9 +36,9 @@ export const setPreviousTrack = () => ({
   type: "SET_PREVIOUS_TRACK"
 });
 
-export const setCurrentTrack = (track, author, trackfile) => {
+export const setCurrentTrack = (trackIndex) => {
   return {
     type: "SET_CURRENT_TRACK",
-    payload: track, author, trackfile
+    payload: trackIndex
   };
 };
