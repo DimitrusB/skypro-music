@@ -28,9 +28,12 @@ export function AudioPlayer({ author, track, trackfile }) {
         // Устанавливаем новый src и загружаем его
         audioRef.current.src = currentTrack.track_file;
         audioRef.current.load();
+        if (isPlaying) {
+          audioRef.current.play();
+        }
       }
     }
-  }, [tracks, currentTrackIndex]);
+  }, [tracks, currentTrackIndex, isPlaying]);
 
 
   const handleNextTrack = () => {
