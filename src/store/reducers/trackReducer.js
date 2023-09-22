@@ -17,6 +17,12 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, volume: action.payload };
     case 'TOGGLE_LOOP':
       return {...state, isLoop: !state.isLoop};
+      case "SET_CURRENT_TRACK":
+        return {
+          ...state,
+          currentTrackIndex: action.payload,
+          isPlaying: true,
+        };
       case 'SET_PLAYING':
         return { ...state, isPlaying: action.payload };
     case "SET_NEXT_TRACK":
