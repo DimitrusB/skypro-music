@@ -25,7 +25,7 @@ export function Center({ onTrackSelection }) {
       });
   }, [dispatch]);
 
-  // const handleTrackClick = (track, author, trackfile) => {
+  // const handleTrackSelection = (track, author, trackfile) => {
   //   onTrackSelection(track, author, trackfile);
   // };
 
@@ -105,8 +105,7 @@ export function Center({ onTrackSelection }) {
               trackfile={tracks.track_file}
               // onClick={() =>
                 // handleTrackClick(tracks.name, tracks.author, tracks.track_file)
-                onClick={() => handleTrackClick(index)
-              }
+                onClick={() => handleTrackClick(index)}
             />
           ))}
         </S.FPlaylistContent>

@@ -5,7 +5,9 @@ import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
 import { setNextTrack, setPlaying, setPreviousTrack, setVolume, toggleLoop } from "../../store/actions/trackActions";
 
-export function AudioPlayer({ author, track, trackfile }) {
+
+
+export function AudioPlayer() {
   const [isLoading, setIsLoading] = useState(true);
   const volume = useSelector((state) => state.volume);
   const isLoop = useSelector((state) => state.isLoop);
@@ -15,6 +17,8 @@ export function AudioPlayer({ author, track, trackfile }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+
+  const [isTrackSelected, setIsTrackSelected] = useState(false);
   const audioRef = useRef(null);
 
   const currentTrack = useSelector((state) => state.currentTrackIndex);
@@ -85,7 +89,7 @@ useEffect(() => {
   } else {
     audioRef.current.pause();
   }
-}, [isPlaying, trackfile]);
+}, [isPlaying, currentTrack.track_file]);
 
   // const handleTogglePlay = async () => {
   //   if (!isPlaying) {
@@ -131,17 +135,22 @@ useEffect(() => {
     }, 5000);
 
     return () => clearTimeout(timeoutId);
-  }, [author, track]);
+  }, [tracks.author, tracks.track]);
   
   const notUsed = () => {
     alert("Еще не реализовано");
   };
-
+  useEffect(() => {
+    // Если выбран трек, устанавливаем isTrackSelected в true
+     if (tracks.length && tracks[currentTrackIndex]?.author !== null) {
+       setIsTrackSelected(true);
+     }
+   }, [tracks, currentTrackIndex]);
 
   return (
     <>
-      <audio
-        key={trackfile}
+     <audio
+        key={tracks.track_file}
         ref={audioRef}
         onPlay={() => dispatch(setPlaying(true))}
         onPause={() => dispatch(setPlaying(false))}
@@ -149,7 +158,7 @@ useEffect(() => {
         loop={isLoop}
         onTimeUpdate={updateCurrentTime}
       >
-        <source src={tracks.length && tracks[currentTrackIndex].track_file} type="audio/mpeg" />
+        <source src={currentTrack && tracks.track_file} type="audio/mpeg" />
       </audio>
       <S.MainBar>
         <S.MainBarContent>
@@ -220,12 +229,12 @@ useEffect(() => {
                   </S.TrackPlayImage>
                   <S.TrackPlayAuthor isLoading={isLoading}>
                     <S.TrackPlayAuthorLink isLoading={isLoading}>
-                      {tracks[currentTrackIndex].author}
+                    {tracks[currentTrackIndex]?.author}
                     </S.TrackPlayAuthorLink>
                   </S.TrackPlayAuthor>
                   <S.TrackPlayAlbum isLoading={isLoading}>
                     <S.TrackPlayAlbumLink isLoading={isLoading}>
-                    {tracks[currentTrackIndex].name}
+                    {tracks[currentTrackIndex]?.name}
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.PlayerTrackPlayContain>
