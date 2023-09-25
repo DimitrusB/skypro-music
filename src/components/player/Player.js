@@ -161,6 +161,7 @@ useEffect(() => {
         onLoadedMetadata={() => setDuration(audioRef.current.duration)}
         loop={isLoop}
         onTimeUpdate={updateCurrentTime}
+        onEnded={handleNextTrack}
       >
         <source src={currentTrack && tracks.track_file} type="audio/mpeg" />
       </audio>

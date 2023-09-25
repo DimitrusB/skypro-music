@@ -51,7 +51,7 @@ const rootReducer = (state = initialState, action) => {
         currentTrackIndex: nextTrackIndex,
       };
     case "SET_PREVIOUS_TRACK":
-      const { isShuffle: isShufflePrev, track: trackPrev } = state;
+      const { isShuffle: isShufflePrev, track: trackPrev} = state;
       let prevTrackIndex;
       if (isShufflePrev) {
         do {
@@ -63,7 +63,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentTrackIndex: prevTrackIndex,
-        isPlaying: true
+
       };
       default:
         return state;
