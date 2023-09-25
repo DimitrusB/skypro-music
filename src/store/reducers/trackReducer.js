@@ -5,10 +5,20 @@ const initialState = {
   isLoop: false,
   isPlaying: false,
   currentTrackIndex: 0,
+  isShuffle:false,
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SHUFFLE_TRACKS':
+      const shuffledTracks = [...state.track];
+      for (let i = shuffledTracks.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledTracks[i], shuffledTracks[j]] = [shuffledTracks[j], shuffledTracks[i]];
+      }
+      return {
+        ...state, isShuffle: !state.isShuffle,
+      };
     case "GET_TRACK_LIST":
       return { ...state, track: action.payload };
     case "GET_TRACK_LIST_SET_ERROR":
@@ -25,24 +35,39 @@ const rootReducer = (state = initialState, action) => {
         };
       case 'SET_PLAYING':
         return { ...state, isPlaying: action.payload };
+ 
     case "SET_NEXT_TRACK":
-  return {
-    ...state,
-    currentTrackIndex: (state.currentTrackIndex + 1) % state.track.length,
-    isPlaying: true
+      const { isShuffle, track } = state;
+      let nextTrackIndex;
+      if (isShuffle) {
+        do {
+          nextTrackIndex = Math.floor(Math.random() * track.length);
+        } while (nextTrackIndex === state.currentTrackIndex);
+      } else {
+        nextTrackIndex = (state.currentTrackIndex + 1) % track.length;
+      }
+      return {
+        ...state,
+        currentTrackIndex: nextTrackIndex,
+      };
+    case "SET_PREVIOUS_TRACK":
+      const { isShuffle: isShufflePrev, track: trackPrev } = state;
+      let prevTrackIndex;
+      if (isShufflePrev) {
+        do {
+          prevTrackIndex = Math.floor(Math.random() * trackPrev.length);
+        } while (prevTrackIndex === state.currentTrackIndex);
+      } else {
+        prevTrackIndex = state.currentTrackIndex > 0 ? state.currentTrackIndex - 1 : trackPrev.length - 1;
+      }
+      return {
+        ...state,
+        currentTrackIndex: prevTrackIndex,
+        isPlaying: true
+      };
+      default:
+        return state;
+    }
   };
-      case "SET_PREVIOUS_TRACK":
-        return {
-          ...state,
-          currentTrackIndex:
-            state.currentTrackIndex > 0
-              ? state.currentTrackIndex - 1
-              : state.track.length - 1,
-          isPlaying: true
-        };
-    default:
-      return state;
-  }
-};
 
 export default rootReducer;

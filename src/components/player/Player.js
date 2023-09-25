@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
-import { setNextTrack, setPlaying, setPreviousTrack, setVolume, toggleLoop } from "../../store/actions/trackActions";
+import { setNextTrack, setPlaying, setPreviousTrack, setVolume, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
 
 
 
@@ -11,6 +11,7 @@ export function AudioPlayer() {
   const [isLoading, setIsLoading] = useState(true);
   const volume = useSelector((state) => state.volume);
   const isLoop = useSelector((state) => state.isLoop);
+  const isShuffle = useSelector((state) => state.isShuffle)
   const isPlaying = useSelector((state) => state.isPlaying);
   const dispatch = useDispatch();
   // const [isPlaying, setIsPlaying] = useState(false);
@@ -39,6 +40,9 @@ export function AudioPlayer() {
     }
   }, [tracks, currentTrackIndex, isPlaying]);
 
+  const handleShuffle = () => {
+    dispatch(shuffleTracks());
+  };
 
   const handleNextTrack = () => {
     dispatch(setNextTrack(currentTrack));
@@ -213,10 +217,12 @@ useEffect(() => {
                     ></use>
                   </S.PlayerBtnSvg>
                 </S.PlayerBtn>
-                <S.PlayerBtn butt="shuffle" onClick={notUsed}>
+                <S.PlayerBtn butt="shuffle" onClick={handleShuffle}>
                   <S.PlayerBtnSvg butsvg="shuffle" alt="shuffle">
                     <title>Случайный порядок</title>
-                    <use xlinkHref={`${iconSprite}#icon-shuffle`}></use>
+                    <use xlinkHref={`${iconSprite}${
+                        !isShuffle ? "#icon-shuffle" : "#icon-shuffleActive"
+                      }`}></use>
                   </S.PlayerBtnSvg>
                 </S.PlayerBtn>
               </S.BarPlayerControls>

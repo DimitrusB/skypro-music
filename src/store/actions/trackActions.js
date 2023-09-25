@@ -42,3 +42,7 @@ export const setCurrentTrack = (trackIndex) => {
     payload: trackIndex
   };
 };
+
+export const shuffleTracks = () => ({
+  type: 'SHUFFLE_TRACKS',
+});
