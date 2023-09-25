@@ -31,7 +31,8 @@ const rootReducer = (state = initialState, action) => {
         return {
           ...state,
           currentTrackIndex: action.payload,
-          isPlaying: true,
+
+          
         };
       case 'SET_PLAYING':
         return { ...state, isPlaying: action.payload };
