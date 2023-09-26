@@ -11,6 +11,7 @@ export function NameTrack({
   time,
   onClick,
   trackfile,
+  playing,
 }) {
   const formattedTime = formatTime(time);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,16 +28,32 @@ export function NameTrack({
     <S.PlaylistItem>
       <S.PlaylistTrack>
         <S.TrackTitled>
+        {playing ? (
           <S.TrackTitleImage isLoading={isLoading}>
+            <S.Circle isLoading={isLoading} alt="music">
+              <use xlinkHref={`${iconSprite}#icon-note`}></use>
+            </S.Circle>
+          </S.TrackTitleImage>):
+          (<S.TrackTitleImage isLoading={isLoading}>
             <S.TrackTitleSvg isLoading={isLoading} alt="music">
               <use xlinkHref={`${iconSprite}#icon-note`}></use>
             </S.TrackTitleSvg>
-          </S.TrackTitleImage>
-          <S.TrackTitleText isLoading={isLoading}>
-            <S.TrackTitleLink isLoading={isLoading} onClick={onClick}>
-              {track} <S.TrackTitleSpan>{mix}</S.TrackTitleSpan>
-            </S.TrackTitleLink>
-          </S.TrackTitleText>
+          </S.TrackTitleImage>)}
+          {playing ? (
+            <S.TrackTitleText isLoading={isLoading}>
+              <S.TrackTitleLink isLoading={isLoading} onClick={onClick}>
+                  {track}
+                  <S.TrackTitleSpan>{mix}</S.TrackTitleSpan>
+              </S.TrackTitleLink>
+            </S.TrackTitleText>
+          ) : (
+            <S.TrackTitleText isLoading={isLoading}>
+              <S.TrackTitleLink isLoading={isLoading} onClick={onClick}>
+                {track}
+                <S.TrackTitleSpan>{mix}</S.TrackTitleSpan>
+              </S.TrackTitleLink>
+            </S.TrackTitleText>
+          )}
         </S.TrackTitled>
         <S.TrackAuthor isLoading={isLoading}>
           <S.TrackAuthorLink isLoading={isLoading} onClick={onClick}>

@@ -13,6 +13,7 @@ import { getTrackList, getTrackListError, setCurrentTrack } from "../../store/ac
 export function Center({ onTrackSelection }) {
   const dispatch = useDispatch();
   const tracks = useSelector((state) => state.track || []);
+  const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
   // const error = useSelector((state) => state.error);
 
   useEffect(() => {
@@ -106,6 +107,7 @@ export function Center({ onTrackSelection }) {
               // onClick={() =>
                 // handleTrackClick(tracks.name, tracks.author, tracks.track_file)
                 onClick={() => handleTrackClick(index)}
+                playing={currentTrackIndex === index}
             />
           ))}
         </S.FPlaylistContent>

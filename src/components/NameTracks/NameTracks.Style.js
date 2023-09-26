@@ -5,6 +5,27 @@ export const PlaylistItem = styled.div`
   display: block;
   margin-bottom: 12px;
 `
+export const Circle = styled.div`
+  width: 51px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: blue;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 255, 0.2);
+  filter: blur(3px); //Добавьте это свойство
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+`;
 export const PlaylistTrack = styled.div`
 display: -webkit-box;
 display: -ms-flexbox;
