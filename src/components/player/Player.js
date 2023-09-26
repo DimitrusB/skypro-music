@@ -19,7 +19,7 @@ export function AudioPlayer() {
   const [duration, setDuration] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
-  const [isTrackSelected, setIsTrackSelected] = useState(false);
+  // const [isTrackSelected, setIsTrackSelected] = useState(false);
   const audioRef = useRef(null);
 
   const currentTrack = useSelector((state) => state.currentTrackIndex);
@@ -141,15 +141,15 @@ useEffect(() => {
     return () => clearTimeout(timeoutId);
   }, [tracks.author, tracks.track]);
   
-  const notUsed = () => {
-    alert("Еще не реализовано");
-  };
-  useEffect(() => {
-    // Если выбран трек, устанавливаем isTrackSelected в true
-     if (tracks.length && tracks[currentTrackIndex]?.author !== null) {
-       setIsTrackSelected(true);
-     }
-   }, [tracks, currentTrackIndex]);
+  // const notUsed = () => {
+  //   alert("Еще не реализовано");
+  // };
+  // useEffect(() => {
+  //   // Если выбран трек, устанавливаем isTrackSelected в true
+  //    if (tracks.length && tracks[currentTrackIndex]?.author !== null) {
+  //      setIsTrackSelected(true);
+  //    }
+  //  }, [tracks, currentTrackIndex]);
 
   return (
     <>
