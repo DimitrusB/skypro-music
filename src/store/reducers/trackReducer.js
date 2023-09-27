@@ -31,6 +31,7 @@ const rootReducer = (state = initialState, action) => {
         return {
           ...state,
           currentTrackIndex: action.payload,
+          isPlaying: true,
 
           
         };

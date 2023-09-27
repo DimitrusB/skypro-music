@@ -45,6 +45,7 @@ export function AudioPlayer() {
   };
 
   const handleNextTrack = () => {
+    console.log("handleNextTrack triggered");
     dispatch(setNextTrack(currentTrack));
   };
   
@@ -154,7 +155,7 @@ useEffect(() => {
   return (
     <>
      <audio
-        key={tracks.track_file}
+        key={tracks[currentTrackIndex]?.track_id}
         ref={audioRef}
         onPlay={() => dispatch(setPlaying(true))}
         onPause={() => dispatch(setPlaying(false))}
@@ -163,7 +164,7 @@ useEffect(() => {
         onTimeUpdate={updateCurrentTime}
         onEnded={handleNextTrack}
       >
-        <source src={currentTrack && tracks.track_file} type="audio/mpeg" />
+        <source src={tracks[currentTrackIndex]?.track_file} type="audio/mpeg" />
       </audio>
       <S.MainBar>
         <S.MainBarContent>
