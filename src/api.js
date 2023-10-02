@@ -49,7 +49,7 @@ export async function getAllTracks() {
         if (!response.ok) throw new Error(response.statusText);
         return response.json();
       })
-      .then((json) => json.token);
+      .then((json) => console.log(json));
   }
 
 

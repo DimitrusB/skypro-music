@@ -5,9 +5,31 @@ import { NameTrackFavorites } from "../../components/NameTracks/NameTrackFavorit
 import iconSprite from "../../img/icon/sprite.svg";
 import { useContext } from "react";
 import UserContext from "../../components/UserContext";
+import { useDispatch, useSelector } from "react-redux";
+import { getTrackListFavorites } from "../../store/actions/trackActions";
+import { getAllFavoritesTracks } from "../../api";
+import { useEffect } from "react";
+import { useState } from "react";
+
+
 
 export function FavoritesTracks() {
-  const { email } = useContext(UserContext);
+  const {email, token} = useContext(UserContext)
+  const dispatch = useDispatch();
+  const tracks = useSelector((state) => state.favoritetracks || []);
+
+    useEffect(() => {
+      if(token) {
+        getAllFavoritesTracks(token)
+          .then((response) => {
+            dispatch(getTrackListFavorites(response));
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      } 
+    }, [dispatch, token]); 
+
   return (
     <header className="App-header">
       <S.Wrapper>
@@ -41,19 +63,24 @@ export function FavoritesTracks() {
                   </S.FPlaylistTitleCol>
                 </S.FContentTitle>
                 <S.FPlaylistContent>
-                  <NameTrackFavorites
-                    track="Guilt"
-                    author="Nero"
-                    album="Welcome Reality"
-                    time="4:44"
-                  />
-                  <NameTrackFavorites
+                {tracks.map((tracks, index) => (
+  <NameTrackFavorites
+    key={index} // Добавлен ключ
+    track={tracks.name}
+    mix={tracks.mix}
+    author={tracks.author}
+    album={tracks.album}
+    time={tracks.duration_in_seconds}
+    trackfile={tracks.track_file}
+  />
+))}
+                  {/* <NameTrackFavorites
                     track="Elektro"
                     author="Dynoro, Outwork, Mr. Gee"
                     album="Elektro"
                     time="2:22"
-                  />
-                  <NameTrackFavorites
+                  /> */}
+                  {/* <NameTrackFavorites
                     track="I’m Fire"
                     author="Ali Bakgor"
                     album="I’m Fire"
@@ -76,7 +103,7 @@ export function FavoritesTracks() {
                     author="Blue Foundation, Zeds Dead"
                     album="Eyes on Fire"
                     time="5:20"
-                  />
+                  /> */}
                 </S.FPlaylistContent>
               </S.CentralblockContent>
             </S.MainCenterblock>

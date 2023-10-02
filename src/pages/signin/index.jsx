@@ -3,7 +3,7 @@ import logo_modal from '../../img/logo_modal.png';
 import * as S from './signin.style';
 import { useContext, useState } from 'react';
 import UserContext from '../../components/UserContext';
-import { signIn } from '../../api';
+import { getToken, signIn } from '../../api';
 
 export function SignIn() {
   const [email, setEmail] = useState('');
@@ -11,7 +11,7 @@ export function SignIn() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { setEmail: setUserEmail } = useContext(UserContext);
-  
+  const {setToken} = useContext(UserContext);
 
   const handleLogin = (e) => {
     setIsLoading(true);
@@ -35,6 +35,20 @@ export function SignIn() {
         console.error('Ошибка:', error);
         alert('Ошибка при входе: ' + error.message);
         setIsLoading(false);
+      });
+      getToken(email, password)
+      .then((response) => {
+        if (response.ok) {
+          return response.json(); // Если ответ в формате JSON, обычно нужно так преобразовывать
+        } else {
+          throw new Error('Ошибка авторизации: '); 
+        }
+      })
+      .then((json) => {
+        setToken(json.response); // Предполагаю, что токен приходит в поле response
+      })
+      .catch((error) => {
+        console.error('Ошибка:', error);
       });
   };
   

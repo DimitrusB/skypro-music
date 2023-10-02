@@ -6,6 +6,7 @@ import UserContext from '../src/components/UserContext';
 
 function App() {
   const [email, setEmail] = useState('');
+  const [token, setToken] = useState(null);
   const resetEmail = () => {
     setEmail('');
   };
@@ -13,7 +14,7 @@ function App() {
 
 
   return (
-    <UserContext.Provider value={{ email, setEmail,resetEmail }}>
+    <UserContext.Provider value={{ email, setEmail,resetEmail, token, setToken  }}>
     <BrowserRouter>
       <div className="App">
         <AppRoutes user={email}/>

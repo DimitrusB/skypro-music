@@ -6,6 +6,8 @@ const initialState = {
   isPlaying: false,
   currentTrackIndex: 0,
   isShuffle:false,
+  favoritetracks: [],
+  isLike: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -19,8 +21,25 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state, isShuffle: !state.isShuffle,
       };
+
     case "GET_TRACK_LIST":
       return { ...state, track: action.payload };
+      case "GET_TRACK_LIST_FAVORITES":
+        return { ...state, favoritetracks: action.payload };
+        case "ADD_TO_FAVORITES":
+  return { 
+    ...state, 
+    favoritetracks: [...state.favoritetracks, action.payload],
+    isLike:true, 
+  };
+  case "REMOVE_FROM_FAVORITES":
+  return {
+    ...state,
+    favoritetracks: state.favoritetracks.filter(
+      (track) => track.id !== action.payload.id
+    ),
+    isLike:false, 
+  };
     case "GET_TRACK_LIST_SET_ERROR":
       return { ...state, error: action.payload };
     case "SET_VOLUME":

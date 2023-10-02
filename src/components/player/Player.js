@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
-import { setNextTrack, setPlaying, setPreviousTrack, setVolume, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
+import { addToFavorites, removeFromFavorites, setNextTrack, setPlaying, setPreviousTrack, setVolume, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
 
 
 
@@ -12,6 +12,7 @@ export function AudioPlayer() {
   const volume = useSelector((state) => state.volume);
   const isLoop = useSelector((state) => state.isLoop);
   const isShuffle = useSelector((state) => state.isShuffle)
+  const isLike = useSelector((state) => state.isLike);
   const isPlaying = useSelector((state) => state.isPlaying);
   const dispatch = useDispatch();
   // const [isPlaying, setIsPlaying] = useState(false);
@@ -112,7 +113,13 @@ useEffect(() => {
   
 // --------------------------------------------------
 
-
+const handleLike = () => {
+  dispatch(addToFavorites(tracks[currentTrackIndex]));
+};
+  
+const handleDislike = () => {
+  dispatch(removeFromFavorites(tracks[currentTrackIndex]));
+};
 
 
 // --------------------------------------------------REPEAT
@@ -248,14 +255,18 @@ useEffect(() => {
                 </S.PlayerTrackPlayContain>
 
                 <S.TrackDislike>
-                  <S.TracPlayLike>
+                  <S.TracPlayLike onClick={handleLike}>
                     <S.TracPlayLikeSvg alt="like">
-                      <use xlinkHref={`${iconSprite}#icon-note`}></use>
+                      <use xlinkHref={`${iconSprite}${
+                        isLike ? "#icon-likeActive" : "#icon-like"
+                      }`}></use>
                     </S.TracPlayLikeSvg>
                   </S.TracPlayLike>
-                  <S.TracPlayDis>
+                  <S.TracPlayDis onClick={handleDislike}>
                     <S.TracPlayDisSvg alt="dislike">
-                      <use xlinkHref={`${iconSprite}#icon-dislike`}></use>
+                    <use xlinkHref={`${iconSprite}${
+                        isLike ? "#icon-dislike" : "#icon-dislikeActive"
+                      }`}></use>
                     </S.TracPlayDisSvg>
                   </S.TracPlayDis>
                 </S.TrackDislike>
