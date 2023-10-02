@@ -33,6 +33,7 @@ export async function getAllTracks() {
     });
   }
 
+
   export function getToken(email, password) {
     return fetch("https://skypro-music-api.skyeng.tech/user/token/", {
       method: "POST",
@@ -44,5 +45,24 @@ export async function getAllTracks() {
         "content-type": "application/json",
       },
     })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+      })
+      .then((json) => json.token);
   }
-  
+
+
+  export function getAllFavoritesTracks(token) {
+    return fetch("https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+      })
+      .then((json) => console.log(json));
+  }
