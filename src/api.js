@@ -66,3 +66,17 @@ export async function getAllTracks() {
       })
       .then((json) => console.log(json));
   }
+
+  export function addFavoritesTracks(trackId, token) {
+    return fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${trackId}/favorite/`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+      })
+      .then((json) => console.log(json));
+  }
