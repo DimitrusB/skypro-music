@@ -67,12 +67,12 @@ export const shuffleTracks = () => {
 });
 };
 
-export const getTrackListFavorites = (favoritetracks) => {
-  return deepFreeze({
-    type: 'GET_TRACKS_LIST_FAVORITES',
-    payload: favoritetracks,
-  });
-};
+// export const getTrackListFavorites = (favoritetracks) => {
+//   return deepFreeze({
+//     type: 'GET_TRACKS_LIST_FAVORITES',
+//     payload: favoritetracks,
+//   });
+// };
 
 export const addToFavorites = (favoritetracks) => {
   return deepFreeze({
@@ -87,3 +87,16 @@ export const removeFromFavorites = (favoritetracks) => {
   payload: favoritetracks,
 });
 };
+export const fetchFavoritesSuccess = (favoritetracks) => {
+  return deepFreeze({
+  type: 'FETCH_FAVORITES_SUCCESS',
+  payload: favoritetracks,
+});
+}
+
+export const fetchFavoritesError = (error) => {
+  return deepFreeze({
+  type: 'FETCH_FAVORITES_ERROR',
+  error
+});
+}

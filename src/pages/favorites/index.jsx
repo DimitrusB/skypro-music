@@ -10,6 +10,7 @@ import { getTrackListFavorites } from "../../store/actions/trackActions";
 import { getAllFavoritesTracks } from "../../api";
 import { useEffect } from "react";
 import { useState } from "react";
+import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
 
 
 
@@ -18,17 +19,9 @@ export function FavoritesTracks() {
   const dispatch = useDispatch();
   const tracks = useSelector((state) => state.favoritetracks || []);
 
-    useEffect(() => {
-      if(token) {
-        getAllFavoritesTracks(token)
-          .then((response) => {
-            dispatch(getTrackListFavorites(response));
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      } 
-    }, [dispatch, token]); 
+  useEffect(() => {
+    dispatch(getAllFavoriteTracks(token));
+  }, [dispatch]);
 
   return (
     <header className="App-header">

@@ -8,6 +8,8 @@ const initialState = {
   isShuffle:false,
   favoritetracks: [],
   isLike: null,
+  error: null,
+
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -24,8 +26,21 @@ const rootReducer = (state = initialState, action) => {
 
     case "GET_TRACK_LIST":
       return { ...state, track: action.payload };
-      case "GET_TRACK_LIST_FAVORITES":
-        return { ...state, favoritetracks: action.payload };
+      // case "GET_TRACK_LIST_FAVORITES":
+      //   return { ...state, favoritetracks: action.payload };
+      case "FETCH_FAVORITES_SUCCESS":
+        // Обновить список любимых треков ответом от сервера
+        return {
+          ...state,
+          favoritetracks: action.payload,
+          error: null,
+        };
+      case "FETCH_FAVORITES_ERROR":
+        // При ошибке обновляем состояние ошибкой
+        return {
+          ...state,
+          error: action.error,
+        };
         case "ADD_TO_FAVORITES":
   return { 
     ...state, 
