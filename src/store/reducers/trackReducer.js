@@ -1,6 +1,5 @@
 const initialState = {
   track: [],
-  error: null,
   volume: 0.5,
   isLoop: false,
   isPlaying: false,
@@ -48,7 +47,7 @@ const rootReducer = (state = initialState, action) => {
   //   isLike:true, 
   // };
 
-  case 'ADD_FAVORITE_TRACK_SUCCESS':
+  case 'ADD_TO_FAVORITES':
     return {
       ...state,
       favoritetracks: [...state.favoritetracks, action.payload],

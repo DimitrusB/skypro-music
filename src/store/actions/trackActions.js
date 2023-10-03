@@ -67,14 +67,7 @@ export const shuffleTracks = () => {
 });
 };
 
-// export const getTrackListFavorites = (favoritetracks) => {
-//   return deepFreeze({
-//     type: 'GET_TRACKS_LIST_FAVORITES',
-//     payload: favoritetracks,
-//   });
-// };
-
-export const addToFavorites = (favoritetracks) => {
+export const addFavoriteTracksSuccess = (favoritetracks) => {
   return deepFreeze({
   type: "ADD_TO_FAVORITES",
   payload: favoritetracks,

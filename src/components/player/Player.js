@@ -3,7 +3,9 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
-import { addToFavorites, removeFromFavorites, setNextTrack, setPlaying, setPreviousTrack, setVolume, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
+import { removeFromFavorites, setNextTrack, setPlaying, setPreviousTrack, setVolume, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
+import { useToken } from "../token";
+import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 
 
 
@@ -26,6 +28,7 @@ export function AudioPlayer() {
   const currentTrack = useSelector((state) => state.currentTrackIndex);
   const tracks = useSelector((state) => state.track);
   const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
+  const { token } = useToken();
 
   useEffect(() => {
     if (tracks.length) {
@@ -97,24 +100,10 @@ useEffect(() => {
   }
 }, [isPlaying, currentTrack.track_file]);
 
-  // const handleTogglePlay = async () => {
-  //   if (!isPlaying) {
-  //     await audioRef.current.play();
-  //     setIsPlaying(true);
-  //   } else {
-  //     audioRef.current.pause();
-  //     setIsPlaying(false)}
-  //   }
-
-  //   useEffect(() => {
-  //     setIsPlaying(false);
-  //     audioRef.current.load();
-  //   }, [trackfile]);
-  
 // --------------------------------------------------
 
 const handleLike = () => {
-  dispatch(addToFavorites(tracks[currentTrackIndex]));
+  dispatch(addFavoritesTracks(tracks[currentTrackIndex].id,token));
 };
   
 const handleDislike = () => {
@@ -149,16 +138,6 @@ const handleDislike = () => {
     return () => clearTimeout(timeoutId);
   }, [tracks.author, tracks.track]);
   
-  // const notUsed = () => {
-  //   alert("Еще не реализовано");
-  // };
-  // useEffect(() => {
-  //   // Если выбран трек, устанавливаем isTrackSelected в true
-  //    if (tracks.length && tracks[currentTrackIndex]?.author !== null) {
-  //      setIsTrackSelected(true);
-  //    }
-  //  }, [tracks, currentTrackIndex]);
-
   return (
     <>
      <audio

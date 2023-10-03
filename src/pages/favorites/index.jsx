@@ -6,10 +6,7 @@ import iconSprite from "../../img/icon/sprite.svg";
 import { useContext } from "react";
 import UserContext from "../../components/UserContext";
 import { useDispatch, useSelector } from "react-redux";
-import { getTrackListFavorites } from "../../store/actions/trackActions";
-import { getAllFavoritesTracks } from "../../api";
 import { useEffect } from "react";
-import { useState } from "react";
 import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
 import { useToken } from "../../components/token";
 
