@@ -11,17 +11,20 @@ import { getAllFavoritesTracks } from "../../api";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
+import { useToken } from "../../components/token";
 
 
 
 export function FavoritesTracks() {
-  const {email, token} = useContext(UserContext)
+  const {email} = useContext(UserContext)
   const dispatch = useDispatch();
+  const { token } = useToken();
   const tracks = useSelector((state) => state.favoritetracks || []);
 
   useEffect(() => {
-    dispatch(getAllFavoriteTracks(token));
-  }, [dispatch]);
+    dispatch(getAllFavoriteTracks(token)); // this returns a promise
+  }, [dispatch, token]); 
+
 
   return (
     <header className="App-header">

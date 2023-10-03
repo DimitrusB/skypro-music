@@ -41,12 +41,19 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           error: action.error,
         };
-        case "ADD_TO_FAVORITES":
-  return { 
-    ...state, 
-    favoritetracks: [...state.favoritetracks, action.payload],
-    isLike:true, 
-  };
+  //       case "ADD_TO_FAVORITES":
+  // return { 
+  //   ...state, 
+  //   favoritetracks: [...state.favoritetracks, action.payload],
+  //   isLike:true, 
+  // };
+
+  case 'ADD_FAVORITE_TRACK_SUCCESS':
+    return {
+      ...state,
+      favoritetracks: [...state.favoritetracks, action.payload],
+    };
+
   case "REMOVE_FROM_FAVORITES":
   return {
     ...state,

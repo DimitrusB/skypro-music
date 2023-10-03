@@ -100,3 +100,12 @@ export const fetchFavoritesError = (error) => {
   error
 });
 }
+
+export const ADD_FAVORITE_TRACKS = "ADD_FAVORITE_TRACKS";
+
+// export const addFavoriteTracksSuccess = (json) => ({
+//     dispatch({ 
+//       type: 'ADD_FAVORITE_TRACK_SUCCESS', 
+//       payload: track 
+//     });
+//   }

@@ -4,6 +4,7 @@ import * as S from './signin.style';
 import { useContext, useState } from 'react';
 import UserContext from '../../components/UserContext';
 import { getToken, signIn } from '../../api';
+import { useToken } from '../../components/token';
 
 export function SignIn() {
   const [email, setEmail] = useState('');
@@ -11,47 +12,47 @@ export function SignIn() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { setEmail: setUserEmail } = useContext(UserContext);
-  const {setToken} = useContext(UserContext);
 
+
+  const { setToken } = useToken();
+  
   const handleLogin = (e) => {
-    setIsLoading(true);
     e.preventDefault();
-    
+    setIsLoading(true);
+
     signIn(email, password)
-    
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Ошибка авторизации: ' + response.statusText);
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error signing in: ' + response.statusText);
         }
+        return response.json();
       })
-      .then((json) => {
+      .then(json => {
         setUserEmail(json.email);
         navigate('/');
         setIsLoading(false);
       })
-      .catch((error) => {
-        console.error('Ошибка:', error);
-        alert('Ошибка при входе: ' + error.message);
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error during login: ' + error.message);
         setIsLoading(false);
       });
-      getToken(email, password)
-      .then((response) => {
-        if (response.ok) {
-          return response.json(); // Если ответ в формате JSON, обычно нужно так преобразовывать
-        } else {
-          throw new Error('Ошибка авторизации: '); 
+
+    getToken(email, password)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error getting token: ');
         }
+        return response.json();
       })
-      .then((json) => {
-        setToken(json.response); // Предполагаю, что токен приходит в поле response
+      .then(json => {
+        setToken(json.response); // Assuming token is in the 'response' field
+      console.log(json.response)
       })
-      .catch((error) => {
-        console.error('Ошибка:', error);
+      .catch(error => {
+        console.error('Error:', error);
       });
-  };
-  
+  }
   
 
 

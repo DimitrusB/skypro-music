@@ -12,7 +12,7 @@ export const getAllFavoriteTracks = (token) => {
         })
         .then(
             json => dispatch({ type: "FETCH_FAVORITES_SUCCESS", payload: json }),
-            error => dispatch({ type: "FETCH_FAVORITES_ERROR", error })
+            error => dispatch({ type: "FETCH_FAVORITES_ERROR", error: error.toString() })  // Updated here
         );
     };
 }
