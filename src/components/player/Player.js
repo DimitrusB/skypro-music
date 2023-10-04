@@ -1,11 +1,11 @@
 import iconSprite from "../../img/icon/sprite.svg";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useContext } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromFavorites, setNextTrack, setPlaying, setPreviousTrack, setVolume, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
-import { useToken } from "../token";
 import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
+import UserContext from "../UserContext";
 
 
 
@@ -17,18 +17,16 @@ export function AudioPlayer() {
   const isLike = useSelector((state) => state.isLike);
   const isPlaying = useSelector((state) => state.isPlaying);
   const dispatch = useDispatch();
-  // const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
-  // const [isTrackSelected, setIsTrackSelected] = useState(false);
   const audioRef = useRef(null);
 
   const currentTrack = useSelector((state) => state.currentTrackIndex);
   const tracks = useSelector((state) => state.track);
   const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
-  const { token } = useToken();
+  const { token } = useContext(UserContext);
 
   useEffect(() => {
     if (tracks.length) {
@@ -103,7 +101,7 @@ useEffect(() => {
 // --------------------------------------------------
 
 const handleLike = () => {
-  dispatch(addFavoritesTracks(tracks[currentTrackIndex].id,token));
+  dispatch(addFavoritesTracks(tracks[currentTrackIndex].id,token.access));
 };
   
 const handleDislike = () => {

@@ -5,7 +5,7 @@ const UserContext = createContext({
   email: '',
   setEmail: () => {},
   resetEmail: () => {},
-  token: null,
+  token: '',
   setToken: () => {},
 });
 

@@ -8,18 +8,19 @@ import UserContext from "../../components/UserContext";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
-import { useToken } from "../../components/token";
+
 
 
 
 export function FavoritesTracks() {
   const {email} = useContext(UserContext)
   const dispatch = useDispatch();
-  const { token } = useToken();
+  const { token } = useContext(UserContext);
   const tracks = useSelector((state) => state.favoritetracks || []);
 
+  console.log('your token : ', token.access);
   useEffect(() => {
-    dispatch(getAllFavoriteTracks(token)); // this returns a promise
+    dispatch(getAllFavoriteTracks(token.access, token.refresh)); 
   }, [dispatch, token]); 
 
 

@@ -6,22 +6,6 @@ import { Panelplaylist } from "../../components/righPanel/rightPanel";
 import * as S from "./Main.style";
 
 export function MainPage() {
-  // const [selectedTrack, setSelectedTrack] = useState(null);
-  // const [selectedAuthor, setSelectedAuthor] = useState(null);
-  // const [selectedTrackFile, setSelectedTrackFile] = useState(null);
-
-  // const handleTrackSelection = (track, author, trackfile) => {
-  //   setSelectedTrack(track);
-  //   setSelectedAuthor(author);
-  //   setSelectedTrackFile(trackfile);
-  // };
-
-  // if (selectedTrack) {
-  //   console.log(selectedTrack);
-  // }
-  // if (selectedAuthor) {
-  //   console.log(selectedAuthor);
-  // }
 
   return (
     <header className="App-header">
@@ -33,11 +17,7 @@ export function MainPage() {
             <Panelplaylist />
           </S.Main>
  
-            <AudioPlayer
-              // track={selectedTrack}
-              // author={selectedAuthor}
-              // trackfile={selectedTrackFile}
-            />
+            <AudioPlayer/>
 
           <footer className="footer"></footer>
         </S.Container>

@@ -4,7 +4,7 @@ import * as S from './signin.style';
 import { useContext, useState } from 'react';
 import UserContext from '../../components/UserContext';
 import { getToken, signIn } from '../../api';
-import { useToken } from '../../components/token';
+
 
 export function SignIn() {
   const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ export function SignIn() {
   const { setEmail: setUserEmail } = useContext(UserContext);
 
 
-  const { setToken } = useToken();
+  const { setToken } = useContext(UserContext);
   
   const handleLogin = (e) => {
     e.preventDefault();
@@ -39,21 +39,14 @@ export function SignIn() {
       });
 
     getToken(email, password)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error getting token: ');
-        }
-        return response.json();
-      })
-      .then(json => {
-        setToken(json.response); // Assuming token is in the 'response' field
-      console.log(json.response)
+      .then(token => {
+        setToken(token);
+      console.log(token)
       })
       .catch(error => {
         console.error('Error:', error);
       });
   }
-  
 
 
   return (

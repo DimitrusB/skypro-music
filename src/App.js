@@ -2,12 +2,12 @@ import { useState } from "react";
 import { AppRoutes } from "./routes";
 import { BrowserRouter } from "react-router-dom";
 import UserContext from '../src/components/UserContext';
-import { TokenProvider } from "./components/token";
+
 
 
 function App() {
   const [email, setEmail] = useState('');
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState('');
   const resetEmail = () => {
     setEmail('');
   };
@@ -15,7 +15,6 @@ function App() {
 
 
   return (
-    <TokenProvider>
     <UserContext.Provider value={{ email, setEmail,resetEmail, token, setToken  }}>
     <BrowserRouter>
       <div className="App">
@@ -23,7 +22,6 @@ function App() {
       </div>
     </BrowserRouter>
     </UserContext.Provider>
-    </TokenProvider>
   );
 }
 
