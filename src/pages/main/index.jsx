@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { NavMenu } from "../../components/NavMenu/NavMenu";
 import { AudioPlayer } from "../../components/player/Player";
 import { Center } from "../../components/center/center";

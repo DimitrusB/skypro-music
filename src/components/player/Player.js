@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback, useContext } from "rea
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromFavorites, setNextTrack, setPlaying, setPreviousTrack, setVolume, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
+import { setNextTrack, setPlaying, setPreviousTrack, setVolume, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
 import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 import UserContext from "../UserContext";
 import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";

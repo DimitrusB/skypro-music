@@ -31,8 +31,6 @@ const rootReducer = (state = initialState, action) => {
 
     case "GET_TRACK_LIST":
       return { ...state, track: action.payload };
-    // case "GET_TRACK_LIST_FAVORITES":
-    //   return { ...state, favoritetracks: action.payload };
 
 
     case "FETCH_FAVORITES_SUCCESS":
@@ -50,35 +48,23 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         error: action.error,
       };
-    //       case "ADD_TO_FAVORITES":
-    // return {
-    //   ...state,
-    //   favoritetracks: [...state.favoritetracks, action.payload],
-    //   isLike:true,
-    // };
+
 
 
     case "ADD_TO_FAVORITES":
       return {
         ...state,
         favoritetracks: [...state.favoritetracks, action.payload],
+        isLike:true,
       };
-
-
-    // case "REMOVE_FROM_FAVORITES":
-    //   return {
-    //     ...state,
-    //     favoritetracks: state.favoritetracks.filter(
-    //       (track) => track.id !== action.payload.id
-    //     ),
-    //     isLike: false,
-    //   };
 
 
     case "DEL_FAVORITE_TRACKS_SUCCESS": 
     return {
       ...state,
-      favoritetracks: state.favoritetracks.filter((track) => track.id !== action.payload.id)};
+      favoritetracks: state.favoritetracks.filter((track) => track.id !== action.payload.id),
+      isLike: false,
+    };
 
 
     case "GET_TRACK_LIST_SET_ERROR":
