@@ -65,14 +65,20 @@ const rootReducer = (state = initialState, action) => {
       };
 
 
-    case "REMOVE_FROM_FAVORITES":
-      return {
-        ...state,
-        favoritetracks: state.favoritetracks.filter(
-          (track) => track.id !== action.payload.id
-        ),
-        isLike: false,
-      };
+    // case "REMOVE_FROM_FAVORITES":
+    //   return {
+    //     ...state,
+    //     favoritetracks: state.favoritetracks.filter(
+    //       (track) => track.id !== action.payload.id
+    //     ),
+    //     isLike: false,
+    //   };
+
+
+    case "DEL_FAVORITE_TRACKS_SUCCESS": 
+    return {
+      ...state,
+      favoritetracks: state.favoritetracks.filter((track) => track.id !== action.payload.id)};
 
 
     case "GET_TRACK_LIST_SET_ERROR":

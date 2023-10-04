@@ -34,67 +34,6 @@ export async function getAllTracks() {
   }
 
 
-  // export function getToken(email, password) {
-  //   return fetch("https://skypro-music-api.skyeng.tech/user/token/", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       email: email,
-  //       password: password,
-  //     }),
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) throw new Error(response.statusText);
-  //       return response.json();
-  //     })
-  //     .then((json) => console.log(json));
-  // }
-
-
-  // export function getToken(email, password) {
-  //   return fetch("https://skypro-music-api.skyeng.tech/user/token/", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       email: email,
-  //       password: password,
-  //     }),
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //   })
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       if (response.status === 401) {
-  //         return response.json().then((json) => {
-  //             return fetch("https://skypro-music-api.skyeng.tech/user/token/refresh/", {
-  //               method: "POST",
-  //               body: JSON.stringify({
-  //                 refresh: json.refresh,
-  //               }),
-  //               headers: {
-  //                 "content-type": "application/json",
-  //               },
-  //             })
-  //             .then(response => {
-  //               if (!response.ok) {
-  //                 throw new Error('Error: ' + response.statusText);
-  //               } else {
-  //                 return response.json();
-  //               }
-  //             })  
-  //           });
-  //       } else {
-  //         throw new Error('Error: ' + response.statusText);
-  //       }
-  //     } else {
-  //       return response.json();
-  //     }
-  //   });
-  //   }
-
-
 export function getToken(email, password) {
   return fetch("https://skypro-music-api.skyeng.tech/user/token/", {
     method: "POST",
@@ -152,16 +91,16 @@ export function refreshToken(refreshToken) {
   //     .then((json) => console.log(json));
   // }
 
-  export function addFavoritesTracks(trackId, token) {
-    return fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${trackId}/favorite/`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error(response.statusText);
-        return response.json();
-      })
-      .then((json) => console.log(json));
-  }
+  // export function addFavoritesTracks(trackId, token) {
+  //   return fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${trackId}/favorite/`, {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) throw new Error(response.statusText);
+  //       return response.json();
+  //     })
+  //     .then((json) => console.log(json));
+  // }

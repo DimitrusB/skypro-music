@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromFavorites, setNextTrack, setPlaying, setPreviousTrack, setVolume, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
 import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 import UserContext from "../UserContext";
+import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";
 
 
 
@@ -105,8 +106,9 @@ const handleLike = () => {
 };
   
 const handleDislike = () => {
-  dispatch(removeFromFavorites(tracks[currentTrackIndex]));
+  dispatch(delFavoritesTracks(tracks[currentTrackIndex].id,token.access));
 };
+
 
 
 // --------------------------------------------------REPEAT
