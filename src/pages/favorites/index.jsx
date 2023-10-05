@@ -8,21 +8,33 @@ import UserContext from "../../components/UserContext";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
-
-
-
+import { NameTrack } from "../../components/NameTracks/NameTrack";
+import { setCurrentTrack, shouldPlayFromFavorite } from "../../store/actions/trackActions";
 
 export function FavoritesTracks() {
-  const {email} = useContext(UserContext)
+  const { email, resetEmail } = useContext(UserContext);
   const dispatch = useDispatch();
   const { token } = useContext(UserContext);
   const tracks = useSelector((state) => state.favoritetracks || []);
+  const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
 
-  console.log('your token : ', token.access);
+  const handleResetClick = () => {
+    resetEmail(email);
+  };
+
+  // console.log("your token : ", token.access);
+
   useEffect(() => {
-    dispatch(getAllFavoriteTracks(token.access, token.refresh)); 
-  }, [dispatch, token]); 
+    dispatch(getAllFavoriteTracks(token.access, token.refresh));
+  }, [dispatch, token]);
 
+  useEffect(() => {
+    dispatch(shouldPlayFromFavorite());
+  }, []);
+
+  const handleTrackClick = (index) => {
+    dispatch(setCurrentTrack(index));
+  };
 
   return (
     <header className="App-header">
@@ -57,17 +69,18 @@ export function FavoritesTracks() {
                   </S.FPlaylistTitleCol>
                 </S.FContentTitle>
                 <S.FPlaylistContent>
-                {tracks.map((tracks, index) => (
-  <NameTrackFavorites
-    key={index} // Добавлен ключ
-    track={tracks.name}
-    mix={tracks.mix}
-    author={tracks.author}
-    album={tracks.album}
-    time={tracks.duration_in_seconds}
-    trackfile={tracks.track_file}
-  />
-))}
+                {tracks.map((tracks,index) => (
+            <NameTrack
+              track={tracks.name}
+              mix={tracks.mix}
+              author={tracks.author}
+              album={tracks.album}
+              time={tracks.duration_in_seconds}
+              trackfile={tracks.track_file}
+                onClick={() => handleTrackClick(index)}
+                playing={currentTrackIndex === index}
+            />
+          ))}
                 </S.FPlaylistContent>
               </S.CentralblockContent>
             </S.MainCenterblock>
@@ -76,7 +89,7 @@ export function FavoritesTracks() {
               <S.PersonalSidebar>
                 <S.PersonalName>{email}</S.PersonalName>
                 <S.SidebarIcon>
-                  <svg alt="logout">
+                  <svg alt="logout" onClick={handleResetClick}>
                     <use xlinkHref={`${iconSprite}#logout`}></use>
                   </svg>
                 </S.SidebarIcon>

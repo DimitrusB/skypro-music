@@ -109,3 +109,10 @@ export const ADD_FAVORITE_TRACKS = "ADD_FAVORITE_TRACKS";
 //       payload: track 
 //     });
 //   }
+
+export const shouldPlayFromFavorite = (isPlaying) => {
+  return deepFreeze({
+  type: 'SET_PLAYING_FAVORITE',
+  payload: isPlaying,
+});
+};

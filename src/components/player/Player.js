@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback, useContext } from "rea
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
-import { setNextTrack, setPlaying, setPreviousTrack, setVolume, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
+import { setNextTrack, setPlaying, setPreviousTrack, setVolume, shouldPlayFromFavorite, shuffleTracks, toggleLoop } from "../../store/actions/trackActions";
 import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 import UserContext from "../UserContext";
 import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";
@@ -21,19 +21,21 @@ export function AudioPlayer() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-
+  const favoritetracks = useSelector((state)=>state.favoritetracks);
   const audioRef = useRef(null);
-
-  const currentTrack = useSelector((state) => state.currentTrackIndex);
+  const playFavorite = useSelector((state) => state.playFavorite);
+  // const currentTrack = useSelector((state) => state.currentTrackIndex);
   const tracks = useSelector((state) => state.track);
   const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
   const { token } = useContext(UserContext);
+  const [currentTrackList, setCurrentTrackList] = useState([]);
 
   useEffect(() => {
-    if (tracks.length) {
-      const currentTrack = tracks[currentTrackIndex];
+    let currentTrackList = playFavorite ? favoritetracks : tracks;
+  
+    if (currentTrackList.length) {
+      const currentTrack = currentTrackList[currentTrackIndex];
       if (audioRef.current) {
-        // Устанавливаем новый src и загружаем его
         audioRef.current.src = currentTrack.track_file;
         audioRef.current.load();
         if (isPlaying) {
@@ -41,7 +43,8 @@ export function AudioPlayer() {
         }
       }
     }
-  }, [tracks, currentTrackIndex, isPlaying]);
+  }, [tracks, currentTrackIndex, isPlaying, favoritetracks, playFavorite]);
+  
 
   const handleShuffle = () => {
     dispatch(shuffleTracks());
@@ -49,11 +52,13 @@ export function AudioPlayer() {
 
   const handleNextTrack = () => {
     console.log("handleNextTrack triggered");
-    dispatch(setNextTrack(currentTrack));
+    const currentTrackList = playFavorite ? favoritetracks : tracks;
+    dispatch(setNextTrack(currentTrackList[currentTrackIndex]));
   };
   
   const handlePreviousTrack = () => {
-    dispatch(setPreviousTrack(currentTrack));
+    const currentTrackList = playFavorite ? favoritetracks : tracks;
+    dispatch(setPreviousTrack(currentTrackList[currentTrackIndex]));
   };
 
   
@@ -97,7 +102,7 @@ useEffect(() => {
   } else {
     audioRef.current.pause();
   }
-}, [isPlaying, currentTrack.track_file]);
+}, [isPlaying, currentTrackIndex.track_file]);
 
 // --------------------------------------------------
 
@@ -136,12 +141,12 @@ const handleDislike = () => {
     }, 5000);
 
     return () => clearTimeout(timeoutId);
-  }, [tracks.author, tracks.track]);
+  }, [currentTrackList.author, currentTrackList.track]);
   
   return (
     <>
      <audio
-        key={tracks[currentTrackIndex]?.track_id}
+        key={currentTrackList[currentTrackIndex]?.track_id}
         ref={audioRef}
         onPlay={() => dispatch(setPlaying(true))}
         onPause={() => dispatch(setPlaying(false))}
@@ -150,7 +155,7 @@ const handleDislike = () => {
         onTimeUpdate={updateCurrentTime}
         onEnded={handleNextTrack}
       >
-        <source src={tracks[currentTrackIndex]?.track_file} type="audio/mpeg" />
+        <source src={currentTrackList[currentTrackIndex]?.track_file} type="audio/mpeg" />
       </audio>
       <S.MainBar>
         <S.MainBarContent>
@@ -223,23 +228,23 @@ const handleDislike = () => {
                   </S.TrackPlayImage>
                   <S.TrackPlayAuthor isLoading={isLoading}>
                     <S.TrackPlayAuthorLink isLoading={isLoading}>
-                    {tracks[currentTrackIndex]?.author}
+                    {currentTrackList[currentTrackIndex]?.author}
                     </S.TrackPlayAuthorLink>
                   </S.TrackPlayAuthor>
                   <S.TrackPlayAlbum isLoading={isLoading}>
                     <S.TrackPlayAlbumLink isLoading={isLoading}>
-                    {tracks[currentTrackIndex]?.name}
+                    {currentTrackList[currentTrackIndex]?.name}
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.PlayerTrackPlayContain>
 
                 <S.TrackDislike>
                   <S.TracPlayLike onClick={handleLike}>
-                    <S.TracPlayLikeSvg alt="like">
+                   {!playFavorite ? <S.TracPlayLikeSvg alt="like">
                       <use xlinkHref={`${iconSprite}${
                         isLike ? "#icon-likeActive" : "#icon-like"
                       }`}></use>
-                    </S.TracPlayLikeSvg>
+                    </S.TracPlayLikeSvg> : ""}
                   </S.TracPlayLike>
                   <S.TracPlayDis onClick={handleDislike}>
                     <S.TracPlayDisSvg alt="dislike">

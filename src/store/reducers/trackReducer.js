@@ -8,6 +8,7 @@ const initialState = {
   favoritetracks: [],
   isLike: null,
   error: null,
+  playFavorite: false,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -30,7 +31,7 @@ const rootReducer = (state = initialState, action) => {
 
 
     case "GET_TRACK_LIST":
-      return { ...state, track: action.payload };
+      return { ...state, track: action.payload,   playFavorite: false };
 
 
     case "FETCH_FAVORITES_SUCCESS":
@@ -89,6 +90,9 @@ const rootReducer = (state = initialState, action) => {
 
     case "SET_PLAYING":
       return { ...state, isPlaying: action.payload };
+
+      case 'SET_PLAYING_FAVORITE':
+        return { ...state, isPlaying: action.payload, playFavorite: true,  currentTrackIndex: 0,  };
 
 
     case "SET_NEXT_TRACK":
