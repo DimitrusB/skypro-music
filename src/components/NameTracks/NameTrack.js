@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import iconSprite from "../../img/icon/sprite.svg";
+import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 import { formatTime } from "../func";
+import UserContext from "../UserContext";
 import * as S from "./NameTracks.Style";
 
 export function NameTrack({
@@ -17,6 +19,16 @@ export function NameTrack({
   const formattedTime = formatTime(time);
   const [isLoading, setIsLoading] = useState(true);
   const isPlaying = useSelector((state) => state.isPlaying);
+  const isLike = useSelector((state) => state.isLike);
+  const dispatch = useDispatch();
+  const tracks = useSelector((state) => state.track);
+  const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
+  const { token } = useContext(UserContext);
+  const playFavorite = useSelector((state) => state.playFavorite);
+
+  const handleLike = () => {
+    dispatch(addFavoritesTracks(tracks[currentTrackIndex].id,token.access));
+  };
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -68,11 +80,11 @@ export function NameTrack({
           </S.TrackAlbumLink>
         </S.TrackAlbum>
         <div>
-          <S.TrackTimeSvg alt="time">
-            <use xlinkHref={`${iconSprite}#icon-note`}></use>
-          </S.TrackTimeSvg>
-          <S.TrackTimeText>{formattedTime}</S.TrackTimeText>
-        </div>
+  <S.TrackTimeSvg alt="time" onClick={playFavorite ? undefined : handleLike}>
+    <use xlinkHref={`${iconSprite}${isLike ? "#icon-likeActive" : "#icon-like"}`}></use>
+  </S.TrackTimeSvg>
+  <S.TrackTimeText>{formattedTime}</S.TrackTimeText>
+</div>
       </S.PlaylistTrack>
     </S.PlaylistItem>
   );

@@ -148,6 +148,8 @@ fill: transparent;
 stroke: #696969;
 `
 export const FPlaylistContent= styled.div`
+overflow: auto;
+max-height: 500px;
 display: -webkit-box;
 display: -ms-flexbox;
 display: flex;
@@ -156,4 +158,15 @@ display: flex;
 -ms-flex-direction: column;
 flex-direction: column;
 overflow-y: auto;
-`
+::-webkit-scrollbar {
+    width: 0px;
+}
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+-ms-overflow-style: none;
+scrollbar-width: none;
+`;

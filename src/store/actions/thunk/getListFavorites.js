@@ -27,7 +27,8 @@ export const getAllFavoriteTracks = (token, tokenRefresh) => {
           error => console.error('Error in fetching', error) // logging the error
       )
       .catch(error => {
-          console.error('Unexpected error in makeRequestWithTokenRefresh', error); 
-          dispatch({ type: "FETCH_FAVORITES_ERROR", error: error.toString() });
-      });
-  }
+        console.error('Unexpected error in makeRequestWithTokenRefresh', error.message); 
+        console.error('Error stack:', error.stack);
+        dispatch({ type: "FETCH_FAVORITES_ERROR", error: error.toString() });
+      })
+    }
