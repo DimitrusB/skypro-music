@@ -28,23 +28,21 @@ export function AudioPlayer() {
   const tracks = useSelector((state) => state.track);
   const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
   const { token } = useContext(UserContext);
-  const [currentTrackList, setCurrentTrackList] = useState([]);
+  const [currentTrackList, setCurrentTrackList] = useState("");
+
 
   useEffect(() => {
-    let currentTrackList = playFavorite ? favoritetracks : tracks;
+    setCurrentTrackList(playFavorite ? favoritetracks : tracks);
   
-    if (currentTrackList.length) {
-      const currentTrack = currentTrackList[currentTrackIndex];
-      if (audioRef.current) {
-        audioRef.current.src = currentTrack.track_file;
-        audioRef.current.load();
-        if (isPlaying) {
-          audioRef.current.play();
-        }
-      }
+    if (!currentTrackList.length || !audioRef.current) return
+  
+    const currentTrack = currentTrackList[currentTrackIndex];
+    audioRef.current.src = currentTrack.track_file;
+    audioRef.current.load();
+    if (isPlaying) {
+      audioRef.current.play();
     }
   }, [tracks, currentTrackIndex, isPlaying, favoritetracks, playFavorite]);
-  
 
   const handleShuffle = () => {
     dispatch(shuffleTracks());
@@ -92,17 +90,37 @@ const handleTogglePlay = async () => {
     await audioRef.current.play();
     dispatch(setPlaying(true));
   } else {
-    audioRef.current.pause();
-    dispatch(setPlaying(false));
+    // проверка, выполнился ли промис `play()`
+    const playPromise = audioRef.current.play();
+    if (playPromise !== undefined) {
+      playPromise.then((_) => {
+        audioRef.current.pause();
+        dispatch(setPlaying(false));
+      }).catch((error) => {
+        console.log("play promise rejected:", error);
+      });
+    }
   }
 };
+
 useEffect(() => {
+  if (!audioRef.current) return;
   if (isPlaying) {
-    audioRef.current.play();
+    const playPromise = audioRef.current.play();
+    if (playPromise !== undefined) {
+      playPromise.then((_) => {
+        // тут можно не делать ничего
+      }).catch((error) => {
+        console.log("play promise rejected:", error);
+        dispatch(setPlaying(false));  // остановить воспроизведение, если промис был отклонен
+      });
+    }
   } else {
     audioRef.current.pause();
   }
-}, [isPlaying, currentTrackIndex.track_file]);
+}, [isPlaying, currentTrackList.track_file]);
+
+
 
 // --------------------------------------------------
 
@@ -142,7 +160,7 @@ const handleDislike = () => {
 
     return () => clearTimeout(timeoutId);
   }, [currentTrackList.author, currentTrackList.track]);
-  
+
   return (
     <>
      <audio

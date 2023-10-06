@@ -17,7 +17,15 @@ export const getAllFavoriteTracks = (token, tokenRefresh) => {
         if(response.status === 401 && retryCount === 0) {
           // Trying to refresh the token
           return refreshToken(tokenRefresh)
-              .then((newToken) => makeRequestWithTokenRefresh(url, newToken.access, tokenRefresh, dispatch, retryCount + 1));
+              .then((newToken) => 
+                makeRequestWithTokenRefresh(
+                  url,
+                  newToken.access,
+                  newToken.refresh || tokenRefresh, // updates the refresh token if it's included in the response
+                  dispatch,
+                  retryCount + 1
+                )
+              );
         }
         if (!response.ok) throw new Error(response.statusText);
         return response.json();
@@ -31,4 +39,4 @@ export const getAllFavoriteTracks = (token, tokenRefresh) => {
         console.error('Error stack:', error.stack);
         dispatch({ type: "FETCH_FAVORITES_ERROR", error: error.toString() });
       })
-    }
+  }

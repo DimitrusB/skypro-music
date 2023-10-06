@@ -258,7 +258,7 @@ export const TrackPlayAuthor = styled.div`
 -ms-grid-row: 1;
 -ms-grid-column: 2;
 grid-area: author;
-min-width: 49px;
+min-width: 200px;
 ${({ isLoading }) => isLoading &&
 ` 
 background: linear-gradient(90deg, #313131 25%, #272727, #201f1f 75%);
@@ -289,7 +289,7 @@ export const TrackPlayAlbum = styled.div`
 -ms-grid-row: 2;
 -ms-grid-column: 2;
 grid-area: album;
-min-width: 49px;
+min-width: 200px;
 ${({ isLoading }) => isLoading &&
 ` 
 background: linear-gradient(90deg, #313131 25%, #272727, #201f1f 75%);
