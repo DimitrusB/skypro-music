@@ -21,7 +21,7 @@ export const getAllFavoriteTracks = (token, tokenRefresh) => {
                 makeRequestWithTokenRefresh(
                   url,
                   newToken.access,
-                  newToken.refresh || tokenRefresh, // updates the refresh token if it's included in the response
+                  newToken.refresh || tokenRefresh,
                   dispatch,
                   retryCount + 1
                 )
@@ -29,13 +29,10 @@ export const getAllFavoriteTracks = (token, tokenRefresh) => {
         }
         if (!response.ok) throw new Error(response.statusText);
         return response.json();
-      })
-      .then(
-          json => dispatch({ type: "FETCH_FAVORITES_SUCCESS", payload: json }),
-          error => console.error('Error in fetching', error) // logging the error
-      )
+      }) 
+      .then(json => dispatch({ type: "FETCH_FAVORITES_SUCCESS", payload: json }))
       .catch(error => {
-        console.error('Unexpected error in makeRequestWithTokenRefresh', error.message); 
+        console.error('Error in fetch or in processing the returned data:', error.message); 
         console.error('Error stack:', error.stack);
         dispatch({ type: "FETCH_FAVORITES_ERROR", error: error.toString() });
       })

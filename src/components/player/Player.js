@@ -7,6 +7,7 @@ import { setNextTrack, setPlaying, setPreviousTrack, setVolume, shouldPlayFromFa
 import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 import UserContext from "../UserContext";
 import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";
+import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
 
 
 
@@ -85,51 +86,45 @@ export function AudioPlayer() {
 
 // --------------------------------------------------PLAY
 
-const handleTogglePlay = async () => {
-  if (!isPlaying) {
-    await audioRef.current.play();
-    dispatch(setPlaying(true));
-  } else {
-    // проверка, выполнился ли промис `play()`
-    const playPromise = audioRef.current.play();
-    if (playPromise !== undefined) {
-      playPromise.then((_) => {
-        audioRef.current.pause();
-        dispatch(setPlaying(false));
-      }).catch((error) => {
-        console.log("play promise rejected:", error);
-      });
+const handleTogglePlay = () => {
+  if (audioRef.current) {
+    if (isPlaying) {
+      const pausePromise = audioRef.current.pause();
+      if (pausePromise !== undefined) {
+        pausePromise.then(() => {
+          dispatch(setPlaying(false));
+        }).catch((error) => {
+          console.log("pause promise rejected:", error);
+        });
+      }
+    } else {
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          dispatch(setPlaying(true));
+        }).catch((error) => {
+          console.log("play promise rejected:", error);
+        });
+      }
     }
   }
 };
 
 useEffect(() => {
-  if (!audioRef.current) return;
-  if (isPlaying) {
-    const playPromise = audioRef.current.play();
-    if (playPromise !== undefined) {
-      playPromise.then((_) => {
-        // тут можно не делать ничего
-      }).catch((error) => {
-        console.log("play promise rejected:", error);
-        dispatch(setPlaying(false));  // остановить воспроизведение, если промис был отклонен
-      });
-    }
-  } else {
-    audioRef.current.pause();
-  }
 }, [isPlaying, currentTrackList.track_file]);
-
-
-
 // --------------------------------------------------
 
 const handleLike = () => {
-  dispatch(addFavoritesTracks(tracks[currentTrackIndex].id,token.access));
+  dispatch(addFavoritesTracks(currentTrackList[currentTrackIndex].id, token.access));
 };
   
 const handleDislike = () => {
-  dispatch(delFavoritesTracks(tracks[currentTrackIndex].id,token.access));
+  if (currentTrackList === tracks) { // Проверка, равен ли currentTrackList первому значению
+    dispatch(delFavoritesTracks(currentTrackList[currentTrackIndex].id, token.access));
+  } else if (currentTrackList === favoritetracks) { // Проверка, равен ли currentTrackList второму значению 
+    dispatch(delFavoritesTracks(currentTrackList[currentTrackIndex].id, token.access));
+    dispatch(getAllFavoriteTracks(token.access, token.refresh));
+  }
 };
 
 
@@ -164,7 +159,7 @@ const handleDislike = () => {
   return (
     <>
      <audio
-        key={currentTrackList[currentTrackIndex]?.track_id}
+        // key={currentTrackList[currentTrackIndex]?.track_id}
         ref={audioRef}
         onPlay={() => dispatch(setPlaying(true))}
         onPause={() => dispatch(setPlaying(false))}
@@ -257,10 +252,10 @@ const handleDislike = () => {
                 </S.PlayerTrackPlayContain>
 
                 <S.TrackDislike>
-                  <S.TracPlayLike onClick={handleLike}>
+                  <S.TracPlayLike onClick={handleLike} >
                    {!playFavorite ? <S.TracPlayLikeSvg alt="like">
                       <use xlinkHref={`${iconSprite}${
-                        isLike ? "#icon-likeActive" : "#icon-like"
+                        isLike ? "#icon-likeActive" : ""
                       }`}></use>
                     </S.TracPlayLikeSvg> : ""}
                   </S.TracPlayLike>

@@ -8,6 +8,7 @@ import * as S from "./NameTracks.Style";
 
 export function NameTrack({
   track,
+  id,
   author,
   mix,
   album,
@@ -19,15 +20,16 @@ export function NameTrack({
   const formattedTime = formatTime(time);
   const [isLoading, setIsLoading] = useState(true);
   const isPlaying = useSelector((state) => state.isPlaying);
-  const isLike = useSelector((state) => state.isLike);
+  const isLike = useSelector((state) => state.isLike[id]);
   const dispatch = useDispatch();
   const tracks = useSelector((state) => state.track);
   const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
   const { token } = useContext(UserContext);
   const playFavorite = useSelector((state) => state.playFavorite);
+  
 
   const handleLike = () => {
-    dispatch(addFavoritesTracks(tracks[currentTrackIndex].id,token.access));
+    dispatch(addFavoritesTracks(id,token.access));
   };
 
   useEffect(() => {
@@ -80,8 +82,8 @@ export function NameTrack({
           </S.TrackAlbumLink>
         </S.TrackAlbum>
         <div>
-  <S.TrackTimeSvg alt="time" onClick={playFavorite ? undefined : handleLike}>
-    <use xlinkHref={`${iconSprite}${isLike ? "#icon-likeActive" : "#icon-like"}`}></use>
+  <S.TrackTimeSvg data={id} alt="time" onClick={playFavorite ? undefined : handleLike}>
+    <use xlinkHref={`${iconSprite}${isLike? "#icon-likeActive" : "#icon-like"}`}></use>
   </S.TrackTimeSvg>
   <S.TrackTimeText>{formattedTime}</S.TrackTimeText>
 </div>

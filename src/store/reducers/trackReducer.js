@@ -6,7 +6,7 @@ const initialState = {
   currentTrackIndex: 0,
   isShuffle: false,
   favoritetracks: [],
-  isLike: null,
+  isLike: {},
   error: null,
   playFavorite: false,
 };
@@ -35,7 +35,6 @@ const rootReducer = (state = initialState, action) => {
 
 
     case "FETCH_FAVORITES_SUCCESS":
-      // Обновить список любимых треков ответом от сервера
       return {
         ...state,
         favoritetracks: action.payload,
@@ -52,20 +51,19 @@ const rootReducer = (state = initialState, action) => {
 
 
 
-    case "ADD_TO_FAVORITES":
+      case "ADD_TO_FAVORITES":
+        return {
+          ...state,
+          favoritetracks: [...state.favoritetracks, action.payload],
+          isLike: { ...state.isLike, [action.payload.id]: true },  // устанавливает значение "лайка" для этого id в true
+        };
+  
+      case "DEL_FAVORITE_TRACKS_SUCCESS": 
       return {
         ...state,
-        favoritetracks: [...state.favoritetracks, action.payload],
-        isLike:true,
+        favoritetracks: state.favoritetracks.filter((track) => track.id !== action.payload.id),
+        isLike: { ...state.isLike, [action.payload.id]: false }, // устанавливает значение "лайка" для этого id в false
       };
-
-
-    case "DEL_FAVORITE_TRACKS_SUCCESS": 
-    return {
-      ...state,
-      favoritetracks: state.favoritetracks.filter((track) => track.id !== action.payload.id),
-      isLike: false,
-    };
 
 
     case "GET_TRACK_LIST_SET_ERROR":
@@ -92,7 +90,7 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, isPlaying: action.payload };
 
       case 'SET_PLAYING_FAVORITE':
-        return { ...state, isPlaying: action.payload, playFavorite: true,  currentTrackIndex: 0,  };
+        return { ...state, isPlaying: action.payload, playFavorite: true,   };
 
 
     case "SET_NEXT_TRACK":

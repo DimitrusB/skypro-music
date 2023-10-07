@@ -98,6 +98,7 @@ export function Center({ onTrackSelection }) {
         <S.FPlaylistContent>
           {tracks.map((tracks,index) => (
             <NameTrack
+              id={tracks.id}
               track={tracks.name}
               mix={tracks.mix}
               author={tracks.author}

@@ -1,7 +1,6 @@
 import { NavMenu } from "../../components/NavMenu/NavMenu";
 import { AudioPlayer } from "../../components/player/Player";
 import * as S from "./favorite.style";
-import { NameTrackFavorites } from "../../components/NameTracks/NameTrackFavorites";
 import iconSprite from "../../img/icon/sprite.svg";
 import { useContext } from "react";
 import UserContext from "../../components/UserContext";
@@ -15,14 +14,13 @@ export function FavoritesTracks() {
   const { email, resetEmail } = useContext(UserContext);
   const dispatch = useDispatch();
   const { token } = useContext(UserContext);
-  const tracks = useSelector((state) => state.favoritetracks || []);
+  const tracks = useSelector((state) => state.favoritetracks);
   const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
 
   const handleResetClick = () => {
     resetEmail(email);
   };
 
-  // console.log("your token : ", token.access);
 
   useEffect(() => {
     dispatch(getAllFavoriteTracks(token.access, token.refresh));
@@ -31,6 +29,10 @@ export function FavoritesTracks() {
   useEffect(() => {
     dispatch(shouldPlayFromFavorite());
   }, []);
+
+  useEffect(() => {
+    console.log('Tracks updated', tracks);
+  }, [tracks]);
 
   const handleTrackClick = (index) => {
     dispatch(setCurrentTrack(index));
@@ -69,8 +71,9 @@ export function FavoritesTracks() {
                   </S.FPlaylistTitleCol>
                 </S.FContentTitle>
                 <S.FPlaylistContent>
-                {tracks.map((tracks,index) => (
+                {Array.isArray(tracks) && tracks.length > 0 && tracks.map((tracks,index) => (
             <NameTrack
+              id={tracks.id}
               track={tracks.name}
               mix={tracks.mix}
               author={tracks.author}

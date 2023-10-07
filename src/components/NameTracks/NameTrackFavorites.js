@@ -40,7 +40,7 @@ export function NameTrackFavorites({ track, author, mix, album, time }) {
         </S.TrackAlbum>
         <div>
           <S.TrackTimeSvg alt="time">
-            <use xlinkHref={`${iconSprite}#icon-like`}></use>
+            <use xlinkHref={`${iconSprite}#icon-likeActive`}></use>
           </S.TrackTimeSvg>
           <S.TrackTimeText>{time}</S.TrackTimeText>
         </div>
