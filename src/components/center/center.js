@@ -8,27 +8,34 @@ import * as S from "./Center.style";
 import { Link } from "react-router-dom";
 import { getAllTracks } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
-import { getTrackList, getTrackListError, setCurrentTrack } from "../../store/actions/trackActions";
+import { fetchFavoritesSuccess, getTrackList, getTrackListError, setCurrentTrack, setPlaying } from "../../store/actions/trackActions";
 import UserContext from "../UserContext";
-import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 
 export function Center({ onTrackSelection }) {
   const dispatch = useDispatch();
   const tracks = useSelector((state) => state.track || []);
-  const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
+  const currentTrackId = useSelector((state) => state.currentTrackId);
+  const isPlaying = useSelector((state) => state.isPlaying);
   // const error = useSelector((state) => state.error);
   const { email, token } = useContext(UserContext);
 
   useEffect(() => {
     getAllTracks()
       .then((response) => {
-        dispatch(getTrackList(response));
-        response.forEach(item => {
+        const tracks = response.map(item => {
           if (item.stared_user.find((user) => user.email === email)) {
-            dispatch(addFavoritesTracks(item.id,token.access));
-            return item;
+            return {...item, isFavorite: true};
           }
+
+          return item;
         })
+
+        if (!currentTrackId) {
+          dispatch(setCurrentTrack(tracks[0].id));
+        }
+
+        dispatch(getTrackList(tracks));
+        dispatch(fetchFavoritesSuccess(tracks.filter((track) => track.isFavorite)));
       })
       .catch((error) => {
         dispatch(getTrackListError(`Error fetching data from the server: ${error}`));
@@ -39,8 +46,13 @@ export function Center({ onTrackSelection }) {
   //   onTrackSelection(track, author, trackfile);
   // };
 
-  const handleTrackClick = (index) => {
-    dispatch(setCurrentTrack(index));
+  const handleTrackClick = (id) => {
+    if (id === currentTrackId) {
+      isPlaying ? dispatch(setPlaying(false)) : dispatch(setPlaying(true));
+    } else {
+      dispatch(setCurrentTrack(id));
+      dispatch(setPlaying(true))
+    }
   };
 
   const [trackFilterOpen, setTrackFilterOpen] = useState(false);
@@ -116,8 +128,8 @@ export function Center({ onTrackSelection }) {
               trackfile={tracks.track_file}
               // onClick={() =>
                 // handleTrackClick(tracks.name, tracks.author, tracks.track_file)
-                onClick={() => handleTrackClick(index)}
-                playing={currentTrackIndex === index}
+                onClick={() => handleTrackClick(tracks.id)}
+                playing={currentTrackId === tracks.id}
             />
           ))}
         </S.FPlaylistContent>

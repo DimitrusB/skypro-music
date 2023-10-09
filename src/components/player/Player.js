@@ -27,23 +27,22 @@ export function AudioPlayer() {
   const playFavorite = useSelector((state) => state.playFavorite);
   // const currentTrack = useSelector((state) => state.currentTrackIndex);
   const tracks = useSelector((state) => state.track);
-  const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
-  const { token } = useContext(UserContext);
+  const currentTrackId = useSelector((state) => state.currentTrackId);
+  const { token, setToken } = useContext(UserContext);
   const [currentTrackList, setCurrentTrackList] = useState("");
-
 
   useEffect(() => {
     setCurrentTrackList(tracks);
   
     if (!currentTrackList.length || !audioRef.current) return
   
-    const currentTrack = currentTrackList[currentTrackIndex];
+    const currentTrack = currentTrackList.find((track) => track.id === currentTrackId);
     audioRef.current.src = currentTrack.track_file;
     audioRef.current.load();
     if (isPlaying) {
       audioRef.current.play();
     }
-  }, [tracks, currentTrackIndex, isPlaying, favoritetracks, playFavorite]);
+  }, [currentTrackId, isPlaying]);
 
   const handleShuffle = () => {
     dispatch(shuffleTracks());
@@ -52,12 +51,14 @@ export function AudioPlayer() {
   const handleNextTrack = () => {
     console.log("handleNextTrack triggered");
     const currentTrackList = playFavorite ? favoritetracks : tracks;
-    dispatch(setNextTrack(currentTrackList[currentTrackIndex]));
+    dispatch(setNextTrack(currentTrackList.find((track) => track.id === currentTrackId)));
+    updateCurrentTime();
   };
   
   const handlePreviousTrack = () => {
     const currentTrackList = playFavorite ? favoritetracks : tracks;
-    dispatch(setPreviousTrack(currentTrackList[currentTrackIndex]));
+    dispatch(setPreviousTrack(currentTrackList.find((track) => track.id === currentTrackId)));
+    updateCurrentTime();
   };
 
   
@@ -115,14 +116,14 @@ useEffect(() => {
 // --------------------------------------------------
 
 const handleLike = () => {
-  dispatch(addFavoritesTracks(currentTrackList[currentTrackIndex].id, token.access));
+  dispatch(addFavoritesTracks(currentTrackList.find((track) => track.id === currentTrackId), token, setToken));
 };
   
 const handleDislike = () => {
   if (currentTrackList === tracks) { // Проверка, равен ли currentTrackList первому значению
-    dispatch(delFavoritesTracks(currentTrackList[currentTrackIndex].id, token.access));
+    dispatch(delFavoritesTracks(currentTrackList.find((track) => track.id === currentTrackId), token, setToken));
   } else if (currentTrackList === favoritetracks) { // Проверка, равен ли currentTrackList второму значению 
-    dispatch(delFavoritesTracks(currentTrackList[currentTrackIndex].id, token.access));
+    dispatch(delFavoritesTracks(currentTrackList.find((track) => track.id === currentTrackId), token, setToken));
     dispatch(getAllFavoriteTracks(token.access, token.refresh));
   }
 };
@@ -157,7 +158,7 @@ const handleDislike = () => {
   }, []);
 
   return (
-    <>
+    currentTrackList.length && <>
      <audio
         // key={currentTrackList[currentTrackIndex]?.track_id}
         ref={audioRef}
@@ -168,7 +169,7 @@ const handleDislike = () => {
         onTimeUpdate={updateCurrentTime}
         onEnded={handleNextTrack}
       >
-        <source src={currentTrackList[currentTrackIndex]?.track_file} type="audio/mpeg" />
+        <source src={currentTrackList.find((track) => track.id === currentTrackId)?.track_file} type="audio/mpeg" />
       </audio>
       <S.MainBar>
         <S.MainBarContent>
@@ -241,12 +242,12 @@ const handleDislike = () => {
                   </S.TrackPlayImage>
                   <S.TrackPlayAuthor isLoading={isLoading}>
                     <S.TrackPlayAuthorLink isLoading={isLoading}>
-                    {currentTrackList[currentTrackIndex]?.author}
+                    {currentTrackList.find((track) => track.id === currentTrackId)?.author}
                     </S.TrackPlayAuthorLink>
                   </S.TrackPlayAuthor>
                   <S.TrackPlayAlbum isLoading={isLoading}>
                     <S.TrackPlayAlbumLink isLoading={isLoading}>
-                    {currentTrackList[currentTrackIndex]?.name}
+                    {currentTrackList.find((track) => track.id === currentTrackId)?.name}
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.PlayerTrackPlayContain>

@@ -54,10 +54,10 @@ export const setPreviousTrack = () => {
 });
 };
 
-export const setCurrentTrack = (trackIndex) => {
+export const setCurrentTrack = (trackId) => {
   return deepFreeze({
     type: "SET_CURRENT_TRACK",
-    payload: trackIndex
+    payload: trackId
   });
 };
 

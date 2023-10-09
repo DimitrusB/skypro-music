@@ -8,19 +8,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
 import { NameTrack } from "../../components/NameTracks/NameTrack";
-import { setCurrentTrack, shouldPlayFromFavorite } from "../../store/actions/trackActions";
+import { setCurrentTrack, setPlaying, shouldPlayFromFavorite } from "../../store/actions/trackActions";
 
 export function FavoritesTracks() {
   const { email, resetEmail } = useContext(UserContext);
   const dispatch = useDispatch();
   const { token } = useContext(UserContext);
-  const tracks = useSelector((state) => state.favoritetracks && state.favoritetracks.payload ? state.favoritetracks.payload : state.favoritetracks);
-  const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
+  const tracks = useSelector((state) => state.track);
+  const currentTrackId = useSelector((state) => state.currentTrackId);
+  const isPlaying = useSelector((state) => state.isPlaying);
 
   const handleResetClick = () => {
     resetEmail(email);
   };
-
 
   useEffect(() => {
     dispatch(getAllFavoriteTracks(token.access, token.refresh));
@@ -34,8 +34,13 @@ export function FavoritesTracks() {
     console.log('Tracks updated', tracks);
   }, [tracks]);
 
-  const handleTrackClick = (index) => {
-    dispatch(setCurrentTrack(index));
+  const handleTrackClick = (id) => {
+    if (id === currentTrackId) {
+      isPlaying ? dispatch(setPlaying(false)) : dispatch(setPlaying(true));
+    } else {
+      dispatch(setCurrentTrack(id));
+      dispatch(setPlaying(true))
+    }
   };
 
   return (
@@ -80,8 +85,8 @@ export function FavoritesTracks() {
               album={tracks.album}
               time={tracks.duration_in_seconds}
               trackfile={tracks.track_file}
-                onClick={() => handleTrackClick(index)}
-                playing={currentTrackIndex === index}
+                onClick={() => handleTrackClick(tracks.id)}
+                playing={currentTrackId === tracks.id}
             />
           ))}
                 </S.FPlaylistContent>

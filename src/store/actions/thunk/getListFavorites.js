@@ -1,4 +1,5 @@
 import { refreshToken } from "../../../api";
+import { fetchFavoritesSuccess } from "../trackActions";
 
 export const getAllFavoriteTracks = (token, tokenRefresh) => {
     return (dispatch) => {
@@ -30,7 +31,7 @@ export const getAllFavoriteTracks = (token, tokenRefresh) => {
         if (!response.ok) throw new Error(response.statusText);
         return response.json();
       }) 
-      .then(json =>  console.log(json) || dispatch({ type: "FETCH_FAVORITES_SUCCESS", payload: json }))
+      .then(json => dispatch(fetchFavoritesSuccess(json)))
       .catch(error => {
         console.error('Error in fetch or in processing the returned data:', error.message); 
         console.error('Error stack:', error.stack);

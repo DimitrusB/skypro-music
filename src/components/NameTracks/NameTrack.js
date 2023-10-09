@@ -5,6 +5,7 @@ import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 import { formatTime } from "../func";
 import UserContext from "../UserContext";
 import * as S from "./NameTracks.Style";
+import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";
 
 export function NameTrack({
   track,
@@ -23,13 +24,16 @@ export function NameTrack({
   const isLike = useSelector((state) => state.isLike[id]);
   const dispatch = useDispatch();
   const tracks = useSelector((state) => state.track);
-  const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
-  const { token } = useContext(UserContext);
+  const currentTrackId = useSelector((state) => state.currentTrackId);
+  const { token, setToken } = useContext(UserContext);
   const playFavorite = useSelector((state) => state.playFavorite);
-  
 
   const handleLike = () => {
-    dispatch(addFavoritesTracks(id,token.access));
+    dispatch(addFavoritesTracks(tracks.find((track) => track.id === currentTrackId), token, setToken));
+  };
+
+  const handleDislike = () => {
+    dispatch(delFavoritesTracks(id, token, setToken));
   };
 
   useEffect(() => {
@@ -44,22 +48,24 @@ export function NameTrack({
     <S.PlaylistItem>
       <S.PlaylistTrack>
         <S.TrackTitled>
-        {isPlaying && playing ? (
-          <S.TrackTitleImage isLoading={isLoading}>
-            <S.Circle isLoading={isLoading} alt="music">
-              <use xlinkHref={`${iconSprite}#icon-note`}></use>
-            </S.Circle>
-          </S.TrackTitleImage>):
-          (<S.TrackTitleImage isLoading={isLoading}>
-            <S.TrackTitleSvg isLoading={isLoading} alt="music">
-              <use xlinkHref={`${iconSprite}#icon-note`}></use>
-            </S.TrackTitleSvg>
-          </S.TrackTitleImage>)}
-          {isPlaying && playing  ? (
+          {isPlaying && playing ? (
+            <S.TrackTitleImage isLoading={isLoading}>
+              <S.Circle isLoading={isLoading} alt="music">
+                <use xlinkHref={`${iconSprite}#icon-note`}></use>
+              </S.Circle>
+            </S.TrackTitleImage>
+          ) : (
+            <S.TrackTitleImage isLoading={isLoading}>
+              <S.TrackTitleSvg isLoading={isLoading} alt="music">
+                <use xlinkHref={`${iconSprite}#icon-note`}></use>
+              </S.TrackTitleSvg>
+            </S.TrackTitleImage>
+          )}
+          {isPlaying && playing ? (
             <S.TrackTitleText isLoading={isLoading}>
               <S.TrackTitleLink isLoading={isLoading} onClick={onClick}>
-                  {track}
-                  <S.TrackTitleSpan>{mix}</S.TrackTitleSpan>
+                {track}
+                <S.TrackTitleSpan>{mix}</S.TrackTitleSpan>
               </S.TrackTitleLink>
             </S.TrackTitleText>
           ) : (
@@ -82,11 +88,19 @@ export function NameTrack({
           </S.TrackAlbumLink>
         </S.TrackAlbum>
         <div>
-  <S.TrackTimeSvg data={id} alt="time" onClick={playFavorite ? undefined : handleLike}>
-    <use xlinkHref={`${iconSprite}${isLike? "#icon-likeActive" : "#icon-like"}`}></use>
-  </S.TrackTimeSvg>
-  <S.TrackTimeText>{formattedTime}</S.TrackTimeText>
-</div>
+          <S.TrackTimeSvg
+            data={id}
+            alt="time"
+            onClick={isLike ? handleDislike : handleLike}
+          >
+            <use
+              xlinkHref={`${iconSprite}${
+                isLike ? "#icon-likeActive" : "#icon-like"
+              }`}
+            ></use>
+          </S.TrackTimeSvg>
+          <S.TrackTimeText>{formattedTime}</S.TrackTimeText>
+        </div>
       </S.PlaylistTrack>
     </S.PlaylistItem>
   );
