@@ -14,7 +14,7 @@ export function FavoritesTracks() {
   const { email, resetEmail } = useContext(UserContext);
   const dispatch = useDispatch();
   const { token } = useContext(UserContext);
-  const tracks = useSelector((state) => state.favoritetracks);
+  const tracks = useSelector((state) => state.favoritetracks && state.favoritetracks.payload ? state.favoritetracks.payload : state.favoritetracks);
   const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
 
   const handleResetClick = () => {
