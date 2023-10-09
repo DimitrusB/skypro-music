@@ -46,7 +46,7 @@ export function NotFoundPage() {
               <S.ButtonBackMainA to="/">Вернуться на главную</S.ButtonBackMainA>
             </S.ButtonBackMain>
           </S.CenterError>
-          <AudioPlayer />
+
           <footer className="footer"></footer>
         </S.Container>
       </S.Wrapper>

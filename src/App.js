@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AppRoutes } from "./routes";
 import { BrowserRouter } from "react-router-dom";
 import UserContext from '../src/components/UserContext';
+import { AudioPlayer } from "./components/player/Player";
 
 
 
@@ -19,6 +20,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <AppRoutes user={email}/>
+        {email && <AudioPlayer/>}
       </div>
     </BrowserRouter>
     </UserContext.Provider>
