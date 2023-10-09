@@ -3,23 +3,32 @@ import { NameTrack } from "../NameTracks/NameTrack";
 import { GenreFilter } from "../filters/genreFilter";
 import { TrackFilter } from "../filters/trckFilter";
 import { YearFilter } from "../filters/yaerFilter";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import * as S from "./Center.style";
 import { Link } from "react-router-dom";
 import { getAllTracks } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { getTrackList, getTrackListError, setCurrentTrack } from "../../store/actions/trackActions";
+import UserContext from "../UserContext";
+import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 
 export function Center({ onTrackSelection }) {
   const dispatch = useDispatch();
   const tracks = useSelector((state) => state.track || []);
   const currentTrackIndex = useSelector((state) => state.currentTrackIndex);
   // const error = useSelector((state) => state.error);
+  const { email, token } = useContext(UserContext);
 
   useEffect(() => {
     getAllTracks()
       .then((response) => {
         dispatch(getTrackList(response));
+        response.forEach(item => {
+          if (item.stared_user.find((user) => user.email === email)) {
+            dispatch(addFavoritesTracks(item.id,token.access));
+            return item;
+          }
+        })
       })
       .catch((error) => {
         dispatch(getTrackListError(`Error fetching data from the server: ${error}`));

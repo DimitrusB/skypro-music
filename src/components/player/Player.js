@@ -33,7 +33,7 @@ export function AudioPlayer() {
 
 
   useEffect(() => {
-    setCurrentTrackList(playFavorite ? favoritetracks : tracks);
+    setCurrentTrackList(tracks);
   
     if (!currentTrackList.length || !audioRef.current) return
   
@@ -154,7 +154,7 @@ const handleDislike = () => {
     }, 5000);
 
     return () => clearTimeout(timeoutId);
-  }, [currentTrackList.author, currentTrackList.track]);
+  }, []);
 
   return (
     <>
