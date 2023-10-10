@@ -17,7 +17,7 @@ export function Center({ onTrackSelection }) {
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
   // const error = useSelector((state) => state.error);
-  const { email, token } = useContext(UserContext);
+  const { email, token, filteredTracks  } = useContext(UserContext);
 
   useEffect(() => {
     getAllTracks()
@@ -117,7 +117,7 @@ export function Center({ onTrackSelection }) {
           </S.FPlaylistTitleCol>
         </S.FContentTitle>
         <S.FPlaylistContent>
-          {tracks.map((tracks,index) => (
+          {filteredTracks.map((tracks,index) => (
             <NameTrack
               id={tracks.id}
               track={tracks.name}

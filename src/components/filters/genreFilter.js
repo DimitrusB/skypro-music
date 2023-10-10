@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getAllTracks } from "../../api";
+import UserContext from "../UserContext";
 import * as S from "./Filters.style";
 
-export function GenreFilter(props) {
+export function GenreFilter(props, onFilteredTracks) {
   const { id, name, onClick, isOpen } = props;
   const [selectedGenre, setSelectedGenre] = useState("");
   const [genres, setGenres] = useState([]);
   const [tracks, setTracks] = useState([]);
+  const { setFilteredTracks } = useContext(UserContext);
 
   const toggleDropdown = () => {
     onClick(id);
@@ -27,12 +29,17 @@ export function GenreFilter(props) {
   }, []);
 
   useEffect(() => {
-    // Фильтруем треки по выбранному жанру
     if (selectedGenre) {
-      const filteredTracks = tracks.filter((track) => track.genre === selectedGenre);
-      console.log(filteredTracks); // Выводим в консоль.
+      const filteredTracks = selectedGenre === 'Все'
+        ? tracks
+        : tracks.filter((track) => track.genre === selectedGenre);
+  
+      // Теперь мы обновляем глобальное состояние вместо вызова своего пропа внутри `GenreFilter`.
+      setFilteredTracks(filteredTracks);
+      console.log(filteredTracks);
+
     }
-  }, [selectedGenre, tracks]);
+  }, [selectedGenre, tracks, setFilteredTracks]);
 
   return (
     <S.Button type="button" onClick={toggleDropdown}>

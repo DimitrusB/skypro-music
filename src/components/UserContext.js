@@ -7,6 +7,8 @@ const UserContext = createContext({
   resetEmail: () => {},
   token: '',
   setToken: () => {},
+  filteredTracks: '',
+  setFilteredTracks: () => {}
 });
 
 export default UserContext;
