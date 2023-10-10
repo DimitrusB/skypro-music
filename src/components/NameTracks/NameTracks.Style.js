@@ -186,6 +186,7 @@ height: 12px;
 margin-right: 17px;
 fill: transparent;
 stroke: #696969;
+cursor: pointer;
 `
 export const TrackTimeText = styled.span`
 font-style: normal;

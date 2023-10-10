@@ -148,24 +148,11 @@ export function AudioPlayer() {
   };
 
   const handleDislike = () => {
-    if (currentTrackList === tracks) {
-      dispatch(
-        delFavoritesTracks(
-          currentTrackList.find((track) => track.id === currentTrackId),
-          token,
-          setToken
-        )
-      );
-    } else if (currentTrackList === favoritetracks) {
-      dispatch(
-        delFavoritesTracks(
-          currentTrackList.find((track) => track.id === currentTrackId),
-          token,
-          setToken
-        )
-      );
-      dispatch(getAllFavoriteTracks(token.access, token.refresh));
-    }
+    const currentTrack = currentTrackList.find(
+      (track) => track.id === currentTrackId
+    );
+
+      dispatch(delFavoritesTracks(currentTrackId, token, setToken));
   };
 
   // --------------------------------------------------REPEAT
