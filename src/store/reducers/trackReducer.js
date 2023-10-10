@@ -8,7 +8,7 @@ const initialState = {
   favoritetracks: [],
   isLike: {},
   error: null,
-  playFavorite: false,
+  playFavorite: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -80,10 +80,10 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case "SET_PLAYING":
-      return { ...state, isPlaying: action.payload };
+      return { ...state, isPlaying: action.payload};
 
     case "SET_PLAYING_FAVORITE":
-      return { ...state, track: state.favoritetracks };
+      return { ...state, track: state.favoritetracks, playFavorite:true };
 
     case "SET_NEXT_TRACK":
       const { isShuffle, track } = state;
