@@ -26,7 +26,6 @@ export function NameTrack({
   const tracks = useSelector((state) => state.track);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const { token, setToken } = useContext(UserContext);
-  const playFavorite = useSelector((state) => state.playFavorite);
 
   const handleLike = () => {
     dispatch(addFavoritesTracks(tracks.find((track) => track.id === currentTrackId), token, setToken));
