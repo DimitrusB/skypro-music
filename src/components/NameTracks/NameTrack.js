@@ -29,10 +29,10 @@ export function NameTrack({
   const { token, setToken } = useContext(UserContext);
 
   const handleLike = () => {
-    const trackToAdd = tracks.find((track) => track.id === currentTrackId);
+    const trackToAdd = tracks.find((track) => track.id === id);
     
     // Проверяем, существует ли уже трек в избранном
-    const isTrackAlreadyLiked = favoritetracks.some((track) => track.id === currentTrackId);
+    const isTrackAlreadyLiked = favoritetracks.some((track) => track.id === id);
     
     if (!isTrackAlreadyLiked) {
       dispatch(addFavoritesTracks(trackToAdd, token, setToken));
