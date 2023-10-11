@@ -93,7 +93,7 @@ export function NameTrack({
           </S.TrackAuthorLink>
         </S.TrackAuthor>
         <S.TrackAlbum isLoading={isLoading}>
-          <S.TrackAlbumLink isLoading={isLoading}>
+          <S.TrackAlbumLink isLoading={isLoading} onClick={onClick}>
             {album}
           </S.TrackAlbumLink>
         </S.TrackAlbum>
