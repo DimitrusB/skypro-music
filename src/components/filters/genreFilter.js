@@ -23,16 +23,17 @@ export function GenreFilter(props, onFilteredTracks) {
         const sortedUniqueGenres = uniqueGenres.sort((a, b) => a.localeCompare(b));
         setGenres(sortedUniqueGenres);
         setTracks(data); // Сохраняем все треки
+        setFilteredTracks(data);
       })
       .catch((error) => {
         alert(`Ошибка получения данных с сервера: ${error}`);
       });
-  }, []);
+  },  [setFilteredTracks]);
 
   useEffect(() => {
     if (selectedGenre) {
       setFilterChoose(true);
-      const filteredTracks = selectedGenre === 'Все'
+      const filteredTracks = selectedGenre === "Все"
         ? tracks
         : tracks.filter((track) => track.genre === selectedGenre);
   
@@ -42,12 +43,12 @@ export function GenreFilter(props, onFilteredTracks) {
 
     }
   }, [selectedGenre, tracks, setFilteredTracks]);
-  const ButtonComponent = filterChoose ? S.ButtonActive : S.Button;
+
   return (
-  <ButtonComponent type="button" onClick={toggleDropdown}>  
-      <S.Choose isOpen={isOpen}>{selectedGenre || name}</S.Choose>
+  <S.Button type="button" onClick={toggleDropdown} style={{ border: filterChoose ? '1px solid #B672FF' : '' }}>  
+      <S.Choose style={{ color: filterChoose ? '#B672FF' : 'default color' }} isOpen={isOpen}>{selectedGenre || name}</S.Choose>
       {isOpen && (
-        <S.Options>
+        <S.Options >
           <S.Option
             key="all"
             onClick={() => {
@@ -68,6 +69,6 @@ export function GenreFilter(props, onFilteredTracks) {
           ))}
         </S.Options>
       )}
-    </ButtonComponent>
+    </S.Button>
   );
 }

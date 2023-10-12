@@ -9,6 +9,7 @@ export function TrackFilter(props, onFilteredTracks) {
   const [ trackName, setTrackName] = useState([]);
   const [tracks, setTracks] = useState([]);
   const { setFilteredTracks } = useContext(UserContext);
+  const [filterChoose, setFilterChoose] = useState(false)
 
   const toggleDropdown = () => {
     onClick(id);
@@ -22,14 +23,16 @@ export function TrackFilter(props, onFilteredTracks) {
         const sortedUniqueTracks = uniqueTracks.sort((a, b) => a.localeCompare(b));
         setTrackName(sortedUniqueTracks);
         setTracks(data); // Сохраняем все треки
+        setFilteredTracks(data);
       })
       .catch((error) => {
         alert(`Ошибка получения данных с сервера: ${error}`);
       });
-  }, []);
+  }, [setFilteredTracks]);
 
   useEffect(() => {
     if (selectedTracks) {
+      setFilterChoose(true);
       const filteredTracks = selectedTracks === 'Все'
         ? tracks
         : tracks.filter((track) => track.author === selectedTracks);
@@ -42,9 +45,9 @@ export function TrackFilter(props, onFilteredTracks) {
   }, [selectedTracks, tracks, setFilteredTracks]);
 
   return (
-    <S.Button type="button" onClick={toggleDropdown}>
-      <S.Choose isOpen={isOpen}>{selectedTracks || name}</S.Choose>
-      {isOpen && (
+    <S.Button type="button" onClick={toggleDropdown} style={{ border: filterChoose ? '1px solid #B672FF' : '' }}>  
+    <S.Choose style={{ color: filterChoose ? '#B672FF' : 'default color' }} isOpen={isOpen}>{selectedTracks || name}</S.Choose>
+    {isOpen && (
         <S.Options>
 <S.Option
   key="all"
