@@ -9,6 +9,7 @@ export function GenreFilter(props, onFilteredTracks) {
   const [genres, setGenres] = useState([]);
   const [tracks, setTracks] = useState([]);
   const { setFilteredTracks } = useContext(UserContext);
+  const [filterChoose, setFilterChoose] = useState(false)
 
   const toggleDropdown = () => {
     onClick(id);
@@ -30,6 +31,7 @@ export function GenreFilter(props, onFilteredTracks) {
 
   useEffect(() => {
     if (selectedGenre) {
+      setFilterChoose(true);
       const filteredTracks = selectedGenre === 'Все'
         ? tracks
         : tracks.filter((track) => track.genre === selectedGenre);
