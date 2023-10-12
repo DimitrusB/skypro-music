@@ -42,6 +42,33 @@ position: relative;
   width: 170px;
 }  
 `
+export const ButtonActive = styled.div`
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+border: 1px solid #ad61ff;
+border-radius: 60px;
+padding: 6px 20px;
+position: relative;
+
+
+&:hover {
+  border-color: #d9b6ff;
+  color: #d9b6ff;
+  cursor: pointer;
+}
+&:active {
+  border-color: #ad61ff;
+  color: #ad61ff;
+  cursor: pointer;
+}
+&:not(:last-child) {
+  margin-right: 10px;
+  width: 170px;
+}  
+`
+
 export const Options = styled.ul`
 display: flex;
 flex-direction: column;

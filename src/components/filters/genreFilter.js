@@ -42,9 +42,9 @@ export function GenreFilter(props, onFilteredTracks) {
 
     }
   }, [selectedGenre, tracks, setFilteredTracks]);
-
+  const ButtonComponent = filterChoose ? S.ButtonActive : S.Button;
   return (
-    <S.Button type="button" onClick={toggleDropdown}>
+  <ButtonComponent type="button" onClick={toggleDropdown}>  
       <S.Choose isOpen={isOpen}>{selectedGenre || name}</S.Choose>
       {isOpen && (
         <S.Options>
@@ -68,6 +68,6 @@ export function GenreFilter(props, onFilteredTracks) {
           ))}
         </S.Options>
       )}
-    </S.Button>
+    </ButtonComponent>
   );
 }
