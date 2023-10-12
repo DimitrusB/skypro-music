@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getAllTracks } from "../../api";
+import UserContext from "../UserContext";
 import * as S from "./Filters.style";
 
-export function TrackFilter(props) {
+export function TrackFilter(props, onFilteredTracks) {
   const { id, name, onClick, isOpen } = props;
-  const [to, setTo] = useState("");
+  const [selectedTracks, setSelectedTracks] = useState("");
+  const [ trackName, setTrackName] = useState([]);
   const [tracks, setTracks] = useState([]);
+  const { setFilteredTracks } = useContext(UserContext);
 
   const toggleDropdown = () => {
     onClick(id);
@@ -17,36 +20,50 @@ export function TrackFilter(props) {
       .then((data) => {
         const uniqueTracks = [...new Set(data.map((track) => track.author))];
         const sortedUniqueTracks = uniqueTracks.sort((a, b) => a.localeCompare(b));
-        setTracks(sortedUniqueTracks);
+        setTrackName(sortedUniqueTracks);
+        setTracks(data); // Сохраняем все треки
       })
       .catch((error) => {
         alert(`Ошибка получения данных с сервера: ${error}`);
       });
   }, []);
 
+  useEffect(() => {
+    if (selectedTracks) {
+      const filteredTracks = selectedTracks === 'Все'
+        ? tracks
+        : tracks.filter((track) => track.author === selectedTracks);
+  
+      // Теперь мы обновляем глобальное состояние вместо вызова своего пропа внутри `GenreFilter`.
+      setFilteredTracks(filteredTracks);
+      console.log(filteredTracks);
+
+    }
+  }, [selectedTracks, tracks, setFilteredTracks]);
+
   return (
     <S.Button type="button" onClick={toggleDropdown}>
-      <S.Choose isOpen={isOpen}>{to || name}</S.Choose>
+      <S.Choose isOpen={isOpen}>{selectedTracks || name}</S.Choose>
       {isOpen && (
         <S.Options>
-          <S.Option
-            key="all"
-            onClick={() => {
-              setTo("Все");
-            }}
-          >
-            Все
-          </S.Option>
-          {tracks.map((track) => (
-            <S.Option
-              key={track}
-              onClick={() => {
-                setTo(track);
-              }}
-            >
-              {track}
-            </S.Option>
-          ))}
+<S.Option
+  key="all"
+  onClick={() => {
+    setSelectedTracks("Все");
+  }}
+>
+  Все
+</S.Option>
+{trackName.map((track) => (
+  <S.Option
+    key={track}
+    onClick={() => {
+        setSelectedTracks(track);
+    }}
+>
+    {track}
+</S.Option>
+))}
         </S.Options>
       )}
     </S.Button>
