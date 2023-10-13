@@ -16,12 +16,28 @@ export function Category() {
   const isPlaying = useSelector((state) => state.isPlaying);
   const { email, resetEmail} = useContext(UserContext);
   const currentTrackId = useSelector((state) => state.currentTrackId);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
 const [tracks, setTracks] = useState([]);
 const [nameList, setNameList] = useState("");
 const category = musicCategory.find(
   (category) => category.id === parseInt(params.id, 10)
 );
+
+useEffect(() => {
+  if (search === "") {
+    setSearchResults(tracks);
+  } else {
+    setSearchResults(
+      tracks.filter((track) =>
+        track.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }
+}, [search, tracks]);
+
+const handleSearchChange = (event) => setSearch(event.target.value);
 
 useEffect(() => {
   getAllTracksById(category.id)
@@ -53,6 +69,7 @@ useEffect(() => {
     }
   };
 
+
   
   const handleResetClick = () => {
     resetEmail(email);
@@ -74,6 +91,7 @@ useEffect(() => {
                   type="search"
                   placeholder="Поиск"
                   name="search"
+                  onChange={handleSearchChange} 
                 />
               </S.MainCenterblockSearch>
               <S.CentralblockH2>{nameList}</S.CentralblockH2>
@@ -92,7 +110,7 @@ useEffect(() => {
                 </S.FContentTitle>
                 <S.FPlaylistContent>
 
-                {tracks.map((track, index) => (
+                {searchResults.map((track, index) => (
                 <NameTrack
                   key={index}
                   id={track.id}
