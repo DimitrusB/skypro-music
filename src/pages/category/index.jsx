@@ -1,17 +1,49 @@
 import { NavMenu } from "../../components/NavMenu/NavMenu";
-import { AudioPlayer } from "../../components/player/Player";
 import * as S from "../favorites/favorite.style";
-import { NameTrackFavorites } from "../../components/NameTracks/NameTrackFavorites";
 import iconSprite from "../../img/icon/sprite.svg";
 import { useParams } from "react-router-dom";
 import { musicCategory } from "../../components/constants";
+import { getAllTracksById } from "../../api";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFavoritesSuccess, getTrackList, getTrackListError, setCurrentTrack } from "../../store/actions/trackActions";
+import { useContext, useEffect, useState } from "react";
+import { NameTrack } from "../../components/NameTracks/NameTrack";
+import UserContext from "../../components/UserContext";
 
 export function Category() {
   const params = useParams();
+  const dispatch = useDispatch();
+  const { email} = useContext(UserContext);
+  const currentTrackId = useSelector((state) => state.currentTrackId);
 
-  const category = musicCategory.find(
-    (category) => category.id === parseInt(params.id, 10)
-  );
+const [tracks, setTracks] = useState([]);
+const [nameList, setNameList] = useState("");
+// const tracks = useSelector((state) => state.track || []);
+const category = musicCategory.find(
+  (category) => category.id === parseInt(params.id, 10)
+);
+
+
+useEffect(() => {
+  getAllTracksById(category.id)
+    .then((response) => {
+      setTracks(response.items);
+      setNameList(response)
+      console.log(response.items);
+    })
+    .then(() => {
+
+      if (!currentTrackId) {
+        dispatch(setCurrentTrack(tracks[0].id));
+      }
+      dispatch(getTrackList(tracks));
+      dispatch(fetchFavoritesSuccess(tracks.filter((track) => track.isFavorite)));
+    })
+    .catch((error) => {
+      dispatch(getTrackListError(`Error fetching data from the server: ${error}`));
+    });
+}, [dispatch]);
+
 
   if (!category) {
     return <div>Плейлист не найден</div>;
@@ -35,7 +67,7 @@ export function Category() {
                   name="search"
                 />
               </S.MainCenterblockSearch>
-              <S.CentralblockH2>{category.alt}</S.CentralblockH2>
+              <S.CentralblockH2>{nameList.name}</S.CentralblockH2>
               <S.CentralblockContent>
                 <S.FContentTitle>
                   <S.FPlaylistTitleCol col="col01">Трек</S.FPlaylistTitleCol>
@@ -50,42 +82,19 @@ export function Category() {
                   </S.FPlaylistTitleCol>
                 </S.FContentTitle>
                 <S.FPlaylistContent>
-                  <NameTrackFavorites
-                    track="Guilt"
-                    author="Nero"
-                    album="Welcome Reality"
-                    time="4:44"
-                  />
-                  <NameTrackFavorites
-                    track="Elektro"
-                    author="Dynoro, Outwork, Mr. Gee"
-                    album="Elektro"
-                    time="2:22"
-                  />
-                  <NameTrackFavorites
-                    track="I’m Fire"
-                    author="Ali Bakgor"
-                    album="I’m Fire"
-                    time="2:22"
-                  />
-                  <NameTrackFavorites
-                    track="Non Stop"
-                    author="Стоункат, Psychopath"
-                    album="Non Stop"
-                    time="4:12"
-                  />
-                  <NameTrackFavorites
-                    track="Run Run"
-                    author="Jaded, Will Clarke, AR/CO"
-                    album="Run Run"
-                    time="2:54"
-                  />
-                  <NameTrackFavorites
-                    track="Eyes on Fire"
-                    author="Blue Foundation, Zeds Dead"
-                    album="Eyes on Fire"
-                    time="5:20"
-                  />
+
+                {tracks.map((track, index) => (
+  <NameTrack
+    key={index}
+    id={track.id}
+    track={track.name}
+    author={track.author}
+    album={track.album}
+    time={track.duration_in_seconds} 
+    trackfile={track.track_file}
+
+  />
+))}
                 </S.FPlaylistContent>
               </S.CentralblockContent>
             </S.MainCenterblock>

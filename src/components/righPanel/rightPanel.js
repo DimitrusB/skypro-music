@@ -1,6 +1,3 @@
-// import playlist1 from "../img/playlist01.png";
-// import playlist2 from "../img/playlist02.png";
-// import playlist3 from "../img/playlist03.png";
 import iconSprite from "../../img/icon/sprite.svg";
 import { NamePlaylist } from "../Playlists/NamePlaylist";
 import * as S from "./rightpanel.style";

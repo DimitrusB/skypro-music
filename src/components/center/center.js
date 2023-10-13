@@ -16,7 +16,6 @@ export function Center({ onTrackSelection }) {
   const tracks = useSelector((state) => state.track || []);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
-  // const error = useSelector((state) => state.error);
   const { email, token, filteredTracks  } = useContext(UserContext);
 
   useEffect(() => {

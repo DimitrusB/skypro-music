@@ -6,6 +6,12 @@ export async function getAllTracks() {
     return data;
   }
   
+  export async function getAllTracksById(Id) {
+    const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/selection/${Id}/`);
+    const data = await response.json();
+    return data;
+  }
+
   export function signIn(email, password) {
     return fetch("https://skypro-music-api.skyeng.tech/user/login/", {
       method: "POST",
