@@ -14,7 +14,7 @@ export function Category() {
   const params = useParams();
   const dispatch = useDispatch();
   const isPlaying = useSelector((state) => state.isPlaying);
-  const { email} = useContext(UserContext);
+  const { email, resetEmail} = useContext(UserContext);
   const currentTrackId = useSelector((state) => state.currentTrackId);
 
 const [tracks, setTracks] = useState([]);
@@ -56,6 +56,11 @@ useEffect(() => {
       dispatch(setCurrentTrack(id));
       dispatch(setPlaying(true))
     }
+  };
+
+  
+  const handleResetClick = () => {
+    resetEmail(email);
   };
 
   return (
@@ -111,9 +116,9 @@ useEffect(() => {
 
             <S.MainSidebar>
               <S.PersonalSidebar>
-                <S.PersonalName>Dmitriy.Borisevich</S.PersonalName>
+                <S.PersonalName>{email}</S.PersonalName>
                 <S.SidebarIcon>
-                  <svg alt="logout">
+                  <svg alt="logout" onClick={handleResetClick}>
                     <use xlinkHref={`${iconSprite}#logout`}></use>
                   </svg>
                 </S.SidebarIcon>
