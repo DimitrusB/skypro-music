@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { musicCategory } from "../../components/constants";
 import { getAllTracksById } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFavoritesSuccess, getTrackList, getTrackListError, setCurrentTrack } from "../../store/actions/trackActions";
+import { fetchFavoritesSuccess, getTrackList, getTrackListError, setCurrentTrack, setPlaying } from "../../store/actions/trackActions";
 import { useContext, useEffect, useState } from "react";
 import { NameTrack } from "../../components/NameTracks/NameTrack";
 import UserContext from "../../components/UserContext";
@@ -13,12 +13,12 @@ import UserContext from "../../components/UserContext";
 export function Category() {
   const params = useParams();
   const dispatch = useDispatch();
+  const isPlaying = useSelector((state) => state.isPlaying);
   const { email} = useContext(UserContext);
   const currentTrackId = useSelector((state) => state.currentTrackId);
 
 const [tracks, setTracks] = useState([]);
 const [nameList, setNameList] = useState("");
-// const tracks = useSelector((state) => state.track || []);
 const category = musicCategory.find(
   (category) => category.id === parseInt(params.id, 10)
 );
@@ -48,6 +48,15 @@ useEffect(() => {
   if (!category) {
     return <div>Плейлист не найден</div>;
   }
+
+  const handleTrackClick = (id) => {
+    if (id === currentTrackId) {
+      isPlaying ? dispatch(setPlaying(false)) : dispatch(setPlaying(true));
+    } else {
+      dispatch(setCurrentTrack(id));
+      dispatch(setPlaying(true))
+    }
+  };
 
   return (
     <header className="App-header">
@@ -84,17 +93,18 @@ useEffect(() => {
                 <S.FPlaylistContent>
 
                 {tracks.map((track, index) => (
-  <NameTrack
-    key={index}
-    id={track.id}
-    track={track.name}
-    author={track.author}
-    album={track.album}
-    time={track.duration_in_seconds} 
-    trackfile={track.track_file}
-
-  />
-))}
+                <NameTrack
+                  key={index}
+                  id={track.id}
+                  track={track.name}
+                  author={track.author}
+                  album={track.album}
+                  time={track.duration_in_seconds} 
+                  trackfile={track.track_file}
+                  onClick={() => handleTrackClick(track.id)}
+                  playing={currentTrackId === track.id}
+                />
+              ))}
                 </S.FPlaylistContent>
               </S.CentralblockContent>
             </S.MainCenterblock>

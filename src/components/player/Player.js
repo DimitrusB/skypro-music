@@ -299,7 +299,7 @@ export function AudioPlayer() {
                             xlinkHref={`${iconSprite}#icon-${
                               currentTrackList.find(
                                 (track) => track.id === currentTrackId
-                              ).isLike
+                              ).isFavorite
                                 ? "likeActive"
                                 : "like"
                             }`}
