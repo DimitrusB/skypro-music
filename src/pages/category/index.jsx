@@ -23,27 +23,22 @@ const category = musicCategory.find(
   (category) => category.id === parseInt(params.id, 10)
 );
 
-
 useEffect(() => {
   getAllTracksById(category.id)
     .then((response) => {
       setTracks(response.items);
-      setNameList(response)
-      console.log(response.items);
-    })
-    .then(() => {
-
+      setNameList(response.name)
+      
       if (!currentTrackId) {
-        dispatch(setCurrentTrack(tracks[0].id));
+        dispatch(setCurrentTrack(response.items[0].id));
       }
-      dispatch(getTrackList(tracks));
-      dispatch(fetchFavoritesSuccess(tracks.filter((track) => track.isFavorite)));
+      dispatch(getTrackList(response.items));
+      dispatch(fetchFavoritesSuccess(response.items.filter((track) => track.isFavorite)));
     })
     .catch((error) => {
       dispatch(getTrackListError(`Error fetching data from the server: ${error}`));
     });
-}, [dispatch]);
-
+}, [dispatch, currentTrackId, category.id]);
 
   if (!category) {
     return <div>Плейлист не найден</div>;
@@ -81,7 +76,7 @@ useEffect(() => {
                   name="search"
                 />
               </S.MainCenterblockSearch>
-              <S.CentralblockH2>{nameList.name}</S.CentralblockH2>
+              <S.CentralblockH2>{nameList}</S.CentralblockH2>
               <S.CentralblockContent>
                 <S.FContentTitle>
                   <S.FPlaylistTitleCol col="col01">Трек</S.FPlaylistTitleCol>
