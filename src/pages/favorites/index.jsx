@@ -2,7 +2,7 @@ import { NavMenu } from "../../components/NavMenu/NavMenu";
 import { AudioPlayer } from "../../components/player/Player";
 import * as S from "./favorite.style";
 import iconSprite from "../../img/icon/sprite.svg";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../components/UserContext";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -17,6 +17,22 @@ export function FavoritesTracks() {
   const tracks = useSelector((state) => state.track);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    if (search === "") {
+      setSearchResults(tracks);
+    } else {
+      setSearchResults(
+        tracks.filter((track) =>
+          track.name.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
+  }, [search, tracks]);
+  
+  const handleSearchChange = (event) => setSearch(event.target.value);
 
   const handleResetClick = () => {
     resetEmail(email);
@@ -59,6 +75,7 @@ export function FavoritesTracks() {
                   type="search"
                   placeholder="Поиск"
                   name="search"
+                  onChange={handleSearchChange}
                 />
               </S.MainCenterblockSearch>
               <S.CentralblockH2>Мои треки</S.CentralblockH2>
@@ -76,7 +93,7 @@ export function FavoritesTracks() {
                   </S.FPlaylistTitleCol>
                 </S.FContentTitle>
                 <S.FPlaylistContent>
-                {Array.isArray(tracks) && tracks.length > 0 && tracks.map((tracks,index) => (
+                {Array.isArray(searchResults) && searchResults.length > 0 && searchResults.map((tracks,index) => (
             <NameTrack
               id={tracks.id}
               track={tracks.name}

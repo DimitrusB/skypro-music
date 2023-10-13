@@ -43,9 +43,6 @@ export function Center({ onTrackSelection }) {
       });
   }, [dispatch]);
 
-  // const handleTrackSelection = (track, author, trackfile) => {
-  //   onTrackSelection(track, author, trackfile);
-  // };
 
   const handleTrackClick = (id) => {
     if (id === currentTrackId) {
