@@ -6,9 +6,15 @@ import { YearFilter } from "../filters/yaerFilter";
 import { useContext, useEffect, useState } from "react";
 import * as S from "./Center.style";
 import { Link } from "react-router-dom";
-import { getAllTracks } from "../../api";
+import { getAllTracks } from "../api/api";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFavoritesSuccess, getTrackList, getTrackListError, setCurrentTrack, setPlaying } from "../../store/actions/trackActions";
+import {
+  fetchFavoritesSuccess,
+  getTrackList,
+  getTrackListError,
+  setCurrentTrack,
+  setPlaying,
+} from "../../store/actions/trackActions";
 import UserContext from "../UserContext";
 
 export function Center({ onTrackSelection }) {
@@ -16,44 +22,45 @@ export function Center({ onTrackSelection }) {
   const tracks = useSelector((state) => state.track || []);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
-  const { email, token, filteredTracks  } = useContext(UserContext);
+  const { email, token, filteredTracks } = useContext(UserContext);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     getAllTracks()
       .then((response) => {
-        const tracks = response.map(item => {
+        const tracks = response.map((item) => {
           if (item.stared_user.find((user) => user.email === email)) {
-            return {...item, isFavorite: true};
+            return { ...item, isFavorite: true };
           }
 
           return item;
-        })
+        });
 
         if (!currentTrackId) {
           dispatch(setCurrentTrack(tracks[0].id));
         }
 
         dispatch(getTrackList(tracks));
-        dispatch(fetchFavoritesSuccess(tracks.filter((track) => track.isFavorite)));
+        dispatch(
+          fetchFavoritesSuccess(tracks.filter((track) => track.isFavorite))
+        );
       })
       .catch((error) => {
-        dispatch(getTrackListError(`Error fetching data from the server: ${error}`));
+        dispatch(
+          getTrackListError(`Error fetching data from the server: ${error}`)
+        );
       });
   }, [dispatch]);
-
 
   const handleTrackClick = (id) => {
     if (id === currentTrackId) {
       isPlaying ? dispatch(setPlaying(false)) : dispatch(setPlaying(true));
     } else {
       dispatch(setCurrentTrack(id));
-      dispatch(setPlaying(true))
+      dispatch(setPlaying(true));
     }
   };
-
-
 
   useEffect(() => {
     if (search === "") {
@@ -66,10 +73,8 @@ export function Center({ onTrackSelection }) {
       );
     }
   }, [search, filteredTracks]);
-  
+
   const handleSearchChange = (event) => setSearch(event.target.value);
-
-
 
   const [trackFilterOpen, setTrackFilterOpen] = useState(false);
   const [yearFilterOpen, setYearFilterOpen] = useState(false);
@@ -99,7 +104,12 @@ export function Center({ onTrackSelection }) {
             <use xlinkHref={`${iconSprite}#icon-search`}></use>
           </S.MainSearchSvg>
         </Link>
-        <S.MainSearchText type="search" placeholder="Поиск" name="search"  onChange={handleSearchChange} />
+        <S.MainSearchText
+          type="search"
+          placeholder="Поиск"
+          name="search"
+          onChange={handleSearchChange}
+        />
       </S.MainCenterblockSearch>
       <S.CentralblockH2>Треки</S.CentralblockH2>
       <S.CentralblockFilter>
@@ -133,7 +143,7 @@ export function Center({ onTrackSelection }) {
           </S.FPlaylistTitleCol>
         </S.FContentTitle>
         <S.FPlaylistContent>
-        {searchResults.map((tracks,index) => (
+          {searchResults.map((tracks, index) => (
             <NameTrack
               id={tracks.id}
               track={tracks.name}
@@ -143,14 +153,13 @@ export function Center({ onTrackSelection }) {
               time={tracks.duration_in_seconds}
               trackfile={tracks.track_file}
               // onClick={() =>
-                // handleTrackClick(tracks.name, tracks.author, tracks.track_file)
-                onClick={() => handleTrackClick(tracks.id)}
-                playing={currentTrackId === tracks.id}
+              // handleTrackClick(tracks.name, tracks.author, tracks.track_file)
+              onClick={() => handleTrackClick(tracks.id)}
+              playing={currentTrackId === tracks.id}
             />
           ))}
         </S.FPlaylistContent>
       </S.CentralblockContent>
     </S.MainCenterblock>
-
   );
 }

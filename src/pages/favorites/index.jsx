@@ -1,5 +1,4 @@
 import { NavMenu } from "../../components/NavMenu/NavMenu";
-import { AudioPlayer } from "../../components/player/Player";
 import * as S from "./favorite.style";
 import iconSprite from "../../img/icon/sprite.svg";
 import { useContext, useState } from "react";

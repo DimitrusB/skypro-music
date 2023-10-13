@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signUp } from '../../api';
+import { signUp } from '../../components/api/api';
 import logo_modal from '../../img/logo_modal.png';
 import * as S from './signup.Style';
 

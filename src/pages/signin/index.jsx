@@ -3,7 +3,7 @@ import logo_modal from '../../img/logo_modal.png';
 import * as S from './signin.style';
 import { useContext, useState } from 'react';
 import UserContext from '../../components/UserContext';
-import { getToken, signIn } from '../../api';
+import { getToken, signIn } from '../../components/api/api';
 
 
 export function SignIn() {

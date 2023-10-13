@@ -1,4 +1,4 @@
-import { refreshToken } from "../../../api";
+import { refreshToken } from "../../../components/api/api";
 import { removeFromFavoriteTracksSuccess } from "../trackActions";
 
 export function delFavoritesTracks(trackId, token, setToken) {

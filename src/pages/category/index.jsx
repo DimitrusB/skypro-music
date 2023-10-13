@@ -3,9 +3,15 @@ import * as S from "../favorites/favorite.style";
 import iconSprite from "../../img/icon/sprite.svg";
 import { useParams } from "react-router-dom";
 import { musicCategory } from "../../components/constants";
-import { getAllTracksById } from "../../api";
+import { getAllTracksById } from "../../components/api/api";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFavoritesSuccess, getTrackList, getTrackListError, setCurrentTrack, setPlaying } from "../../store/actions/trackActions";
+import {
+  fetchFavoritesSuccess,
+  getTrackList,
+  getTrackListError,
+  setCurrentTrack,
+  setPlaying,
+} from "../../store/actions/trackActions";
 import { useContext, useEffect, useState } from "react";
 import { NameTrack } from "../../components/NameTracks/NameTrack";
 import UserContext from "../../components/UserContext";
@@ -14,47 +20,53 @@ export function Category() {
   const params = useParams();
   const dispatch = useDispatch();
   const isPlaying = useSelector((state) => state.isPlaying);
-  const { email, resetEmail} = useContext(UserContext);
+  const { email, resetEmail } = useContext(UserContext);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-const [tracks, setTracks] = useState([]);
-const [nameList, setNameList] = useState("");
-const category = musicCategory.find(
-  (category) => category.id === parseInt(params.id, 10)
-);
+  const [tracks, setTracks] = useState([]);
+  const [nameList, setNameList] = useState("");
+  const category = musicCategory.find(
+    (category) => category.id === parseInt(params.id, 10)
+  );
 
-useEffect(() => {
-  if (search === "") {
-    setSearchResults(tracks);
-  } else {
-    setSearchResults(
-      tracks.filter((track) =>
-        track.name.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }
-}, [search, tracks]);
+  useEffect(() => {
+    if (search === "") {
+      setSearchResults(tracks);
+    } else {
+      setSearchResults(
+        tracks.filter((track) =>
+          track.name.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
+  }, [search, tracks]);
 
-const handleSearchChange = (event) => setSearch(event.target.value);
+  const handleSearchChange = (event) => setSearch(event.target.value);
 
-useEffect(() => {
-  getAllTracksById(category.id)
-    .then((response) => {
-      setTracks(response.items);
-      setNameList(response.name)
-      
-      if (!currentTrackId) {
-        dispatch(setCurrentTrack(response.items[0].id));
-      }
-      dispatch(getTrackList(response.items));
-      dispatch(fetchFavoritesSuccess(response.items.filter((track) => track.isFavorite)));
-    })
-    .catch((error) => {
-      dispatch(getTrackListError(`Error fetching data from the server: ${error}`));
-    });
-}, [dispatch, currentTrackId, category.id]);
+  useEffect(() => {
+    getAllTracksById(category.id)
+      .then((response) => {
+        setTracks(response.items);
+        setNameList(response.name);
+
+        if (!currentTrackId) {
+          dispatch(setCurrentTrack(response.items[0].id));
+        }
+        dispatch(getTrackList(response.items));
+        dispatch(
+          fetchFavoritesSuccess(
+            response.items.filter((track) => track.isFavorite)
+          )
+        );
+      })
+      .catch((error) => {
+        dispatch(
+          getTrackListError(`Error fetching data from the server: ${error}`)
+        );
+      });
+  }, [dispatch, currentTrackId, category.id]);
 
   if (!category) {
     return <div>Плейлист не найден</div>;
@@ -65,12 +77,10 @@ useEffect(() => {
       isPlaying ? dispatch(setPlaying(false)) : dispatch(setPlaying(true));
     } else {
       dispatch(setCurrentTrack(id));
-      dispatch(setPlaying(true))
+      dispatch(setPlaying(true));
     }
   };
 
-
-  
   const handleResetClick = () => {
     resetEmail(email);
   };
@@ -91,7 +101,7 @@ useEffect(() => {
                   type="search"
                   placeholder="Поиск"
                   name="search"
-                  onChange={handleSearchChange} 
+                  onChange={handleSearchChange}
                 />
               </S.MainCenterblockSearch>
               <S.CentralblockH2>{nameList}</S.CentralblockH2>
@@ -109,20 +119,19 @@ useEffect(() => {
                   </S.FPlaylistTitleCol>
                 </S.FContentTitle>
                 <S.FPlaylistContent>
-
-                {searchResults.map((track, index) => (
-                <NameTrack
-                  key={index}
-                  id={track.id}
-                  track={track.name}
-                  author={track.author}
-                  album={track.album}
-                  time={track.duration_in_seconds} 
-                  trackfile={track.track_file}
-                  onClick={() => handleTrackClick(track.id)}
-                  playing={currentTrackId === track.id}
-                />
-              ))}
+                  {searchResults.map((track, index) => (
+                    <NameTrack
+                      key={index}
+                      id={track.id}
+                      track={track.name}
+                      author={track.author}
+                      album={track.album}
+                      time={track.duration_in_seconds}
+                      trackfile={track.track_file}
+                      onClick={() => handleTrackClick(track.id)}
+                      playing={currentTrackId === track.id}
+                    />
+                  ))}
                 </S.FPlaylistContent>
               </S.CentralblockContent>
             </S.MainCenterblock>

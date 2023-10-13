@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getAllTracks } from "../../api";
+import { getAllTracks } from "../api/api";
 import UserContext from "../UserContext";
 import * as S from "./Filters.style";
 
@@ -9,7 +9,7 @@ export function GenreFilter(props, onFilteredTracks) {
   const [genres, setGenres] = useState([]);
   const [tracks, setTracks] = useState([]);
   const { setFilteredTracks } = useContext(UserContext);
-  const [filterChoose, setFilterChoose] = useState(false)
+  const [filterChoose, setFilterChoose] = useState(false);
 
   const toggleDropdown = () => {
     onClick(id);
@@ -20,7 +20,9 @@ export function GenreFilter(props, onFilteredTracks) {
     getAllTracks()
       .then((data) => {
         const uniqueGenres = [...new Set(data.map((track) => track.genre))];
-        const sortedUniqueGenres = uniqueGenres.sort((a, b) => a.localeCompare(b));
+        const sortedUniqueGenres = uniqueGenres.sort((a, b) =>
+          a.localeCompare(b)
+        );
         setGenres(sortedUniqueGenres);
         setTracks(data); // Сохраняем все треки
         setFilteredTracks(data);
@@ -28,27 +30,36 @@ export function GenreFilter(props, onFilteredTracks) {
       .catch((error) => {
         alert(`Ошибка получения данных с сервера: ${error}`);
       });
-  },  [setFilteredTracks]);
+  }, [setFilteredTracks]);
 
   useEffect(() => {
     if (selectedGenre) {
       setFilterChoose(true);
-      const filteredTracks = selectedGenre === "Все"
-        ? tracks
-        : tracks.filter((track) => track.genre === selectedGenre);
-  
+      const filteredTracks =
+        selectedGenre === "Все"
+          ? tracks
+          : tracks.filter((track) => track.genre === selectedGenre);
+
       // Теперь мы обновляем глобальное состояние вместо вызова своего пропа внутри `GenreFilter`.
       setFilteredTracks(filteredTracks);
       console.log(filteredTracks);
-
     }
   }, [selectedGenre, tracks, setFilteredTracks]);
 
   return (
-  <S.Button type="button" onClick={toggleDropdown} style={{ border: filterChoose ? '1px solid #B672FF' : '' }}>  
-      <S.Choose style={{ color: filterChoose ? '#B672FF' : 'default color' }} isOpen={isOpen}>{selectedGenre || name}</S.Choose>
+    <S.Button
+      type="button"
+      onClick={toggleDropdown}
+      style={{ border: filterChoose ? "1px solid #B672FF" : "" }}
+    >
+      <S.Choose
+        style={{ color: filterChoose ? "#B672FF" : "default color" }}
+        isOpen={isOpen}
+      >
+        {selectedGenre || name}
+      </S.Choose>
       {isOpen && (
-        <S.Options >
+        <S.Options>
           <S.Option
             key="all"
             onClick={() => {

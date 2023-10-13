@@ -1,5 +1,5 @@
-import { refreshToken } from "../../../api";
-import { addFavoriteTracksSuccess, getTrackList } from "../trackActions";
+import { refreshToken } from "../../../components/api/api";
+import { addFavoriteTracksSuccess} from "../trackActions";
 
 export function addFavoritesTracks(track, token, setToken) {
   return (dispatch) => {
