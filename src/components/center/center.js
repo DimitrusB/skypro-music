@@ -17,6 +17,8 @@ export function Center({ onTrackSelection }) {
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
   const { email, token, filteredTracks  } = useContext(UserContext);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     getAllTracks()
@@ -54,6 +56,24 @@ export function Center({ onTrackSelection }) {
     }
   };
 
+
+
+  useEffect(() => {
+    if (search === "") {
+      setSearchResults(filteredTracks);
+    } else {
+      setSearchResults(
+        filteredTracks.filter((track) =>
+          track.name.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
+  }, [search, filteredTracks]);
+  
+  const handleSearchChange = (event) => setSearch(event.target.value);
+
+
+
   const [trackFilterOpen, setTrackFilterOpen] = useState(false);
   const [yearFilterOpen, setYearFilterOpen] = useState(false);
   const [genreFilterOpen, setGenreFilterOpen] = useState(false);
@@ -82,7 +102,7 @@ export function Center({ onTrackSelection }) {
             <use xlinkHref={`${iconSprite}#icon-search`}></use>
           </S.MainSearchSvg>
         </Link>
-        <S.MainSearchText type="search" placeholder="Поиск" name="search" />
+        <S.MainSearchText type="search" placeholder="Поиск" name="search"  onChange={handleSearchChange} />
       </S.MainCenterblockSearch>
       <S.CentralblockH2>Треки</S.CentralblockH2>
       <S.CentralblockFilter>
@@ -116,7 +136,7 @@ export function Center({ onTrackSelection }) {
           </S.FPlaylistTitleCol>
         </S.FContentTitle>
         <S.FPlaylistContent>
-        {filteredTracks.map((tracks,index) => (
+        {searchResults.map((tracks,index) => (
             <NameTrack
               id={tracks.id}
               track={tracks.name}
