@@ -5,7 +5,7 @@ import UserContext from "../UserContext";
 
 export function YearFilter(props, onFilteredTracks) {
   const { id, name, onClick, isOpen } = props;
-  const [selectedYear, setSelectedYear] = useState("");
+  const {selectedYear, setSelectedYear} = useContext(UserContext);
   const [tracks, setTracks] = useState([]);
   const [years, setYears] = useState([]);
   const [filterChoose, setFilterChoose] = useState(false);
@@ -35,23 +35,22 @@ export function YearFilter(props, onFilteredTracks) {
       });
   }, [setFilteredTracks]);
 
-  useEffect(() => {
-    if (selectedYear) {
-      setFilterChoose(true);
-      const filteredTracks =
-        selectedYear === "Все"
-          ? tracks
-          : tracks.filter(
-              (track) =>
-                track.release_date &&
-                track.release_date.substring(0, 4) === selectedYear
-            );
 
-      // Теперь мы обновляем глобальное состояние вместо вызова своего пропа внутри `GenreFilter`.
+
+  useEffect(() => {
+    if (selectedYear) { 
+      let filteredTracks = tracks;
+      
+      if(selectedYear !== "Все") {
+        setFilterChoose(true);
+        filteredTracks = filteredTracks.filter((track) => track.release_date && track.release_date.substring(0, 4)=== selectedYear);
+      }
+
+
       setFilteredTracks(filteredTracks);
-      console.log(filteredTracks);
-    }
-  }, [selectedYear, tracks, setFilteredTracks]);
+     }
+  }, [tracks, selectedYear, setFilteredTracks]);
+
 
   return (
     <S.Button

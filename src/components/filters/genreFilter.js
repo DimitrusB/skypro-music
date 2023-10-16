@@ -5,7 +5,7 @@ import * as S from "./Filters.style";
 
 export function GenreFilter(props, onFilteredTracks) {
   const { id, name, onClick, isOpen } = props;
-  const [selectedGenre, setSelectedGenre] = useState("");
+  const {selectedGenre, setSelectedGenre} = useContext(UserContext);
   const [genres, setGenres] = useState([]);
   const [tracks, setTracks] = useState([]);
   const { setFilteredTracks } = useContext(UserContext);
@@ -32,19 +32,20 @@ export function GenreFilter(props, onFilteredTracks) {
       });
   }, [setFilteredTracks]);
 
-  useEffect(() => {
-    if (selectedGenre) {
-      setFilterChoose(true);
-      const filteredTracks =
-        selectedGenre === "Все"
-          ? tracks
-          : tracks.filter((track) => track.genre === selectedGenre);
 
-      // Теперь мы обновляем глобальное состояние вместо вызова своего пропа внутри `GenreFilter`.
+  useEffect(() => {
+    if (selectedGenre) { 
+      let filteredTracks = tracks;
+      
+      if(selectedGenre !== "Все") {
+        setFilterChoose(true);
+        filteredTracks = filteredTracks.filter((track) => track.genre === selectedGenre);
+      }
+
+
       setFilteredTracks(filteredTracks);
-      console.log(filteredTracks);
-    }
-  }, [selectedGenre, tracks, setFilteredTracks]);
+     }
+  }, [tracks, selectedGenre,setFilteredTracks]);
 
   return (
     <S.Button

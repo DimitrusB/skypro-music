@@ -22,9 +22,10 @@ export function Center({ onTrackSelection }) {
   const tracks = useSelector((state) => state.track || []);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
-  const { email, token, filteredTracks } = useContext(UserContext);
+  const { email,  filteredTracks, selectedGenre, setSelectedGenre, selectedYear, setSelectedYear, selectedTracks, setSelectedTracks} = useContext(UserContext);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const { setFilteredTracks } = useContext(UserContext);
 
   useEffect(() => {
     getAllTracks()
@@ -61,6 +62,30 @@ export function Center({ onTrackSelection }) {
       dispatch(setPlaying(true));
     }
   };
+
+  useEffect(() => {
+
+    let filtered = tracks;
+
+
+    if (selectedGenre && selectedGenre !== "Все") {
+      filtered = filtered.filter((track) => track.genre === selectedGenre);
+    }
+
+
+    if (selectedYear && selectedYear !== "Все") {
+
+      filtered = filtered.filter((track) => track.release_date && track.release_date.substring(0, 4)=== selectedYear);
+    }
+
+    if (selectedTracks && selectedTracks !== "Все") {
+
+      filtered = filtered.filter((track) => track.author === selectedTracks);
+    }
+
+    setFilteredTracks(filtered);
+    console.log(filtered);
+  }, [tracks, selectedGenre, selectedYear, selectedTracks]);
 
   useEffect(() => {
     if (search === "") {
@@ -109,6 +134,7 @@ export function Center({ onTrackSelection }) {
           placeholder="Поиск"
           name="search"
           onChange={handleSearchChange}
+          
         />
       </S.MainCenterblockSearch>
       <S.CentralblockH2>Треки</S.CentralblockH2>
@@ -118,16 +144,22 @@ export function Center({ onTrackSelection }) {
           name="По исполнителю"
           onClick={() => handleFilterToggle("track")}
           isOpen={trackFilterOpen}
+          selectedTrack={selectedTracks}
+          setSelectedTrack={setSelectedTracks}
         />
         <YearFilter
           name="Году выпуска"
           onClick={() => handleFilterToggle("year")}
           isOpen={yearFilterOpen}
+          selectedYear={selectedYear}
+          setSelectedYear={setSelectedYear}
         />
         <GenreFilter
           name="Жанру"
           onClick={() => handleFilterToggle("genre")}
           isOpen={genreFilterOpen}
+          selectedGenre={selectedGenre}
+          setSelectedGenre={setSelectedGenre}
         />
         {/* <Filter></Filter> */}
       </S.CentralblockFilter>
