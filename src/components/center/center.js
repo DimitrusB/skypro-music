@@ -93,7 +93,9 @@ export function Center({ onTrackSelection }) {
     } else {
       setSearchResults(
         filteredTracks.filter((track) =>
-          track.name.toLowerCase().includes(search.toLowerCase())
+          track && (track.name || track.author) ? track.name.toLowerCase().includes(search.toLowerCase())
+          || track.author.toLowerCase().includes(search.toLowerCase())
+          : false
         )
       );
     }

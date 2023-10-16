@@ -26,7 +26,6 @@ export function NameTrack({
   const isLike = useSelector((state) => state.isLike[id]);
   const dispatch = useDispatch();
   const tracks = useSelector((state) => state.track);
-  const currentTrackId = useSelector((state) => state.currentTrackId);
   const favoritetracks = useSelector((state) => state.favoritetracks);
   const { token, setToken } = useContext(UserContext);
   
