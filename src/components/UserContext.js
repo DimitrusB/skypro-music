@@ -7,8 +7,14 @@ const UserContext = createContext({
   resetEmail: () => {},
   token: '',
   setToken: () => {},
-  filteredTracks: '',
-  setFilteredTracks: () => {}
+  filteredTracks: [],
+  setFilteredTracks: () => {},
+  selectedTracks: '',
+  setSelectedTracks: () => {},
+  selectedGenre: '',
+  setSelectedGenre: () => {},
+  selectedYear: '',
+  setSelectedYear: () => {},
 });
 
 export default UserContext;

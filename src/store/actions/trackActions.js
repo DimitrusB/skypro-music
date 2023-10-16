@@ -116,3 +116,10 @@ export const shouldPlayFromFavorite = (isPlaying) => {
   payload: isPlaying,
 });
 };
+
+export const toggleLikeStatus = (id) => {
+  return {
+    type: "TOGGLE_LIKE_STATUS",
+    payload: id,
+  };
+};

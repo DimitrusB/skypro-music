@@ -28,6 +28,15 @@ const rootReducer = (state = initialState, action) => {
         isShuffle: !state.isShuffle,
       };
 
+      case "TOGGLE_LIKE_STATUS":
+        return {
+          ...state,
+          isLike: {
+            ...state.isLike,
+            [action.payload]: !state.isLike[action.payload],
+          },
+        };
+
     case "GET_TRACK_LIST":
       return { ...state, track: action.payload, playFavorite: false };
 

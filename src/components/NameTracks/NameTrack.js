@@ -6,6 +6,8 @@ import { formatTime } from "../func";
 import UserContext from "../UserContext";
 import * as S from "./NameTracks.Style";
 import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";
+import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
+import { toggleLikeStatus } from "../../store/actions/trackActions";
 
 export function NameTrack({
   track,
@@ -27,6 +29,7 @@ export function NameTrack({
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const favoritetracks = useSelector((state) => state.favoritetracks);
   const { token, setToken } = useContext(UserContext);
+  
 
   const handleLike = () => {
     const trackToAdd = tracks.find((track) => track.id === id);
@@ -41,10 +44,16 @@ export function NameTrack({
     }
   };
 
-  const handleDislike = () => {
-    dispatch(delFavoritesTracks(id, token, setToken));
+  const handleDislike = async () => {
+    await dispatch(delFavoritesTracks(id, token, setToken));
+    dispatch(toggleLikeStatus(id));
+    dispatch(getAllFavoriteTracks(token.access, token.refresh));
   };
 
+  
+  useEffect(() => {
+    // ваши действия при изменении favoritetracks или isLike
+  }, [favoritetracks, isLike]);
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
