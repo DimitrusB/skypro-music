@@ -22,10 +22,11 @@ export function Center({ onTrackSelection }) {
   const tracks = useSelector((state) => state.track || []);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
-  const { email,  filteredTracks, selectedGenre, setSelectedGenre, selectedYear, setSelectedYear, selectedTracks, setSelectedTracks} = useContext(UserContext);
+  const {  filteredTracks, selectedGenre, setSelectedGenre, selectedYear, setSelectedYear, selectedTracks, setSelectedTracks} = useContext(UserContext);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const { setFilteredTracks } = useContext(UserContext);
+  const email = localStorage.getItem('email')
 
   useEffect(() => {
     getAllTracks()

@@ -11,16 +11,16 @@ function App() {
   const [selectedGenre, setSelectedGenre] = useState("Все");
   const [selectedYear, setSelectedYear] = useState("Все");
   const [selectedTracks, setSelectedTracks] = useState("Все");
-  const [email, setEmail] = useState('');
-  const [token, setToken] = useState('');
-  const resetEmail = () => {
-    setEmail('');
-  };
+  const email = localStorage.getItem('email')
+  // const [token, setToken] = useState('');
+  // const resetEmail = () => {
+  //   setEmail('');
+  // };
 
 
 
   return (
-    <UserContext.Provider value={{ filteredTracks, setFilteredTracks, selectedGenre, setSelectedGenre, selectedYear, setSelectedYear, selectedTracks, setSelectedTracks, email, setEmail,resetEmail, token, setToken  }}>
+    <UserContext.Provider value={{ filteredTracks, setFilteredTracks, selectedGenre, setSelectedGenre, selectedYear, setSelectedYear, selectedTracks, setSelectedTracks}}>
     <BrowserRouter>
       <div className="App">
         <AppRoutes user={email}/>

@@ -11,10 +11,11 @@ export function SignIn() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { setEmail: setUserEmail } = useContext(UserContext);
+  const [token, setToken] = useState('');
+  // const { setEmail: setUserEmail } = useContext(UserContext);
 
 
-  const { setToken } = useContext(UserContext);
+  // const { setToken } = useContext(UserContext);
   
   const handleLogin = (e) => {
     e.preventDefault();
@@ -28,7 +29,8 @@ export function SignIn() {
         return response.json();
       })
       .then(json => {
-        setUserEmail(json.email);
+        localStorage.setItem('email',json.email);
+        console.log(localStorage.getItem('email'));
         navigate('/');
         setIsLoading(false);
       })
@@ -39,13 +41,14 @@ export function SignIn() {
       });
 
     getToken(email, password)
-      .then(token => {
-        setToken(token);
-      console.log(token)
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    .then(token => {
+      localStorage.setItem('token', token.stringify(token));  // Save the token in localStorage
+      setToken(token);
+      console.log(token);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   }
 
 

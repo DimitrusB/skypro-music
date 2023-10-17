@@ -3,12 +3,17 @@ import { NamePlaylist } from "../Playlists/NamePlaylist";
 import * as S from "./rightpanel.style";
 import UserContext from "../UserContext";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function Panelplaylist() {
-  const { email, resetEmail } = useContext(UserContext);
+  // const { email, resetEmail } = useContext(UserContext);
+  const email = localStorage.getItem('email')
+  const navigate = useNavigate();
 
   const handleResetClick = () => {
-    resetEmail(email);
+    localStorage.removeItem('email')
+    localStorage.removeItem('token')
+    navigate('/signin')
   };
   return (
     <S.MainSidebar>

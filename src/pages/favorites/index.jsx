@@ -8,16 +8,28 @@ import { useEffect } from "react";
 import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
 import { NameTrack } from "../../components/NameTracks/NameTrack";
 import { setCurrentTrack, setPlaying, shouldPlayFromFavorite } from "../../store/actions/trackActions";
+import { useNavigate } from "react-router-dom";
 
 export function FavoritesTracks() {
-  const { email, resetEmail } = useContext(UserContext);
+  // const { email, resetEmail } = useContext(UserContext);
   const dispatch = useDispatch();
-  const { token } = useContext(UserContext);
+  // const { token } = useContext(UserContext);
   const tracks = useSelector((state) => state.track);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const email = localStorage.getItem('email')
+  const navigate = useNavigate();
+  let token = localStorage.getItem('token');
+
+
+
+  useEffect(() => {
+    if (token && token.access && token.refresh) {
+      dispatch(getAllFavoriteTracks(token.access, token.refresh));
+    }
+  }, [dispatch, token]);
 
   useEffect(() => {
     if (search === "") {
@@ -34,7 +46,8 @@ export function FavoritesTracks() {
   const handleSearchChange = (event) => setSearch(event.target.value);
 
   const handleResetClick = () => {
-    resetEmail(email);
+    localStorage.removeItem('email')
+    navigate('/signin')
   };
 
   useEffect(() => {
