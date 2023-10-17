@@ -27,8 +27,8 @@ export function NameTrack({
   const dispatch = useDispatch();
   const tracks = useSelector((state) => state.track);
   const favoritetracks = useSelector((state) => state.favoritetracks);
-  const { token, setToken } = useContext(UserContext);
-  
+  // const { token, setToken } = useContext(UserContext);
+  let token = JSON.parse(localStorage.getItem('token'));
 
   const handleLike = () => {
     const trackToAdd = tracks.find((track) => track.id === id);
@@ -37,14 +37,14 @@ export function NameTrack({
     const isTrackAlreadyLiked = favoritetracks.some((track) => track.id === id);
     
     if (!isTrackAlreadyLiked) {
-      dispatch(addFavoritesTracks(trackToAdd, token, setToken));
+      dispatch(addFavoritesTracks(trackToAdd, token));
     } else {
       console.log('Трек уже добавлен в избранное.');
     }
   };
 
   const handleDislike = async () => {
-    await dispatch(delFavoritesTracks(id, token, setToken));
+    await dispatch(delFavoritesTracks(id, token));
     dispatch(toggleLikeStatus(id));
     dispatch(getAllFavoriteTracks(token.access, token.refresh));
   };

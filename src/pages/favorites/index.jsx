@@ -21,15 +21,15 @@ export function FavoritesTracks() {
   const [searchResults, setSearchResults] = useState([]);
   const email = localStorage.getItem('email')
   const navigate = useNavigate();
-  let token = localStorage.getItem('token');
+  let token = JSON.parse(localStorage.getItem('token'));
 
 
 
-  useEffect(() => {
-    if (token && token.access && token.refresh) {
-      dispatch(getAllFavoriteTracks(token.access, token.refresh));
-    }
-  }, [dispatch, token]);
+  // useEffect(() => {
+  //   if (token && token.access && token.refresh) {
+  //     dispatch(getAllFavoriteTracks(token.access, token.refresh));
+  //   }
+  // }, [dispatch, token]);
 
   useEffect(() => {
     if (search === "") {
@@ -47,6 +47,7 @@ export function FavoritesTracks() {
 
   const handleResetClick = () => {
     localStorage.removeItem('email')
+    localStorage.removeItem(JSON.parse(localStorage.getItem('token')))
     navigate('/signin')
   };
 

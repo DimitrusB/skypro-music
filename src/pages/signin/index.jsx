@@ -42,7 +42,7 @@ export function SignIn() {
 
     getToken(email, password)
     .then(token => {
-      localStorage.setItem('token', token.stringify(token));  // Save the token in localStorage
+      localStorage.setItem('token', JSON.stringify(token));;  // Save the token in localStorage
       setToken(token);
       console.log(token);
     })

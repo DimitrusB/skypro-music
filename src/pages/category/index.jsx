@@ -1,7 +1,7 @@
 import { NavMenu } from "../../components/NavMenu/NavMenu";
 import * as S from "../favorites/favorite.style";
 import iconSprite from "../../img/icon/sprite.svg";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { musicCategory } from "../../components/constants";
 import { getAllTracksById } from "../../components/api/api";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +24,7 @@ export function Category() {
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
 
   const [tracks, setTracks] = useState([]);
   const [nameList, setNameList] = useState("");
@@ -81,9 +82,14 @@ export function Category() {
     }
   };
 
+
+
   const handleResetClick = () => {
-    resetEmail(email);
+    localStorage.removeItem('email')
+    localStorage.removeItem(JSON.parse(localStorage.getItem('token')))
+    navigate('/signin')
   };
+
 
   return (
     <header className="App-header">

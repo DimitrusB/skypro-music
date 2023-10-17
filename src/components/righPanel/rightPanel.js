@@ -10,9 +10,10 @@ export function Panelplaylist() {
   const email = localStorage.getItem('email')
   const navigate = useNavigate();
 
+
   const handleResetClick = () => {
     localStorage.removeItem('email')
-    localStorage.removeItem('token')
+    localStorage.removeItem(JSON.parse(localStorage.getItem('token')))
     navigate('/signin')
   };
   return (
