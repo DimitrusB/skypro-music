@@ -12,7 +12,6 @@ export function SignIn() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState("");
-  const {userMail, setUserMail} = useContext(UserContext)
   // const { setEmail: setUserEmail } = useContext(UserContext);
 
   // const { setToken } = useContext(UserContext);
@@ -31,7 +30,7 @@ export function SignIn() {
       .then(() => {
         getToken(email, password)
           .then((token) => {
-            setToken(clientStorage.setEmailUser(email));
+            clientStorage.setEmailUser(email);
             clientStorage.setPasswordUser(password);
             clientStorage.setTokenUser(token);
             navigate("..", {relative: "path"});
