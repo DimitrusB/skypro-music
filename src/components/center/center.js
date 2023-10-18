@@ -16,6 +16,7 @@ import {
   setPlaying,
 } from "../../store/actions/trackActions";
 import UserContext from "../UserContext";
+import clientStorage from "../../utils/client-storage";
 
 export function Center({ onTrackSelection }) {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ export function Center({ onTrackSelection }) {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const { setFilteredTracks } = useContext(UserContext);
-  const email = localStorage.getItem('email')
+  const email = clientStorage.getEmailUser();
 
   useEffect(() => {
     getAllTracks()

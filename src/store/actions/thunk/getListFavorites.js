@@ -1,4 +1,5 @@
 import { refreshToken } from "../../../components/api/api";
+import clientStorage from "../../../utils/client-storage";
 import { fetchFavoritesSuccess } from "../trackActions";
 
 export const getAllFavoriteTracks = (token, tokenRefresh) => {
@@ -17,7 +18,6 @@ const makeRequestWithTokenRefresh = (
   token,
   tokenRefresh,
   dispatch,
-  retryCount = 0
 ) => {
   return fetch(url, {
     method: "GET",
@@ -26,17 +26,17 @@ const makeRequestWithTokenRefresh = (
     },
   })
     .then((response) => {
-      if (response.status === 401 && retryCount === 0) {
+      if (response.status === 401) {
         // Trying to refresh the token
-        return refreshToken(tokenRefresh).then((newToken) =>
+        return refreshToken(tokenRefresh).then((newToken) => {
+          clientStorage.setTokenUser({access: newToken.access, refresh: newToken.refresh || tokenRefresh})
           makeRequestWithTokenRefresh(
             url,
             newToken.access,
             newToken.refresh || tokenRefresh,
             dispatch,
-            retryCount + 1
           )
-        );
+          });
       }
       if (!response.ok) throw new Error(response.statusText);
       return response.json();

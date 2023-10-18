@@ -7,29 +7,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
 import { NameTrack } from "../../components/NameTracks/NameTrack";
-import { setCurrentTrack, setPlaying, shouldPlayFromFavorite } from "../../store/actions/trackActions";
+import { getTrackList, setCurrentTrack, setPlaying, shouldPlayFromFavorite } from "../../store/actions/trackActions";
 import { useNavigate } from "react-router-dom";
+import clientStorage from "../../utils/client-storage";
 
 export function FavoritesTracks() {
   // const { email, resetEmail } = useContext(UserContext);
   const dispatch = useDispatch();
   // const { token } = useContext(UserContext);
   const tracks = useSelector((state) => state.track);
+  const favoriteTracks = useSelector((state) => state.favoritetracks);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const email = localStorage.getItem('email')
+  const email = clientStorage.getEmailUser();
   const navigate = useNavigate();
-  let token = JSON.parse(localStorage.getItem('token'));
+  const token = clientStorage.getTokenUser();
 
 
 
-  // useEffect(() => {
-  //   if (token && token.access && token.refresh) {
-  //     dispatch(getAllFavoriteTracks(token.access, token.refresh));
-  //   }
-  // }, [dispatch, token]);
+  useEffect(() => {
+    if (token && token.access && token.refresh) {
+      dispatch(getAllFavoriteTracks(token.access, token.refresh));
+    }
+  }, []);
 
   useEffect(() => {
     if (search === "") {
@@ -46,14 +48,9 @@ export function FavoritesTracks() {
   const handleSearchChange = (event) => setSearch(event.target.value);
 
   const handleResetClick = () => {
-    localStorage.removeItem('email')
-    localStorage.removeItem(JSON.parse(localStorage.getItem('token')))
+    clientStorage.clearUserInfo();
     navigate('/signin')
   };
-
-  useEffect(() => {
-    dispatch(getAllFavoriteTracks(token.access, token.refresh));
-  }, [dispatch, token]);
 
   useEffect(() => {
     dispatch(shouldPlayFromFavorite());
@@ -61,7 +58,10 @@ export function FavoritesTracks() {
 
   useEffect(() => {
     console.log('Tracks updated', tracks);
-  }, [tracks]);
+    if (!tracks.length && favoriteTracks.length) {
+      dispatch(getTrackList(favoriteTracks));
+    }
+  }, [tracks, favoriteTracks]);
 
   const handleTrackClick = (id) => {
     if (id === currentTrackId) {

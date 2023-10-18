@@ -15,12 +15,12 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { NameTrack } from "../../components/NameTracks/NameTrack";
 import UserContext from "../../components/UserContext";
+import clientStorage from "../../utils/client-storage";
 
 export function Category() {
   const params = useParams();
   const dispatch = useDispatch();
   const isPlaying = useSelector((state) => state.isPlaying);
-  const { email, resetEmail } = useContext(UserContext);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -31,7 +31,7 @@ export function Category() {
   const category = musicCategory.find(
     (category) => category.id === parseInt(params.id, 10)
   );
-
+  const email = clientStorage.getEmailUser();
   useEffect(() => {
     if (search === "") {
       setSearchResults(tracks);
@@ -82,14 +82,10 @@ export function Category() {
     }
   };
 
-
-
   const handleResetClick = () => {
-    localStorage.removeItem('email')
-    localStorage.removeItem(JSON.parse(localStorage.getItem('token')))
+    clientStorage.clearUserInfo();
     navigate('/signin')
   };
-
 
   return (
     <header className="App-header">

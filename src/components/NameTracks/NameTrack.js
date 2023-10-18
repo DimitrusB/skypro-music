@@ -8,6 +8,7 @@ import * as S from "./NameTracks.Style";
 import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";
 import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
 import { toggleLikeStatus } from "../../store/actions/trackActions";
+import clientStorage from "../../utils/client-storage";
 
 export function NameTrack({
   track,
@@ -27,8 +28,8 @@ export function NameTrack({
   const dispatch = useDispatch();
   const tracks = useSelector((state) => state.track);
   const favoritetracks = useSelector((state) => state.favoritetracks);
-  // const { token, setToken } = useContext(UserContext);
-  let token = JSON.parse(localStorage.getItem('token'));
+  const token = clientStorage.getTokenUser();
+  const setToken = clientStorage.setTokenUser;
 
   const handleLike = () => {
     const trackToAdd = tracks.find((track) => track.id === id);
@@ -37,22 +38,23 @@ export function NameTrack({
     const isTrackAlreadyLiked = favoritetracks.some((track) => track.id === id);
     
     if (!isTrackAlreadyLiked) {
-      dispatch(addFavoritesTracks(trackToAdd, token));
+      dispatch(addFavoritesTracks(trackToAdd, token, setToken));
     } else {
       console.log('Трек уже добавлен в избранное.');
     }
   };
 
   const handleDislike = async () => {
-    await dispatch(delFavoritesTracks(id, token));
+    await dispatch(delFavoritesTracks(id, token, setToken));
     dispatch(toggleLikeStatus(id));
     dispatch(getAllFavoriteTracks(token.access, token.refresh));
   };
 
   
   useEffect(() => {
-    // ваши действия при изменении favoritetracks или isLike
   }, [favoritetracks, isLike]);
+
+  
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsLoading(false);

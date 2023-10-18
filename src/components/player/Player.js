@@ -22,6 +22,7 @@ import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 import UserContext from "../UserContext";
 import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";
 import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
+import clientStorage from "../../utils/client-storage";
 
 export function AudioPlayer() {
   const [isLoading, setIsLoading] = useState(true);
@@ -40,8 +41,9 @@ export function AudioPlayer() {
   // const currentTrack = useSelector((state) => state.currentTrackIndex);
   const tracks = useSelector((state) => state.track);
   const currentTrackId = useSelector((state) => state.currentTrackId);
-  const { token, setToken } = useContext(UserContext);
   const [currentTrackList, setCurrentTrackList] = useState("");
+  const token = clientStorage.getTokenUser();
+  const setToken = clientStorage.setTokenUser;
 
   useEffect(() => {
     setCurrentTrackList(tracks);

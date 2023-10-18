@@ -4,16 +4,15 @@ import * as S from "./rightpanel.style";
 import UserContext from "../UserContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import clientStorage from "../../utils/client-storage";
 
 export function Panelplaylist() {
   // const { email, resetEmail } = useContext(UserContext);
-  const email = localStorage.getItem('email')
+  const email = clientStorage.getEmailUser();
   const navigate = useNavigate();
 
-
   const handleResetClick = () => {
-    localStorage.removeItem('email')
-    localStorage.removeItem(JSON.parse(localStorage.getItem('token')))
+    clientStorage.clearUserInfo();
     navigate('/signin')
   };
   return (
