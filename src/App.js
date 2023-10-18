@@ -11,6 +11,9 @@ function App() {
   const [selectedYear, setSelectedYear] = useState("Все");
   const [selectedTracks, setSelectedTracks] = useState("Все");
   const email = clientStorage.getEmailUser();
+  const [userMail, setUserMail] = useState('');
+  
+
   // const [token, setToken] = useState('');
   // const resetEmail = () => {
   //   setEmail('');
@@ -27,6 +30,8 @@ function App() {
         setSelectedYear,
         selectedTracks,
         setSelectedTracks,
+        userMail, 
+        setUserMail
       }}
     >
       <BrowserRouter>
