@@ -5,13 +5,21 @@ import UserContext from "../UserContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import clientStorage from "../../utils/client-storage";
+import { useDispatch, useSelector } from "react-redux";
+import { setPlaying } from "../../store/actions/trackActions";
 
 export function Panelplaylist() {
   // const { email, resetEmail } = useContext(UserContext);
   const email = clientStorage.getEmailUser();
   const navigate = useNavigate();
+  const isPlaying = useSelector((state) => state.isPlaying);
+  const dispatch = useDispatch();
+
 
   const handleResetClick = () => {
+    if(isPlaying) {
+      dispatch(setPlaying(false));
+    }
     clientStorage.clearUserInfo();
     navigate('/signin')
   };
