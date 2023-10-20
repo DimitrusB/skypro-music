@@ -11,7 +11,7 @@ import { getTrackList, setCurrentTrack, setPlaying, shouldPlayFromFavorite } fro
 import { useNavigate } from "react-router-dom";
 import clientStorage from "../../utils/client-storage";
 
-export function FavoritesTracks() {
+export function FavoritesTracks({setIsLogged}) {
   // const { email, resetEmail } = useContext(UserContext);
   const dispatch = useDispatch();
   // const { token } = useContext(UserContext);
@@ -49,7 +49,8 @@ export function FavoritesTracks() {
 
   const handleResetClick = () => {
     clientStorage.clearUserInfo();
-    navigate('/signin')
+    navigate('/signin');
+    setIsLogged(null);
   };
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { Center } from "../../components/center/center";
 import { Panelplaylist } from "../../components/righPanel/rightPanel";
 import * as S from "./Main.style";
 
-export function MainPage() {
+export function MainPage({setIsLogged}) {
 
   return (
     <header className="App-header">
@@ -13,7 +13,7 @@ export function MainPage() {
           <S.Main>
             <NavMenu />
             <Center/>
-            <Panelplaylist />
+            <Panelplaylist setIsLogged={setIsLogged} />
           </S.Main>
 
 

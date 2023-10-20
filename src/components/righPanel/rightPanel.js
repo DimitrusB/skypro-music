@@ -8,7 +8,7 @@ import clientStorage from "../../utils/client-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { setPlaying } from "../../store/actions/trackActions";
 
-export function Panelplaylist() {
+export function Panelplaylist({setIsLogged}) {
   // const { email, resetEmail } = useContext(UserContext);
   const email = clientStorage.getEmailUser();
   const navigate = useNavigate();
@@ -21,7 +21,8 @@ export function Panelplaylist() {
       dispatch(setPlaying(false));
     }
     clientStorage.clearUserInfo();
-    navigate('/signin')
+    setIsLogged(null);
+    navigate('/signin');
   };
   return (
     <S.MainSidebar>

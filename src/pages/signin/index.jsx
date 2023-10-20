@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import logo_modal from "../../img/logo_modal.png";
 import * as S from "./signin.style";
 import { useContext, useState } from "react";
@@ -6,15 +6,20 @@ import UserContext from "../../components/UserContext";
 import { getToken, signIn } from "../../components/api/api";
 import clientStorage from "../../utils/client-storage";
 
-export function SignIn() {
+export function SignIn({setIsLogged}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState("");
+  const user = clientStorage.getEmailUser();
   // const { setEmail: setUserEmail } = useContext(UserContext);
 
   // const { setToken } = useContext(UserContext);
+
+  if (user) {
+    return <Navigate to="/" />
+  }
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -35,6 +40,7 @@ export function SignIn() {
             clientStorage.setTokenUser(token);
             navigate("..", {relative: "path"});
             setIsLoading(false);
+            setIsLogged("yes");
           })
           .catch((error) => {
             console.error("Error:", error);

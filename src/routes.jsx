@@ -11,18 +11,20 @@ import { AudioPlayer } from "./components/player/Player";
 
 
 
-export const AppRoutes = ({ user }) => {
+export const AppRoutes = ({ isLogged, setIsLogged }) => {
 
   return (
     
     <Routes>
-      <Route path="/" element={<ProtectedRoute user={user} element={<MainPage />} />} />
+      <Route path="/" element={<ProtectedRoute isLogged={isLogged} />}>
+        <Route index element={<MainPage setIsLogged={setIsLogged} />} />
+        <Route path="favorites" element={<FavoritesTracks setIsLogged={setIsLogged} />} />
+        <Route path="category/:id" element={<Category setIsLogged={setIsLogged} />} />
+        <Route path="audioplayer" element={<AudioPlayer />} />
+      </Route>
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/favorites" element={<ProtectedRoute user={user} element={<FavoritesTracks />} />}/>
+      <Route path="/signin" element={<SignIn setIsLogged={setIsLogged} />} />
       <Route path="*" element={<NotFoundPage />} />
-      <Route path="/category/:id" element={<ProtectedRoute user={user} element={<Category />} />}/>
-      <Route path="/audioplayer" element={<ProtectedRoute user={user} element={<AudioPlayer />} />}/>
     </Routes>
   );
 };

@@ -17,7 +17,7 @@ import { NameTrack } from "../../components/NameTracks/NameTrack";
 import UserContext from "../../components/UserContext";
 import clientStorage from "../../utils/client-storage";
 
-export function Category() {
+export function Category({setIsLogged}) {
   const params = useParams();
   const dispatch = useDispatch();
   const isPlaying = useSelector((state) => state.isPlaying);
@@ -84,7 +84,8 @@ export function Category() {
 
   const handleResetClick = () => {
     clientStorage.clearUserInfo();
-    navigate('/signin')
+    navigate('/signin');
+    setIsLogged(null);
   };
 
   return (
