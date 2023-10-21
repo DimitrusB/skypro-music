@@ -1,5 +1,6 @@
 import { refreshToken } from "../../../components/api/api";
-import { removeFromFavoriteTracksSuccess } from "../trackActions";
+import { removeFromFavoriteTracksSuccess, fetchFavoritesError } from "../trackActions";
+import clientStorage from "../../../utils/client-storage";
 
 export function delFavoritesTracks(trackId, token, setToken) {
   return (dispatch) => {
@@ -14,22 +15,26 @@ export function delFavoritesTracks(trackId, token, setToken) {
     )
       .then((response) => {
         if (response.status === 401) {
-          refreshToken(token.refresh)
-            .then((response) => {
-              return { ...token, ...response };
-            })
-            .then((result) => {
-              setToken(result);
-              delFavoritesTracks(trackId, result, setToken);
+          return refreshToken(token.refresh)
+            .then((newTokenResponse) => {
+              const newToken = {
+                access: newTokenResponse.access,
+                refresh: newTokenResponse.refresh || token.refresh,
+              };
+              setToken(newToken);
+              clientStorage.setTokenUser(newToken);
+              return delFavoritesTracks(trackId, newToken, setToken);
             });
         }
-
         if (!response.ok) throw new Error(response.statusText);
         return response.json();
       })
       .then(() => {
         dispatch(removeFromFavoriteTracksSuccess(trackId));
       })
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => {
+        console.error("Error during deletion:", error);
+        dispatch(fetchFavoritesError(error.toString())); 
+      });
   };
 }

@@ -1,5 +1,6 @@
 import { refreshToken } from "../../../components/api/api";
-import { addFavoriteTracksSuccess} from "../trackActions";
+import { addFavoriteTracksSuccess, fetchFavoritesError } from "../trackActions";
+import clientStorage from "../../../utils/client-storage";
 
 export function addFavoritesTracks(track, token, setToken) {
   return (dispatch) => {
@@ -12,24 +13,28 @@ export function addFavoritesTracks(track, token, setToken) {
         },
       }
     )
-      .then((response) => {
-        if (response.status === 401) {
-          refreshToken(token.refresh)
-            .then((response) => {
-              return { ...token, ...response };
-            })
-            .then((result) => {
-              setToken(result);
-              addFavoritesTracks(track, result, setToken);
-            });
-        }
-
+    .then((response) => {
+      if (response.status === 401) {
+        return refreshToken(token.refresh)
+          .then((newTokenResponse) => {
+            const newToken = {
+              access: newTokenResponse.access,
+              refresh: newTokenResponse.refresh || token.refresh,
+            };
+            setToken(newToken);
+            clientStorage.setTokenUser(newToken);
+            return addFavoriteTracksSuccess(track, newToken, setToken);
+          });
+      }
         if (!response.ok) throw new Error(response.statusText);
         return response.json();
       })
       .then(() => {
         dispatch(addFavoriteTracksSuccess(track));
       })
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => {
+        console.error("Error:", error);
+        dispatch(fetchFavoritesError(error.toString())); 
+      });
   };
 }
