@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useRef,
   useCallback,
-  useContext,
 } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
@@ -14,14 +13,11 @@ import {
   setPlaying,
   setPreviousTrack,
   setVolume,
-  shouldPlayFromFavorite,
   shuffleTracks,
   toggleLoop,
 } from "../../store/actions/trackActions";
 import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
-import UserContext from "../UserContext";
 import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";
-import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
 import clientStorage from "../../utils/client-storage";
 
 export function AudioPlayer() {
@@ -38,26 +34,35 @@ export function AudioPlayer() {
   const favoritetracks = useSelector((state) => state.favoritetracks);
   const audioRef = useRef(null);
   const playFavorite = useSelector((state) => state.playFavorite);
-  // const currentTrack = useSelector((state) => state.currentTrackIndex);
   const tracks = useSelector((state) => state.track);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const [currentTrackList, setCurrentTrackList] = useState("");
   const token = clientStorage.getTokenUser();
   const setToken = clientStorage.setTokenUser;
+  const [canPlay, setCanPlay] = useState(false);
 
   useEffect(() => {
     setCurrentTrackList(tracks);
-
-    if (!currentTrackList.length || !audioRef.current) return;
-
-    const currentTrack = currentTrackList.find(
+      if (!currentTrackList.length || !audioRef.current) return;
+      const currentTrack = currentTrackList.find(
       (track) => track.id === currentTrackId
     );
     audioRef.current.src = currentTrack.track_file;
-    audioRef.current.load();
-    if (isPlaying) {
-      audioRef.current.play();
-    }
+  
+    const loadAudio = async () => {
+      try {
+        await audioRef.current.load();
+        if (audioRef.current.readyState >= 3) {
+          if (isPlaying) {
+            audioRef.current.play().catch(error => console.error("Ошибка воспроизведения аудио:", error));
+          }
+        }
+      } catch (error) {
+        console.error("Ошибка загрузки аудио:", error);
+      }
+    };
+    loadAudio();
+  
   }, [currentTrackId, isPlaying]);
 
   const handleShuffle = () => {
@@ -136,6 +141,13 @@ export function AudioPlayer() {
     }
   };
 
+  const handleCanPlayThrough = () => {
+    setCanPlay(true);
+    if (isPlaying) {
+        audioRef.current.play();
+    }
+  };
+
   useEffect(() => {}, [isPlaying, currentTrackList.track_file]);
   // --------------------------------------------------
 
@@ -187,6 +199,7 @@ export function AudioPlayer() {
         <audio
           // key={currentTrackList[currentTrackIndex]?.track_id}
           ref={audioRef}
+          onCanPlayThrough={handleCanPlayThrough}
           onPlay={() => dispatch(setPlaying(true))}
           onPause={() => dispatch(setPlaying(false))}
           onLoadedMetadata={() => setDuration(audioRef.current.duration)}
