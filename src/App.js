@@ -7,9 +7,9 @@ import clientStorage from "./utils/client-storage";
 
 function App() {
   const [filteredTracks, setFilteredTracks] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState("Все");
-  const [selectedYear, setSelectedYear] = useState("Все");
-  const [selectedTracks, setSelectedTracks] = useState("Все");
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedYears, setSelectedYears] = useState([]);
+  const [selectedTracks, setSelectedTracks] = useState([]);
   const [isLogged, setIsLogged] = useState(null);
   const email = clientStorage.getEmailUser();
 
@@ -26,10 +26,10 @@ function App() {
       value={{
         filteredTracks,
         setFilteredTracks,
-        selectedGenre,
-        setSelectedGenre,
-        selectedYear,
-        setSelectedYear,
+        selectedGenres,
+        setSelectedGenres,
+        selectedYears,
+        setSelectedYears,
         selectedTracks,
         setSelectedTracks,
       }}

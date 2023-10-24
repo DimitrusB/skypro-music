@@ -9,12 +9,12 @@ const UserContext = createContext({
   // setToken: () => {},
   filteredTracks: [],
   setFilteredTracks: () => {},
-  selectedTracks: '',
+  selectedTracks: [],
   setSelectedTracks: () => {},
-  selectedGenre: '',
-  setSelectedGenre: () => {},
-  selectedYear: '',
-  setSelectedYear: () => {},
+  selectedGenres: [],
+  setSelectedGenres: () => {},
+  selectedYears: [],
+  setSelectedYears: () => {},
 });
 
 export default UserContext;

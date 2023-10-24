@@ -5,7 +5,7 @@ import UserContext from "../UserContext";
 
 export function YearFilter(props, onFilteredTracks) {
   const { id, name, onClick, isOpen } = props;
-  const {selectedYear, setSelectedYear} = useContext(UserContext);
+  const {selectedYears, setSelectedYears} = useContext(UserContext);
   const [tracks, setTracks] = useState([]);
   const [years, setYears] = useState([]);
   const [filterChoose, setFilterChoose] = useState(false);
@@ -38,20 +38,23 @@ export function YearFilter(props, onFilteredTracks) {
 
 
   useEffect(() => {
-    if (selectedYear) { 
-      let filteredTracks = tracks;
-      
-      if(selectedYear !== "Все") {
-        setFilterChoose(true);
-        filteredTracks = filteredTracks.filter((track) => track.release_date && track.release_date.substring(0, 4)=== selectedYear);
-      }
+    if (selectedYears){
+    let filteredTracks = tracks;
 
-
-      setFilteredTracks(filteredTracks);
-     }
-  }, [tracks, selectedYear, setFilteredTracks]);
-
-
+    if (selectedYears.length > 0 && !(selectedYears.length === 1)) {
+      setFilterChoose(true);
+      filteredTracks = filteredTracks.filter((track) =>
+        selectedYears.includes(
+          track.release_date && track.release_date.substring(0, 4)));
+    }else {
+      setFilterChoose(false);
+    }
+  
+    setFilteredTracks(filteredTracks);
+  }
+  }, [tracks, selectedYears, setFilteredTracks]);
+  
+  
   return (
     <S.Button
       type="button"
@@ -59,30 +62,34 @@ export function YearFilter(props, onFilteredTracks) {
       style={{ border: filterChoose ? "1px solid #B672FF" : "" }}
     >
       <S.Choose
-        style={{ color: filterChoose ? "#B672FF" : "default color" }}
+        style={{ color: filterChoose ? "#B672FF" : "" }}
         isOpen={isOpen}
       >
-        {selectedYear || name}
+        {selectedYears.length > 0 && !selectedYears.includes('Все') ? selectedYears.join(', ') : name }
       </S.Choose>
       {isOpen && (
         <S.Options>
           <S.Option
             key="all"
             onClick={() => {
-              setSelectedYear("Все");
+              setSelectedYears([]);
             }}
           >
             Все
           </S.Option>
           {years.map((year) => (
-            <S.Option
-              key={year}
-              onClick={() => {
-                setSelectedYear(year);
-              }}
-            >
-              {year}
-            </S.Option>
+            < S.Option
+  key={year}
+  onClick={() => {
+    if (selectedYears.includes(year)) {
+      setSelectedYears(selectedYears.filter(x => x !== year));
+    } else {
+      setSelectedYears([...selectedYears, year]);
+    }
+  }}
+>
+  {year}
+</S.Option>
           ))}
         </S.Options>
       )}

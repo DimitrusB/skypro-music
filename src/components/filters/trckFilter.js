@@ -34,17 +34,19 @@ export function TrackFilter(props, onFilteredTracks) {
 
 
   useEffect(() => {
-
     if (selectedTracks) { 
       let filteredTracks = tracks;
-      
-      if(selectedTracks !== "Все") {
+
+  
+      if(selectedTracks.length > 0 && !(selectedTracks.length ===1)) {
         setFilterChoose(true);
         filteredTracks = filteredTracks.filter((track) => track.author === selectedTracks);
+      }else {
+        setFilterChoose(false);
       }
       setFilteredTracks(filteredTracks);
-     }
-  }, [tracks, selectedTracks,setFilteredTracks]);
+    }
+  }, [tracks, selectedTracks, setFilteredTracks]);
 
   return (
     <S.Button
@@ -53,17 +55,17 @@ export function TrackFilter(props, onFilteredTracks) {
       style={{ border: filterChoose ? "1px solid #B672FF" : "" }}
     >
       <S.Choose
-        style={{ color: filterChoose ? "#B672FF" : "default color" }}
+        style={{ color: filterChoose ? "#B672FF" : "" }}
         isOpen={isOpen}
       >
-        {selectedTracks || name}
+        {selectedTracks.length > 0 && !selectedTracks.includes('Все')  ? selectedTracks.join(', ') : name }
       </S.Choose>
       {isOpen && (
         <S.Options>
           <S.Option
             key="all"
             onClick={() => {
-              setSelectedTracks("Все");
+              setSelectedTracks([]);
             }}
           >
             Все
@@ -72,7 +74,11 @@ export function TrackFilter(props, onFilteredTracks) {
             <S.Option
               key={track}
               onClick={() => {
-                setSelectedTracks(track);
+                if (selectedTracks.includes(track)) {
+                  setSelectedTracks(selectedTracks.filter(x => x !== track));
+                } else {
+                  setSelectedTracks([...selectedTracks, track]);
+                }
               }}
             >
               {track}

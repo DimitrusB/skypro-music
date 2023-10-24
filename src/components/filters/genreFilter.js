@@ -5,7 +5,7 @@ import * as S from "./Filters.style";
 
 export function GenreFilter(props, onFilteredTracks) {
   const { id, name, onClick, isOpen } = props;
-  const {selectedGenre, setSelectedGenre} = useContext(UserContext);
+  const {selectedGenres, setSelectedGenres} = useContext(UserContext);
   const [genres, setGenres] = useState([]);
   const [tracks, setTracks] = useState([]);
   const { setFilteredTracks } = useContext(UserContext);
@@ -34,18 +34,21 @@ export function GenreFilter(props, onFilteredTracks) {
 
 
   useEffect(() => {
-    if (selectedGenre) { 
+    if (selectedGenres) { 
       let filteredTracks = tracks;
-      
-      if(selectedGenre !== "Все") {
+
+  
+      if (selectedGenres.length > 0 && !(selectedGenres.length === 1)) {
         setFilterChoose(true);
-        filteredTracks = filteredTracks.filter((track) => track.genre === selectedGenre);
+        filteredTracks = filteredTracks.filter((track) => selectedGenres.includes(track.genre));
+      } else {
+        setFilterChoose(false);
       }
-
-
+  
       setFilteredTracks(filteredTracks);
-     }
-  }, [tracks, selectedGenre,setFilteredTracks]);
+    }
+  }, [tracks, selectedGenres, setFilteredTracks]);
+  
 
   return (
     <S.Button
@@ -53,31 +56,35 @@ export function GenreFilter(props, onFilteredTracks) {
       onClick={toggleDropdown}
       style={{ border: filterChoose ? "1px solid #B672FF" : "" }}
     >
-      <S.Choose
-        style={{ color: filterChoose ? "#B672FF" : "default color" }}
-        isOpen={isOpen}
-      >
-        {selectedGenre || name}
-      </S.Choose>
+<S.Choose
+  style={{ color: filterChoose ? "#B672FF" : "" }}
+  isOpen={isOpen}
+>
+  {selectedGenres.length > 0 && !selectedGenres.includes('Все') ? selectedGenres.join(', ') : name}
+</S.Choose>
       {isOpen && (
         <S.Options>
           <S.Option
             key="all"
             onClick={() => {
-              setSelectedGenre("Все");
+              setSelectedGenres([]);
             }}
           >
             Все
           </S.Option>
           {genres.map((genre) => (
-            <S.Option
-              key={genre}
-              onClick={() => {
-                setSelectedGenre(genre);
-              }}
-            >
-              {genre}
-            </S.Option>
+            < S.Option
+            key={genre}
+            onClick={() => {
+              if (selectedGenres.includes(genre)) {
+                setSelectedGenres(selectedGenres.filter(x => x !== genre));
+              } else {
+                setSelectedGenres([...selectedGenres, genre]);
+              }
+            }}
+          >
+            {genre}
+          </S.Option>
           ))}
         </S.Options>
       )}

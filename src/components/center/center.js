@@ -23,10 +23,12 @@ export function Center({ onTrackSelection }) {
   const tracks = useSelector((state) => state.track || []);
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
-  const {  filteredTracks, selectedGenre, setSelectedGenre, selectedYear, setSelectedYear, selectedTracks, setSelectedTracks} = useContext(UserContext);
+  const { filteredTracks, setFilteredTracks } = useContext(UserContext);
+  const{ selectedGenres, setSelectedGenres} = useContext(UserContext);
+  const {selectedYears, setSelectedYears}= useContext(UserContext);
+  const {selectedTracks, setSelectedTracks} = useContext(UserContext);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const { setFilteredTracks } = useContext(UserContext);
   const email = clientStorage.getEmailUser();
 
   useEffect(() => {
@@ -66,28 +68,23 @@ export function Center({ onTrackSelection }) {
   };
 
   useEffect(() => {
-
     let filtered = tracks;
-
-
-    if (selectedGenre && selectedGenre !== "Все") {
-      filtered = filtered.filter((track) => track.genre === selectedGenre);
+  
+    if (Array.isArray(selectedGenres) && selectedGenres.length > 0 && !selectedGenres.includes('Все') ) {
+      filtered = filtered.filter(track => selectedGenres.some(genre => track.genre === genre));
     }
-
-
-    if (selectedYear && selectedYear !== "Все") {
-
-      filtered = filtered.filter((track) => track.release_date && track.release_date.substring(0, 4)=== selectedYear);
+  
+    if (Array.isArray(selectedYears) && selectedYears.length > 0 && !selectedYears.includes('Все')) {
+      filtered = filtered.filter(track => selectedYears.some(year => track.release_date && track.release_date.substring(0, 4) === year));
     }
-
-    if (selectedTracks && selectedTracks !== "Все") {
-
-      filtered = filtered.filter((track) => track.author === selectedTracks);
+  
+    if (Array.isArray(selectedTracks) && selectedTracks.length > 0 && !selectedTracks.includes('Все')) {
+      filtered = filtered.filter(track => selectedTracks.some(author => track.author === author));
     }
-
+  
     setFilteredTracks(filtered);
     console.log(filtered);
-  }, [tracks, selectedGenre, selectedYear, selectedTracks]);
+  }, [tracks, selectedGenres, selectedYears, selectedTracks]);
 
   useEffect(() => {
     if (search === "") {
@@ -155,15 +152,15 @@ export function Center({ onTrackSelection }) {
           name="Году выпуска"
           onClick={() => handleFilterToggle("year")}
           isOpen={yearFilterOpen}
-          selectedYear={selectedYear}
-          setSelectedYear={setSelectedYear}
+          selectedYear={selectedYears}
+          setSelectedYear={setSelectedYears}
         />
         <GenreFilter
           name="Жанру"
           onClick={() => handleFilterToggle("genre")}
           isOpen={genreFilterOpen}
-          selectedGenre={selectedGenre}
-          setSelectedGenre={setSelectedGenre}
+          selectedGenre={selectedGenres}
+          setSelectedGenre={setSelectedGenres}
         />
         {/* <Filter></Filter> */}
       </S.CentralblockFilter>
