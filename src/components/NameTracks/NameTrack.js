@@ -51,20 +51,20 @@ export function NameTrack({
     
     
     if (!isTrackAlreadyLiked) {
-      dispatch(addFavoritesTracks(trackToAdd, token, setToken));
-
+      dispatch(addFavoritesTracks(trackToAdd, token, setToken))
+        .then(() => dispatch(getAllFavoriteTracks(token.access, token.refresh)));
     } else {
       console.log('Трек уже добавлен в избранное.');
     }
-    dispatch(getAllFavoriteTracks(token.access, token.refresh));
-  };
+  }  
 
   const handleDislike = async () => {
     await dispatch(delFavoritesTracks(id, token, setToken));
     dispatch(toggleLikeStatus(id));
     dispatch(getAllFavoriteTracks(token.access, token.refresh));
+    // window.location.reload()
   };
-
+  
   useEffect(() => {
   }, [favoritetracks, isLike]);
 
