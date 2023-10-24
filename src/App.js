@@ -10,6 +10,7 @@ function App() {
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedYears, setSelectedYears] = useState([]);
   const [selectedTracks, setSelectedTracks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLogged, setIsLogged] = useState(null);
   const email = clientStorage.getEmailUser();
 
@@ -32,6 +33,8 @@ function App() {
         setSelectedYears,
         selectedTracks,
         setSelectedTracks,
+        isLoading,
+        setIsLoading,
       }}
     >
       <BrowserRouter>

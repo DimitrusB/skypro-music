@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import playlistnull from "../../img/playlistnull.png";
 import * as S from "./NamePlaylist.Style";
 import { musicCategory } from "../constants";
 import {  NavLink } from "react-router-dom";
+import UserContext from "../UserContext";
 
 export function NamePlaylist(props) {
 
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, setIsLoading } = useContext(UserContext);
   const [loadedCategories, setLoadedCategories] = useState({});
 
   const handleImageLoad = (categoryId) => {

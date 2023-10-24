@@ -1,5 +1,5 @@
 import iconSprite from "../../img/icon/sprite.svg";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useContext } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,9 +14,10 @@ import {
 import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";
 import clientStorage from "../../utils/client-storage";
+import UserContext from "../UserContext";
 
 export function AudioPlayer() {
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, setIsLoading } = useContext(UserContext);
   const volume = useSelector((state) => state.volume);
   const isLoop = useSelector((state) => state.isLoop);
   const isShuffle = useSelector((state) => state.isShuffle);
@@ -183,13 +184,13 @@ export function AudioPlayer() {
     audioRef.current.currentTime = seekTime;
   };
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 5000);
 
-    return () => clearTimeout(timeoutId);
-  }, []);
+  //   return () => clearTimeout(timeoutId);
+  // }, []);
 
   return (
     currentTrackList.length && (

@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import iconSprite from "../../img/icon/sprite.svg";
+import UserContext from "../UserContext";
 import * as S from "./NameTrackFavorites.style";
 
 export function NameTrackFavorites({ track, author, mix, album, time }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, setIsLoading } = useContext(UserContext);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 5000);
 
-    return () => clearTimeout(timeoutId);
-  }, []);
+  //   return () => clearTimeout(timeoutId);
+  // }, []);
 
   return (
     <S.PlaylistItem>

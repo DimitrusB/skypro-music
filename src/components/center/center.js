@@ -30,6 +30,7 @@ export function Center({ onTrackSelection }) {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const email = clientStorage.getEmailUser();
+  const { isLoading, setIsLoading } = useContext(UserContext);
 
   useEffect(() => {
     getAllTracks()
@@ -51,7 +52,11 @@ export function Center({ onTrackSelection }) {
           fetchFavoritesSuccess(tracks.filter((track) => track.isFavorite))
         );
       })
+      .then(() => {
+        setIsLoading(false); // Прекратить отображение скелетона после загрузки
+      })
       .catch((error) => {
+        setIsLoading(false); // Также прекратите показывать скелетон в случае ошибки
         dispatch(
           getTrackListError(`Error fetching data from the server: ${error}`)
         );

@@ -14,6 +14,8 @@ const UserContext = createContext({
   setSelectedGenres: () => {},
   selectedYears: [],
   setSelectedYears: () => {},
+  isLoading: true,
+  setIsLoading: ()=>{},
 });
 
 export default UserContext;

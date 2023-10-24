@@ -22,7 +22,6 @@ export function NameTrack({
   playing,
 }) {
   const formattedTime = formatTime(time);
-  const [isLoading, setIsLoading] = useState(true);
   const isPlaying = useSelector((state) => state.isPlaying);
   const isLike = useSelector((state) => state.isLike[id]);
   const dispatch = useDispatch();
@@ -30,7 +29,8 @@ export function NameTrack({
   const favoritetracks = useSelector((state) => state.favoritetracks);
   const token = clientStorage.getTokenUser();
   const setToken = clientStorage.setTokenUser;
-
+  const { isLoading, setIsLoading } = useContext(UserContext);
+  
   const handleLike = () => {
     const trackToAdd = tracks.find((track) => track.id === id);
     
@@ -55,13 +55,13 @@ export function NameTrack({
   }, [favoritetracks, isLike]);
 
   
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 5000);
 
-    return () => clearTimeout(timeoutId);
-  }, []);
+  //   return () => clearTimeout(timeoutId);
+  // }, []);
 
 
   return (
