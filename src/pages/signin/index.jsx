@@ -1,8 +1,7 @@
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import logo_modal from "../../img/logo_modal.png";
 import * as S from "./signin.style";
-import { useContext, useState } from "react";
-import UserContext from "../../components/UserContext";
+import {useState } from "react";
 import { getToken, signIn } from "../../components/api/api";
 import clientStorage from "../../utils/client-storage";
 
@@ -13,9 +12,6 @@ export function SignIn({setIsLogged}) {
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState("");
   const user = clientStorage.getEmailUser();
-  // const { setEmail: setUserEmail } = useContext(UserContext);
-
-  // const { setToken } = useContext(UserContext);
 
   if (user) {
     return <Navigate to="/" />
