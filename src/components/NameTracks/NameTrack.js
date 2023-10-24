@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import iconSprite from "../../img/icon/sprite.svg";
 import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
@@ -30,12 +30,25 @@ export function NameTrack({
   const token = clientStorage.getTokenUser();
   const setToken = clientStorage.setTokenUser;
   const { isLoading, setIsLoading } = useContext(UserContext);
-  
+  const trackRef = useRef(null); // создайте ref
+
+  useEffect(() => {
+    if (isPlaying && playing && trackRef.current) { 
+      trackRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      });
+    }
+  }, [isPlaying, playing]);
+
   const handleLike = () => {
     const trackToAdd = tracks.find((track) => track.id === id);
     
     // Проверяем, существует ли уже трек в избранном
     const isTrackAlreadyLiked = favoritetracks.some((track) => track.id === id);
+
+
+    
     
     if (!isTrackAlreadyLiked) {
       dispatch(addFavoritesTracks(trackToAdd, token, setToken));
@@ -54,18 +67,10 @@ export function NameTrack({
   useEffect(() => {
   }, [favoritetracks, isLike]);
 
-  
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 5000);
-
-  //   return () => clearTimeout(timeoutId);
-  // }, []);
 
 
   return (
-    <S.PlaylistItem>
+    <S.PlaylistItem ref={trackRef}>
       <S.PlaylistTrack>
         <S.TrackTitled>
           {isPlaying && playing ? (
