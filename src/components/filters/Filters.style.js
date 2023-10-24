@@ -29,8 +29,6 @@ export const Number = styled.span`
   justify-content: center;
   align-items: center;
   color: #fff;
-  top: -15px;
-  right: -2px;
   font-family: StratosSkyeng;
   font-size: 13px;
   font-style: normal;
