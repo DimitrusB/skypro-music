@@ -5,7 +5,7 @@ import UserContext from "../UserContext";
 
 export function YearFilter(props, onFilteredTracks) {
   const { id, name, onClick, isOpen } = props;
-  const {selectedYears, setSelectedYears} = useContext(UserContext);
+  const { selectedYears, setSelectedYears } = useContext(UserContext);
   const [tracks, setTracks] = useState([]);
   const [years, setYears] = useState([]);
   const [filterChoose, setFilterChoose] = useState(false);
@@ -35,37 +35,43 @@ export function YearFilter(props, onFilteredTracks) {
       });
   }, [setFilteredTracks]);
 
-
-
   useEffect(() => {
-    if (selectedYears){
-    let filteredTracks = tracks;
+    if (selectedYears) {
+      let filteredTracks = tracks;
 
-    if (selectedYears.length > 0 && !(selectedYears.length === 1)) {
-      setFilterChoose(true);
-      filteredTracks = filteredTracks.filter((track) =>
-        selectedYears.includes(
-          track.release_date && track.release_date.substring(0, 4)));
-    }else {
-      setFilterChoose(false);
+      if (selectedYears.length > 0 && !(selectedYears.length === 1)) {
+        setFilterChoose(true);
+        filteredTracks = filteredTracks.filter((track) =>
+          selectedYears.includes(
+            track.release_date && track.release_date.substring(0, 4)
+          )
+        );
+      } else {
+        setFilterChoose(false);
+      }
+
+      setFilteredTracks(filteredTracks);
     }
-  
-    setFilteredTracks(filteredTracks);
-  }
   }, [tracks, selectedYears, setFilteredTracks]);
-  
-  
+
   return (
     <S.Button
       type="button"
       onClick={toggleDropdown}
-      style={{ border: filterChoose ? "1px solid #B672FF" : "" }}
+      style={{ border: filterChoose ? "1px solid " : "" }}
     >
       <S.Choose
-        style={{ color: filterChoose ? "#B672FF" : "" }}
+        style={{ color: filterChoose ? "" : "", position: "relative" }}
         isOpen={isOpen}
       >
-        {selectedYears.length > 0 && !selectedYears.includes('Все') ? selectedYears.join(', ') : name }
+        {selectedYears.length > 0 && !selectedYears.includes("Все") ? (
+          <>
+            <S.Number>{selectedYears.length}</S.Number>
+            {name}
+          </>
+        ) : (
+          name
+        )}
       </S.Choose>
       {isOpen && (
         <S.Options>
@@ -78,18 +84,19 @@ export function YearFilter(props, onFilteredTracks) {
             Все
           </S.Option>
           {years.map((year) => (
-            < S.Option
-  key={year}
-  onClick={() => {
-    if (selectedYears.includes(year)) {
-      setSelectedYears(selectedYears.filter(x => x !== year));
-    } else {
-      setSelectedYears([...selectedYears, year]);
-    }
-  }}
->
-  {year}
-</S.Option>
+            <S.Option
+              key={year}
+              isSelected={selectedYears.includes(year)}
+              onClick={() => {
+                if (selectedYears.includes(year)) {
+                  setSelectedYears(selectedYears.filter((x) => x !== year));
+                } else {
+                  setSelectedYears([...selectedYears, year]);
+                }
+              }}
+            >
+              {year}
+            </S.Option>
           ))}
         </S.Options>
       )}

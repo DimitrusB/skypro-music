@@ -5,7 +5,7 @@ import * as S from "./Filters.style";
 
 export function GenreFilter(props, onFilteredTracks) {
   const { id, name, onClick, isOpen } = props;
-  const {selectedGenres, setSelectedGenres} = useContext(UserContext);
+  const { selectedGenres, setSelectedGenres } = useContext(UserContext);
   const [genres, setGenres] = useState([]);
   const [tracks, setTracks] = useState([]);
   const { setFilteredTracks } = useContext(UserContext);
@@ -32,23 +32,22 @@ export function GenreFilter(props, onFilteredTracks) {
       });
   }, [setFilteredTracks]);
 
-
   useEffect(() => {
-    if (selectedGenres) { 
+    if (selectedGenres) {
       let filteredTracks = tracks;
 
-  
       if (selectedGenres.length > 0 && !(selectedGenres.length === 1)) {
         setFilterChoose(true);
-        filteredTracks = filteredTracks.filter((track) => selectedGenres.includes(track.genre));
+        filteredTracks = filteredTracks.filter((track) =>
+          selectedGenres.includes(track.genre)
+        );
       } else {
         setFilterChoose(false);
       }
-  
+
       setFilteredTracks(filteredTracks);
     }
   }, [tracks, selectedGenres, setFilteredTracks]);
-  
 
   return (
     <S.Button
@@ -56,21 +55,19 @@ export function GenreFilter(props, onFilteredTracks) {
       onClick={toggleDropdown}
       style={{ border: filterChoose ? "1px solid " : "" }}
     >
-<S.Choose
-    style={{ color: filterChoose ? "" : "", position: "relative" }}
-    isOpen={isOpen}
->
-    {selectedGenres.length > 0 && !selectedGenres.includes('Все') 
-        ? <>
-           <S.Number>
-           {selectedGenres.length}
-           </S.Number>
-           {name}
+      <S.Choose
+        style={{ color: filterChoose ? "" : "", position: "relative" }}
+        isOpen={isOpen}
+      >
+        {selectedGenres.length > 0 && !selectedGenres.includes("Все") ? (
+          <>
+            <S.Number>{selectedGenres.length}</S.Number>
+            {name}
           </>
-        : name
-    }
-</S.Choose>
-
+        ) : (
+          name
+        )}
+      </S.Choose>
 
       {isOpen && (
         <S.Options>
@@ -83,18 +80,19 @@ export function GenreFilter(props, onFilteredTracks) {
             Все
           </S.Option>
           {genres.map((genre) => (
-            < S.Option
-            key={genre}
-            onClick={() => {
-              if (selectedGenres.includes(genre)) {
-                setSelectedGenres(selectedGenres.filter(x => x !== genre));
-              } else {
-                setSelectedGenres([...selectedGenres, genre]);
-              }
-            }}
-          >
-            {genre}
-          </S.Option>
+            <S.Option
+              key={genre}
+              isSelected={selectedGenres.includes(genre)}
+              onClick={() => {
+                if (selectedGenres.includes(genre)) {
+                  setSelectedGenres(selectedGenres.filter((x) => x !== genre));
+                } else {
+                  setSelectedGenres([...selectedGenres, genre]);
+                }
+              }}
+            >
+              {genre}
+            </S.Option>
           ))}
         </S.Options>
       )}

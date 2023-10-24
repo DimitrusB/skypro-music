@@ -24,9 +24,9 @@ export function Center({ onTrackSelection }) {
   const currentTrackId = useSelector((state) => state.currentTrackId);
   const isPlaying = useSelector((state) => state.isPlaying);
   const { filteredTracks, setFilteredTracks } = useContext(UserContext);
-  const{ selectedGenres, setSelectedGenres} = useContext(UserContext);
-  const {selectedYears, setSelectedYears}= useContext(UserContext);
-  const {selectedTracks, setSelectedTracks} = useContext(UserContext);
+  const { selectedGenres, setSelectedGenres } = useContext(UserContext);
+  const { selectedYears, setSelectedYears } = useContext(UserContext);
+  const { selectedTracks, setSelectedTracks } = useContext(UserContext);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const email = clientStorage.getEmailUser();
@@ -69,19 +69,40 @@ export function Center({ onTrackSelection }) {
 
   useEffect(() => {
     let filtered = tracks;
-  
-    if (Array.isArray(selectedGenres) && selectedGenres.length > 0 && !selectedGenres.includes('Все') ) {
-      filtered = filtered.filter(track => selectedGenres.some(genre => track.genre === genre));
+
+    if (
+      Array.isArray(selectedGenres) &&
+      selectedGenres.length > 0 &&
+      !selectedGenres.includes("Все")
+    ) {
+      filtered = filtered.filter((track) =>
+        selectedGenres.some((genre) => track.genre === genre)
+      );
     }
-  
-    if (Array.isArray(selectedYears) && selectedYears.length > 0 && !selectedYears.includes('Все')) {
-      filtered = filtered.filter(track => selectedYears.some(year => track.release_date && track.release_date.substring(0, 4) === year));
+
+    if (
+      Array.isArray(selectedYears) &&
+      selectedYears.length > 0 &&
+      !selectedYears.includes("Все")
+    ) {
+      filtered = filtered.filter((track) =>
+        selectedYears.some(
+          (year) =>
+            track.release_date && track.release_date.substring(0, 4) === year
+        )
+      );
     }
-  
-    if (Array.isArray(selectedTracks) && selectedTracks.length > 0 && !selectedTracks.includes('Все')) {
-      filtered = filtered.filter(track => selectedTracks.some(author => track.author === author));
+
+    if (
+      Array.isArray(selectedTracks) &&
+      selectedTracks.length > 0 &&
+      !selectedTracks.includes("Все")
+    ) {
+      filtered = filtered.filter((track) =>
+        selectedTracks.some((author) => track.author === author)
+      );
     }
-  
+
     setFilteredTracks(filtered);
     console.log(filtered);
   }, [tracks, selectedGenres, selectedYears, selectedTracks]);
@@ -92,9 +113,10 @@ export function Center({ onTrackSelection }) {
     } else {
       setSearchResults(
         filteredTracks.filter((track) =>
-          track && (track.name || track.author) ? track.name.toLowerCase().includes(search.toLowerCase())
-          || track.author.toLowerCase().includes(search.toLowerCase())
-          : false
+          track && (track.name || track.author)
+            ? track.name.toLowerCase().includes(search.toLowerCase()) ||
+              track.author.toLowerCase().includes(search.toLowerCase())
+            : false
         )
       );
     }
@@ -135,7 +157,6 @@ export function Center({ onTrackSelection }) {
           placeholder="Поиск"
           name="search"
           onChange={handleSearchChange}
-          
         />
       </S.MainCenterblockSearch>
       <S.CentralblockH2>Треки</S.CentralblockH2>

@@ -1,10 +1,5 @@
 import iconSprite from "../../img/icon/sprite.svg";
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-} from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as S from "./player.style";
 import ProgressBar from "../progressBar/progressBar";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,18 +38,22 @@ export function AudioPlayer() {
 
   useEffect(() => {
     setCurrentTrackList(tracks);
-      if (!currentTrackList.length || !audioRef.current) return;
-      const currentTrack = currentTrackList.find(
+    if (!currentTrackList.length || !audioRef.current) return;
+    const currentTrack = currentTrackList.find(
       (track) => track.id === currentTrackId
     );
     audioRef.current.src = currentTrack.track_file;
-  
+
     const loadAudio = async () => {
       try {
         await audioRef.current.load();
         if (audioRef.current.readyState >= 3) {
           if (isPlaying) {
-            audioRef.current.play().catch(error => console.error("Ошибка воспроизведения аудио:", error));
+            audioRef.current
+              .play()
+              .catch((error) =>
+                console.error("Ошибка воспроизведения аудио:", error)
+              );
           }
         }
       } catch (error) {
@@ -62,7 +61,6 @@ export function AudioPlayer() {
       }
     };
     loadAudio();
-  
   }, [currentTrackId, isPlaying]);
 
   const handleShuffle = () => {
@@ -144,7 +142,7 @@ export function AudioPlayer() {
   const handleCanPlayThrough = () => {
     setCanPlay(true);
     if (isPlaying) {
-        audioRef.current.play();
+      audioRef.current.play();
     }
   };
 
@@ -166,7 +164,7 @@ export function AudioPlayer() {
       (track) => track.id === currentTrackId
     );
 
-      dispatch(delFavoritesTracks(currentTrackId, token, setToken));
+    dispatch(delFavoritesTracks(currentTrackId, token, setToken));
   };
 
   // --------------------------------------------------REPEAT

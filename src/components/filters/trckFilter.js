@@ -5,7 +5,7 @@ import * as S from "./Filters.style";
 
 export function TrackFilter(props, onFilteredTracks) {
   const { id, name, onClick, isOpen } = props;
-  const {selectedTracks, setSelectedTracks} = useContext(UserContext);
+  const { selectedTracks, setSelectedTracks } = useContext(UserContext);
   const [trackName, setTrackName] = useState([]);
   const [tracks, setTracks] = useState([]);
   const { setFilteredTracks } = useContext(UserContext);
@@ -32,16 +32,16 @@ export function TrackFilter(props, onFilteredTracks) {
       });
   }, [setFilteredTracks]);
 
-
   useEffect(() => {
-    if (selectedTracks) { 
+    if (selectedTracks) {
       let filteredTracks = tracks;
 
-  
-      if(selectedTracks.length > 0 && !(selectedTracks.length ===1)) {
+      if (selectedTracks.length > 0 && !(selectedTracks.length === 1)) {
         setFilterChoose(true);
-        filteredTracks = filteredTracks.filter((track) => track.author === selectedTracks);
-      }else {
+        filteredTracks = filteredTracks.filter(
+          (track) => track.author === selectedTracks
+        );
+      } else {
         setFilterChoose(false);
       }
       setFilteredTracks(filteredTracks);
@@ -52,13 +52,20 @@ export function TrackFilter(props, onFilteredTracks) {
     <S.Button
       type="button"
       onClick={toggleDropdown}
-      style={{ border: filterChoose ? "1px solid #B672FF" : "" }}
+      style={{ border: filterChoose ? "1px solid " : "" }}
     >
       <S.Choose
-        style={{ color: filterChoose ? "#B672FF" : "" }}
+        style={{ color: filterChoose ? "" : "", position: "relative" }}
         isOpen={isOpen}
       >
-        {selectedTracks.length > 0 && !selectedTracks.includes('Все')  ? selectedTracks.join(', ') : name }
+        {selectedTracks.length > 0 && !selectedTracks.includes("Все") ? (
+          <>
+            <S.Number>{selectedTracks.length}</S.Number>
+            {name}
+          </>
+        ) : (
+          name
+        )}
       </S.Choose>
       {isOpen && (
         <S.Options>
@@ -73,9 +80,10 @@ export function TrackFilter(props, onFilteredTracks) {
           {trackName.map((track) => (
             <S.Option
               key={track}
+              isSelected={selectedTracks.includes(track)}
               onClick={() => {
                 if (selectedTracks.includes(track)) {
-                  setSelectedTracks(selectedTracks.filter(x => x !== track));
+                  setSelectedTracks(selectedTracks.filter((x) => x !== track));
                 } else {
                   setSelectedTracks([...selectedTracks, track]);
                 }

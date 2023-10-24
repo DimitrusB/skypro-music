@@ -7,11 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
 import { NameTrack } from "../../components/NameTracks/NameTrack";
-import { getTrackList, setCurrentTrack, setPlaying, shouldPlayFromFavorite } from "../../store/actions/trackActions";
+import {
+  getTrackList,
+  setCurrentTrack,
+  setPlaying,
+  shouldPlayFromFavorite,
+} from "../../store/actions/trackActions";
 import { useNavigate } from "react-router-dom";
 import clientStorage from "../../utils/client-storage";
 
-export function FavoritesTracks({setIsLogged}) {
+export function FavoritesTracks({ setIsLogged }) {
   // const { email, resetEmail } = useContext(UserContext);
   const dispatch = useDispatch();
   // const { token } = useContext(UserContext);
@@ -24,8 +29,6 @@ export function FavoritesTracks({setIsLogged}) {
   const email = clientStorage.getEmailUser();
   const navigate = useNavigate();
   const token = clientStorage.getTokenUser();
-
-
 
   useEffect(() => {
     if (token && token.access && token.refresh) {
@@ -44,12 +47,12 @@ export function FavoritesTracks({setIsLogged}) {
       );
     }
   }, [search, tracks]);
-  
+
   const handleSearchChange = (event) => setSearch(event.target.value);
 
   const handleResetClick = () => {
     clientStorage.clearUserInfo();
-    navigate('/signin');
+    navigate("/signin");
     setIsLogged(null);
   };
 
@@ -58,7 +61,7 @@ export function FavoritesTracks({setIsLogged}) {
   }, []);
 
   useEffect(() => {
-    console.log('Tracks updated', tracks);
+    console.log("Tracks updated", tracks);
     if (!tracks.length && favoriteTracks.length) {
       dispatch(getTrackList(favoriteTracks));
     }
@@ -69,7 +72,7 @@ export function FavoritesTracks({setIsLogged}) {
       isPlaying ? dispatch(setPlaying(false)) : dispatch(setPlaying(true));
     } else {
       dispatch(setCurrentTrack(id));
-      dispatch(setPlaying(true))
+      dispatch(setPlaying(true));
     }
   };
 
@@ -107,19 +110,21 @@ export function FavoritesTracks({setIsLogged}) {
                   </S.FPlaylistTitleCol>
                 </S.FContentTitle>
                 <S.FPlaylistContent>
-                {Array.isArray(searchResults) && searchResults.length > 0 && searchResults.map((tracks,index) => (
-            <NameTrack
-              id={tracks.id}
-              track={tracks.name}
-              mix={tracks.mix}
-              author={tracks.author}
-              album={tracks.album}
-              time={tracks.duration_in_seconds}
-              trackfile={tracks.track_file}
-                onClick={() => handleTrackClick(tracks.id)}
-                playing={currentTrackId === tracks.id}
-            />
-          ))}
+                  {Array.isArray(searchResults) &&
+                    searchResults.length > 0 &&
+                    searchResults.map((tracks, index) => (
+                      <NameTrack
+                        id={tracks.id}
+                        track={tracks.name}
+                        mix={tracks.mix}
+                        author={tracks.author}
+                        album={tracks.album}
+                        time={tracks.duration_in_seconds}
+                        trackfile={tracks.track_file}
+                        onClick={() => handleTrackClick(tracks.id)}
+                        playing={currentTrackId === tracks.id}
+                      />
+                    ))}
                 </S.FPlaylistContent>
               </S.CentralblockContent>
             </S.MainCenterblock>
