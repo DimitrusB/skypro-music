@@ -118,7 +118,7 @@ const rootReducer = (state = initialState, action) => {
       let prevTrackId;
       if (isShufflePrev) {
         do {
-          prevTrackId = tracksId[Math.floor(Math.random() * track.length)];
+          prevTrackId = tracksId[Math.floor(Math.random() * tracksId.length)];
         } while (prevTrackId === state.currentTrackId);
       } else {
         const currentIndex = tracksId.findIndex(
