@@ -38,7 +38,7 @@ const rootReducer = (state = initialState, action) => {
         };
 
     case "GET_TRACK_LIST":
-      return { ...state, track: action.payload, playFavorite: false, currentTrackId: 0, };
+      return { ...state, track: action.payload, playFavorite: false, };
 
     case "FETCH_FAVORITES_SUCCESS":
       const favoritesTracks = {};
