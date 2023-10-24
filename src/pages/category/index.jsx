@@ -25,6 +25,7 @@ export function Category({setIsLogged}) {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useContext(UserContext);
 
   const [tracks, setTracks] = useState([]);
   const [nameList, setNameList] = useState("");
@@ -51,7 +52,7 @@ export function Category({setIsLogged}) {
       .then((response) => {
         setTracks(response.items);
         setNameList(response.name);
-
+        setIsLoading(false);
         if (!currentTrackId) {
           dispatch(setCurrentTrack(response.items[0].id));
         }
@@ -63,6 +64,7 @@ export function Category({setIsLogged}) {
         );
       })
       .catch((error) => {
+        setIsLoading(false);
         dispatch(
           getTrackListError(`Error fetching data from the server: ${error}`)
         );

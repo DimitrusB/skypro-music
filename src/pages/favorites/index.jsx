@@ -29,10 +29,14 @@ export function FavoritesTracks({ setIsLogged }) {
   const email = clientStorage.getEmailUser();
   const navigate = useNavigate();
   const token = clientStorage.getTokenUser();
-
+  const { isLoading, setIsLoading } = useContext(UserContext);
+  
   useEffect(() => {
     if (token && token.access && token.refresh) {
-      dispatch(getAllFavoriteTracks(token.access, token.refresh));
+      dispatch(getAllFavoriteTracks(token.access, token.refresh))
+      .then(() => {
+        setIsLoading(false);
+      })
     }
   }, []);
 

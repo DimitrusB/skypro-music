@@ -30,7 +30,7 @@ export function NameTrack({
   const token = clientStorage.getTokenUser();
   const setToken = clientStorage.setTokenUser;
   const { isLoading, setIsLoading } = useContext(UserContext);
-  const trackRef = useRef(null); // создайте ref
+  const trackRef = useRef(null); 
 
   useEffect(() => {
     if (isPlaying && playing && trackRef.current) { 
@@ -52,9 +52,11 @@ export function NameTrack({
     
     if (!isTrackAlreadyLiked) {
       dispatch(addFavoritesTracks(trackToAdd, token, setToken));
+
     } else {
       console.log('Трек уже добавлен в избранное.');
     }
+    dispatch(getAllFavoriteTracks(token.access, token.refresh));
   };
 
   const handleDislike = async () => {
@@ -63,10 +65,8 @@ export function NameTrack({
     dispatch(getAllFavoriteTracks(token.access, token.refresh));
   };
 
-  
   useEffect(() => {
   }, [favoritetracks, isLike]);
-
 
 
   return (
