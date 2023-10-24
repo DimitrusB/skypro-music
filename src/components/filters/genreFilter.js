@@ -54,14 +54,24 @@ export function GenreFilter(props, onFilteredTracks) {
     <S.Button
       type="button"
       onClick={toggleDropdown}
-      style={{ border: filterChoose ? "1px solid #B672FF" : "" }}
+      style={{ border: filterChoose ? "1px solid " : "" }}
     >
 <S.Choose
-  style={{ color: filterChoose ? "#B672FF" : "" }}
-  isOpen={isOpen}
+    style={{ color: filterChoose ? "" : "", position: "relative" }}
+    isOpen={isOpen}
 >
-  {selectedGenres.length > 0 && !selectedGenres.includes('Все') ? selectedGenres.join(', ') : name}
+    {selectedGenres.length > 0 && !selectedGenres.includes('Все') 
+        ? <>
+           <S.Number>
+           {selectedGenres.length}
+           </S.Number>
+           {name}
+          </>
+        : name
+    }
 </S.Choose>
+
+
       {isOpen && (
         <S.Options>
           <S.Option

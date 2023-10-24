@@ -17,6 +17,26 @@ background-color: transparent;
   color: #B672FF;
 }
 `
+export const Number = styled.span`
+position: absolute; 
+top: -20px;
+right: -20px; 
+background-color: #AD61FF; 
+border-radius: 50%; 
+width: 26px;
+height: 25.5px;
+display: flex;
+justify-content: center;
+align-items: center;
+color: #FFF;
+
+font-family: StratosSkyeng;
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: 13px; /* 100% */
+`;
+
 export const Button = styled.div`
 font-style: normal;
 font-weight: 400;
