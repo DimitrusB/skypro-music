@@ -50,16 +50,23 @@ export function Category({setIsLogged}) {
   useEffect(() => {
     getAllTracksById(category.id)
       .then((response) => {
-        setTracks(response.items);
+        const processedTracks = response.items.map((item) => {
+          if (item.stared_user.find((user) => user.email === email)) {
+            return { ...item, isFavorite: true };
+          }
+          return item;
+        })
+  
+        setTracks(processedTracks);
         setNameList(response.name);
         setIsLoading(false);
         if (!currentTrackId) {
-          dispatch(setCurrentTrack(response.items[0].id));
+          dispatch(setCurrentTrack(processedTracks[0].id));
         }
-        dispatch(getTrackList(response.items));
+        dispatch(getTrackList(processedTracks));
         dispatch(
           fetchFavoritesSuccess(
-            response.items.filter((track) => track.isFavorite)
+            processedTracks.filter((track) => track.isFavorite)
           )
         );
       })
@@ -70,6 +77,7 @@ export function Category({setIsLogged}) {
         );
       });
   }, [dispatch, currentTrackId, category.id]);
+  
 
   if (!category) {
     return <div>Плейлист не найден</div>;

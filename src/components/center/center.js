@@ -32,6 +32,10 @@ export function Center({ onTrackSelection }) {
   const email = clientStorage.getEmailUser();
   const { isLoading, setIsLoading } = useContext(UserContext);
 
+  if (currentTrackId === undefined) {
+    dispatch(setCurrentTrack(0));
+  }
+
   useEffect(() => {
     getAllTracks()
       .then((response) => {
@@ -61,7 +65,7 @@ export function Center({ onTrackSelection }) {
           getTrackListError(`Error fetching data from the server: ${error}`)
         );
       });
-  }, [dispatch]);
+  }, [dispatch, currentTrackId]);
 
   const handleTrackClick = (id) => {
     if (id === currentTrackId) {
