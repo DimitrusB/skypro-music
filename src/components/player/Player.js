@@ -15,6 +15,7 @@ import { addFavoritesTracks } from "../../store/actions/thunk/addfavorites";
 import { delFavoritesTracks } from "../../store/actions/thunk/delFavorites";
 import clientStorage from "../../utils/client-storage";
 import UserContext from "../UserContext";
+import { getAllFavoriteTracks } from "../../store/actions/thunk/getListFavorites";
 
 export function AudioPlayer() {
   const { isLoading, setIsLoading } = useContext(UserContext);
@@ -156,7 +157,10 @@ export function AudioPlayer() {
     );
 
     if (!favoritetracks.includes(currentTrack)) {
-      dispatch(addFavoritesTracks(currentTrack, token, setToken));
+      dispatch(addFavoritesTracks(currentTrack, token, setToken))
+      .then(() => dispatch(getAllFavoriteTracks(token.access , token.refresh)));
+    }else{
+      console.log('Трек уже добавлен в избранное.');
     }
   };
 
@@ -166,6 +170,7 @@ export function AudioPlayer() {
     );
 
     dispatch(delFavoritesTracks(currentTrackId, token, setToken));
+    dispatch(getAllFavoriteTracks(token.access, token.refresh));
   };
 
   // --------------------------------------------------REPEAT
