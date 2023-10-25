@@ -3,11 +3,12 @@ import styled from 'styled-components';
 
 export const MainNav = styled.nav`  
   width: 244px;
+  height: 100vh;
   background-color: #181818;
   padding: 20px 0 20px 36px;
 
   ${props => props.whiteTheme && `
-  background-color: #ffffff; 
+  background: #F6F5F3;
 
 `}
   `
@@ -30,6 +31,11 @@ export const BurgerLine = styled.span`
   width: 100%;
   height: 1px;
   background-color: #d3d3d3;
+
+  ${props => props.whiteTheme && `
+  background: #000;
+
+`}
   `
 export const NavBurger = styled.div` 
   width: 20px;

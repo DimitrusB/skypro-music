@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import logo from "../../img/logo.png";
+import logoWhite from "../../img/logoWhite.png";
 import * as S from "./NavMenu.Style";
 import { Link, useNavigate } from "react-router-dom";
 import clientStorage from "../../utils/client-storage";
@@ -29,13 +30,13 @@ export function NavMenu({setIsLogged}) {
     <S.MainNav whiteTheme={whiteTheme}>
       <S.NavLogo>
         <Link to="/">
-          <S.NavImage src={logo} alt="logo" />
+          <S.NavImage src={whiteTheme ? logoWhite : logo} alt="logo" />
         </Link>
       </S.NavLogo>
       <S.NavBurger onClick={handleMoreClick}>
-        <S.BurgerLine></S.BurgerLine>
-        <S.BurgerLine></S.BurgerLine>
-        <S.BurgerLine></S.BurgerLine>
+        <S.BurgerLine whiteTheme={whiteTheme}></S.BurgerLine>
+        <S.BurgerLine whiteTheme={whiteTheme}></S.BurgerLine>
+        <S.BurgerLine whiteTheme={whiteTheme}></S.BurgerLine>
       </S.NavBurger>
       <S.NavMenu>
         <S.MenuList showMore={showMore}>

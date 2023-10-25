@@ -58,6 +58,10 @@ font-size: 64px;
 line-height: 72px;
 letter-spacing: -0.8px;
 margin-bottom: 45px;
+${props => props.whiteTheme && `
+color: #000;
+
+`}
 `
 
 export const CentralblockFilter = styled.div`
@@ -89,6 +93,10 @@ font-weight: 400;
 font-size: 16px;
 line-height: 24px;
 margin-right: 15px;
+${props => props.whiteTheme && `
+color: #000;
+
+`}
 `
 export const FContentTitle= styled.div`
 display: -webkit-box;

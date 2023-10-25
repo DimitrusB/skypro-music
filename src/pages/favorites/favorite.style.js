@@ -32,6 +32,11 @@ width: auto;
 -ms-flex-positive: 3;
 flex-grow: 3;
 padding: 20px 40px 20px 111px;
+
+${props => props.whiteTheme && `
+background: #FFF;
+
+`}
 `
 export const MainCenterblockSearch = styled.div`
 width: 100%;
@@ -83,6 +88,10 @@ font-size: 64px;
 line-height: 72px;
 letter-spacing: -0.8px;
 margin-bottom: 45px;
+${props => props.whiteTheme && `
+color: #000;
+
+`}
 `
 
 export const CentralblockFilter = styled.div`
@@ -198,6 +207,11 @@ scrollbar-width: none;
 export const MainSidebar = styled.div`
 max-width: 418px;
 padding: 20px 90px 20px 78px;
+
+${props => props.whiteTheme && `
+background: #ffffff;
+
+`}
 `
 export const PersonalSidebar = styled.div`
 display: -webkit-box;
@@ -222,6 +236,10 @@ font-size: 16px;
 line-height: 24px;
 color: #ffffff;
 margin-right: 16px;
+${props => props.whiteTheme && `
+color: #000;
+
+`}
 `
 export const SidebarIcon = styled.div`
 width: 43px;
@@ -229,6 +247,10 @@ height: 43px;
 background-color: #313131;
 border-radius: 50%;
 cursor: pointer;
+${props => props.whiteTheme && `
+background-color: #ffffff;
+
+`}
 `
 export const SidebarBlock = styled.div`
 height: 100%;

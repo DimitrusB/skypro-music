@@ -31,6 +31,14 @@ export function FavoritesTracks({ setIsLogged }) {
   const navigate = useNavigate();
   const token = clientStorage.getTokenUser();
   const { isLoading, setIsLoading } = useContext(UserContext);
+  const { whiteTheme, setWhiteTheme } = useContext(UserContext);
+
+  useEffect(() =>{
+    const theme = localStorage.getItem('theme');
+    if (theme) {
+      setWhiteTheme(theme === 'white' ? true : false);
+    }
+  },[]);
 
   useEffect(() => {
     if (token && token.access && token.refresh) {
@@ -82,7 +90,7 @@ export function FavoritesTracks({ setIsLogged }) {
         <S.Container>
           <S.Main>
             <NavMenu />
-            <S.MainCenterblock>
+            <S.MainCenterblock whiteTheme={whiteTheme}>
               <S.MainCenterblockSearch>
                 <S.MainSearchSvg>
                   <use xlinkHref={`${iconSprite}#icon-search`}></use>
@@ -95,7 +103,7 @@ export function FavoritesTracks({ setIsLogged }) {
                   onChange={handleSearchChange}
                 />
               </S.MainCenterblockSearch>
-              <S.CentralblockH2>Мои треки</S.CentralblockH2>
+              <S.CentralblockH2 whiteTheme={whiteTheme}>Мои треки</S.CentralblockH2>
               <S.CentralblockContent>
                 <S.FContentTitle>
                   <S.FPlaylistTitleCol col="col01">Трек</S.FPlaylistTitleCol>
@@ -129,12 +137,16 @@ export function FavoritesTracks({ setIsLogged }) {
               </S.CentralblockContent>
             </S.MainCenterblock>
 
-            <S.MainSidebar>
+            <S.MainSidebar whiteTheme={whiteTheme}>
               <S.PersonalSidebar>
-                <S.PersonalName>{email}</S.PersonalName>
-                <S.SidebarIcon>
+                <S.PersonalName whiteTheme={whiteTheme}>{email}</S.PersonalName>
+                <S.SidebarIcon whiteTheme={whiteTheme}>
                   <svg alt="logout" onClick={handleResetClick}>
-                    <use xlinkHref={`${iconSprite}#logout`}></use>
+                  <use
+                        xlinkHref={`${iconSprite}${
+                          whiteTheme ? "#icon-logoutWhite" : "#logout"
+                        }`}
+                      ></use>
                   </svg>
                 </S.SidebarIcon>
               </S.PersonalSidebar>

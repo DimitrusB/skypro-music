@@ -10,6 +10,7 @@ export function YearFilter(props, onFilteredTracks) {
   const [years, setYears] = useState([]);
   const [filterChoose, setFilterChoose] = useState(false);
   const { setFilteredTracks } = useContext(UserContext);
+  const { whiteTheme, setWhiteTheme } = useContext(UserContext);
 
   const toggleDropdown = () => {
     onClick(id);
@@ -55,12 +56,12 @@ export function YearFilter(props, onFilteredTracks) {
   }, [tracks, selectedYears, setFilteredTracks]);
 
   return (
-    <S.Button
+    <S.Button whiteTheme={whiteTheme}
       type="button"
       onClick={toggleDropdown}
       style={{ border: filterChoose ? "1px solid " : "" }}
     >
-      <S.Choose
+      <S.Choose whiteTheme={whiteTheme}
         style={{ color: filterChoose ? "" : "", position: "relative" }}
         isOpen={isOpen}
       >
@@ -74,8 +75,8 @@ export function YearFilter(props, onFilteredTracks) {
         )}
       </S.Choose>
       {isOpen && (
-        <S.Options>
-          <S.Option
+        <S.Options whiteTheme={whiteTheme}>
+          <S.Option whiteTheme={whiteTheme}
             key="all"
             onClick={() => {
               setSelectedYears([]);
@@ -84,7 +85,7 @@ export function YearFilter(props, onFilteredTracks) {
             Все
           </S.Option>
           {years.map((year) => (
-            <S.Option
+            <S.Option whiteTheme={whiteTheme}
               key={year}
               isSelected={selectedYears.includes(year)}
               onClick={() => {

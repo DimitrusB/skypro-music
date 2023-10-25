@@ -26,10 +26,10 @@ export function Panelplaylist({setIsLogged}) {
     navigate('/signin');
   };
   return (
-    <S.MainSidebar>
+    <S.MainSidebar whiteTheme={whiteTheme}>
       <S.PersonalSidebar>
-        <S.PersonalName>{email}</S.PersonalName>
-        <S.SidebarIcon>
+        <S.PersonalName whiteTheme={whiteTheme}>{email}</S.PersonalName>
+        <S.SidebarIcon whiteTheme={whiteTheme}>
           <svg alt="logout" onClick={handleResetClick}>
           <use
                         xlinkHref={`${iconSprite}${

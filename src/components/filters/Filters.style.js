@@ -8,6 +8,12 @@ export const Choose = styled.div`
   line-height: 24px;
   background: transparent;
   color: white;
+    
+  ${props => props.whiteTheme && `
+  color: #000;
+  
+  `}
+
   ${({ isOpen }) =>
     isOpen &&
     `
@@ -46,6 +52,11 @@ export const Button = styled.div`
   padding: 6px 20px;
   position: relative;
 
+  ${props => props.whiteTheme && `
+  border: 1px solid #000;
+  
+  `}
+
   &:hover {
     border-color: #d9b6ff;
     color: #d9b6ff;
@@ -80,6 +91,9 @@ export const Options = styled.ul`
   z-index: 1;
   margin-top: 10px;
   margin-left: -20px;
+  ${props => props.whiteTheme && `
+  background: #F6F5F3;
+  `}
 
   &::-webkit-scrollbar-thumb {
     background-color: #ffffff;
@@ -98,8 +112,14 @@ export const Option = styled.li`
   color: #fff;
   width: 115px;
   color: ${(props) => (props.isSelected ? "#B672FF" : "#FFFFFF")};
+
   &:hover {
     color: #b672ff;
     text-decoration: underline;
   }
+  ${props => props.whiteTheme && `
+  color: #000;
+  background: #F6F5F3;
+
+  `}
 `;

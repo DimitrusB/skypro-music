@@ -31,6 +31,7 @@ export function Center({ onTrackSelection }) {
   const [searchResults, setSearchResults] = useState([]);
   const email = clientStorage.getEmailUser();
   const { isLoading, setIsLoading } = useContext(UserContext);
+  const { whiteTheme, setWhiteTheme } = useContext(UserContext);
 
   if (currentTrackId === undefined) {
     dispatch(setCurrentTrack(0));
@@ -168,9 +169,9 @@ export function Center({ onTrackSelection }) {
           onChange={handleSearchChange}
         />
       </S.MainCenterblockSearch>
-      <S.CentralblockH2>Треки</S.CentralblockH2>
+      <S.CentralblockH2 whiteTheme={whiteTheme}>Треки</S.CentralblockH2>
       <S.CentralblockFilter>
-        <S.FilterTitle>Искать по:</S.FilterTitle>
+        <S.FilterTitle whiteTheme={whiteTheme}>Искать по:</S.FilterTitle>
         <TrackFilter
           name="По исполнителю"
           onClick={() => handleFilterToggle("track")}

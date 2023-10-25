@@ -10,6 +10,7 @@ export function TrackFilter(props, onFilteredTracks) {
   const [tracks, setTracks] = useState([]);
   const { setFilteredTracks } = useContext(UserContext);
   const [filterChoose, setFilterChoose] = useState(false);
+  const { whiteTheme, setWhiteTheme } = useContext(UserContext);
 
   const toggleDropdown = () => {
     onClick(id);
@@ -49,12 +50,12 @@ export function TrackFilter(props, onFilteredTracks) {
   }, [tracks, selectedTracks, setFilteredTracks]);
 
   return (
-    <S.Button
+    <S.Button whiteTheme={whiteTheme}
       type="button"
       onClick={toggleDropdown}
       style={{ border: filterChoose ? "1px solid " : "" }}
     >
-      <S.Choose
+      <S.Choose whiteTheme={whiteTheme}
         style={{ color: filterChoose ? "" : "", position: "relative" }}
         isOpen={isOpen}
       >
@@ -68,8 +69,8 @@ export function TrackFilter(props, onFilteredTracks) {
         )}
       </S.Choose>
       {isOpen && (
-        <S.Options>
-          <S.Option
+        <S.Options whiteTheme={whiteTheme}>
+          <S.Option whiteTheme={whiteTheme}
             key="all"
             onClick={() => {
               setSelectedTracks([]);
@@ -78,7 +79,7 @@ export function TrackFilter(props, onFilteredTracks) {
             Все
           </S.Option>
           {trackName.map((track) => (
-            <S.Option
+            <S.Option whiteTheme={whiteTheme}
               key={track}
               isSelected={selectedTracks.includes(track)}
               onClick={() => {
