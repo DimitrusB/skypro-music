@@ -1,0 +1,170 @@
+import { NavMenu } from "../../components/NavMenu/NavMenu";
+import * as S from "../favorites/favorite.style";
+import iconSprite from "../../img/icon/sprite.svg";
+import { useNavigate, useParams } from "react-router-dom";
+import { musicCategory } from "../../components/constants";
+import { getAllTracksById } from "../../components/api/api";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchFavoritesSuccess,
+  getTrackList,
+  getTrackListError,
+  setCurrentTrack,
+  setPlaying,
+} from "../../store/actions/trackActions";
+import { useContext, useEffect, useState } from "react";
+import { NameTrack } from "../../components/NameTracks/NameTrack";
+import UserContext from "../../components/UserContext";
+import clientStorage from "../../utils/client-storage";
+
+export function Category({setIsLogged}) {
+  const params = useParams();
+  const dispatch = useDispatch();
+  const isPlaying = useSelector((state) => state.isPlaying);
+  const currentTrackId = useSelector((state) => state.currentTrackId);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useContext(UserContext);
+
+  const [tracks, setTracks] = useState([]);
+  const [nameList, setNameList] = useState("");
+  const category = musicCategory.find(
+    (category) => category.id === parseInt(params.id, 10)
+  );
+  const email = clientStorage.getEmailUser();
+  useEffect(() => {
+    if (search === "") {
+      setSearchResults(tracks);
+    } else {
+      setSearchResults(
+        tracks.filter((track) =>
+          track.name.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
+  }, [search, tracks]);
+
+  const handleSearchChange = (event) => setSearch(event.target.value);
+
+  useEffect(() => {
+    getAllTracksById(category.id)
+      .then((response) => {
+        const processedTracks = response.items.map((item) => {
+          if (item.stared_user.find((user) => user.email === email)) {
+            return { ...item, isFavorite: true };
+          }
+          return item;
+        })
+  
+        setTracks(processedTracks);
+        setNameList(response.name);
+        setIsLoading(false);
+        if (!currentTrackId) {
+          dispatch(setCurrentTrack(processedTracks[0].id));
+        }
+        dispatch(getTrackList(processedTracks));
+        dispatch(
+          fetchFavoritesSuccess(
+            processedTracks.filter((track) => track.isFavorite)
+          )
+        );
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        dispatch(
+          getTrackListError(`Error fetching data from the server: ${error}`)
+        );
+      });
+  }, [dispatch, currentTrackId, category.id]);
+  
+
+  if (!category) {
+    return <div>Плейлист не найден</div>;
+  }
+
+  const handleTrackClick = (id) => {
+    if (id === currentTrackId) {
+      isPlaying ? dispatch(setPlaying(false)) : dispatch(setPlaying(true));
+    } else {
+      dispatch(setCurrentTrack(id));
+      dispatch(setPlaying(true));
+    }
+  };
+
+  const handleResetClick = () => {
+    clientStorage.clearUserInfo();
+    navigate('/signin');
+    setIsLogged(null);
+  };
+
+  return (
+    <header className="App-header">
+      <S.Wrapper>
+        <S.Container>
+          <S.Main>
+            <NavMenu />
+            <S.MainCenterblock>
+              <S.MainCenterblockSearch>
+                <S.MainSearchSvg>
+                  <use xlinkHref={`${iconSprite}#icon-search`}></use>
+                </S.MainSearchSvg>
+
+                <S.MainSearchText
+                  type="search"
+                  placeholder="Поиск"
+                  name="search"
+                  onChange={handleSearchChange}
+                />
+              </S.MainCenterblockSearch>
+              <S.CentralblockH2>{nameList}</S.CentralblockH2>
+              <S.CentralblockContent>
+                <S.FContentTitle>
+                  <S.FPlaylistTitleCol col="col01">Трек</S.FPlaylistTitleCol>
+                  <S.FPlaylistTitleCol col="col02">
+                    ИСПОЛНИТЕЛЬ
+                  </S.FPlaylistTitleCol>
+                  <S.FPlaylistTitleCol col="col03">АЛЬБОМ</S.FPlaylistTitleCol>
+                  <S.FPlaylistTitleCol col="col04">
+                    <S.FPlaylistTitleSvg alt="time">
+                      <use xlinkHref={`${iconSprite}#icon-watch`}></use>
+                    </S.FPlaylistTitleSvg>
+                  </S.FPlaylistTitleCol>
+                </S.FContentTitle>
+                <S.FPlaylistContent>
+                  {searchResults.map((track, index) => (
+                    <NameTrack
+                      key={index}
+                      id={track.id}
+                      track={track.name}
+                      author={track.author}
+                      album={track.album}
+                      time={track.duration_in_seconds}
+                      trackfile={track.track_file}
+                      onClick={() => handleTrackClick(track.id)}
+                      playing={currentTrackId === track.id}
+                    />
+                  ))}
+                </S.FPlaylistContent>
+              </S.CentralblockContent>
+            </S.MainCenterblock>
+
+            <S.MainSidebar>
+              <S.PersonalSidebar>
+                <S.PersonalName>{email}</S.PersonalName>
+                <S.SidebarIcon>
+                  <svg alt="logout" onClick={handleResetClick}>
+                    <use xlinkHref={`${iconSprite}#logout`}></use>
+                  </svg>
+                </S.SidebarIcon>
+              </S.PersonalSidebar>
+              <S.SidebarBlock></S.SidebarBlock>
+            </S.MainSidebar>
+          </S.Main>
+
+          <footer className="footer"></footer>
+        </S.Container>
+      </S.Wrapper>
+    </header>
+  );
+}
