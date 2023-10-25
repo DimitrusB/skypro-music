@@ -43,7 +43,7 @@ export function AudioPlayer() {
     const currentTrack = currentTrackList.find(
       (track) => track.id === currentTrackId
     );
-    audioRef.current.src = currentTrack.track_file;
+    audioRef.current.src = currentTrack?.track_file;
 
     const loadAudio = async () => {
       try {
@@ -62,7 +62,7 @@ export function AudioPlayer() {
       }
     };
     loadAudio();
-  }, [currentTrackId, isPlaying]);
+  }, [currentTrackId, isPlaying, currentTrackList]);
 
   const handleShuffle = () => {
     dispatch(shuffleTracks());
@@ -313,7 +313,7 @@ export function AudioPlayer() {
                             xlinkHref={`${iconSprite}#icon-${
                               currentTrackList.find(
                                 (track) => track.id === currentTrackId
-                              ).isLike
+                              )?.isLike
                                 ? "likeActive"
                                 : "like"
                             }`}

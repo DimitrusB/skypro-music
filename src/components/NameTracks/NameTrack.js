@@ -64,10 +64,6 @@ export function NameTrack({
     dispatch(getAllFavoriteTracks(token.access, token.refresh));
     // window.location.reload()
   };
-  
-  useEffect(() => {
-  }, [favoritetracks, isLike]);
-
 
   return (
     <S.PlaylistItem ref={trackRef}>

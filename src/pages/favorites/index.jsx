@@ -23,6 +23,7 @@ export function FavoritesTracks({ setIsLogged }) {
   const tracks = useSelector((state) => state.track);
   const favoriteTracks = useSelector((state) => state.favoritetracks);
   const currentTrackId = useSelector((state) => state.currentTrackId);
+  const playFromFavorite = useSelector((state) => state.playFavorite);
   const isPlaying = useSelector((state) => state.isPlaying);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -30,7 +31,7 @@ export function FavoritesTracks({ setIsLogged }) {
   const navigate = useNavigate();
   const token = clientStorage.getTokenUser();
   const { isLoading, setIsLoading } = useContext(UserContext);
-  
+
   useEffect(() => {
     if (token && token.access && token.refresh) {
       dispatch(getAllFavoriteTracks(token.access, token.refresh))
@@ -42,15 +43,19 @@ export function FavoritesTracks({ setIsLogged }) {
 
   useEffect(() => {
     if (search === "") {
-      setSearchResults(tracks);
+      setSearchResults(favoriteTracks);
     } else {
       setSearchResults(
-        tracks.filter((track) =>
+        favoriteTracks.filter((track) =>
           track.name.toLowerCase().includes(search.toLowerCase())
         )
       );
     }
-  }, [search, tracks]);
+
+    if (playFromFavorite) {
+      dispatch(getTrackList(favoriteTracks));
+    }
+  }, [search, favoriteTracks]);
 
   const handleSearchChange = (event) => setSearch(event.target.value);
 
@@ -60,17 +65,6 @@ export function FavoritesTracks({ setIsLogged }) {
     setIsLogged(null);
   };
 
-  useEffect(() => {
-    dispatch(shouldPlayFromFavorite());
-  }, []);
-
-  useEffect(() => {
-    console.log("Tracks updated", tracks);
-    if (!tracks.length && favoriteTracks.length) {
-      dispatch(getTrackList(favoriteTracks));
-    }
-  }, [tracks, favoriteTracks]);
-
   const handleTrackClick = (id) => {
     if (id === currentTrackId) {
       isPlaying ? dispatch(setPlaying(false)) : dispatch(setPlaying(true));
@@ -78,6 +72,8 @@ export function FavoritesTracks({ setIsLogged }) {
       dispatch(setCurrentTrack(id));
       dispatch(setPlaying(true));
     }
+    dispatch(getTrackList(favoriteTracks));
+    dispatch(shouldPlayFromFavorite());
   };
 
   return (

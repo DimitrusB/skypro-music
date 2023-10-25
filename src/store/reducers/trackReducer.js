@@ -92,7 +92,7 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, isPlaying: action.payload };
 
     case "SET_PLAYING_FAVORITE":
-      return { ...state, track: state.favoritetracks, playFavorite: true, };
+      return { ...state, playFavorite: true, };
 
     case "SET_NEXT_TRACK":
       const { isShuffle, track } = state;
