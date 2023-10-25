@@ -33,19 +33,18 @@ export function FavoritesTracks({ setIsLogged }) {
   const { isLoading, setIsLoading } = useContext(UserContext);
   const { whiteTheme, setWhiteTheme } = useContext(UserContext);
 
-  useEffect(() =>{
-    const theme = localStorage.getItem('theme');
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
     if (theme) {
-      setWhiteTheme(theme === 'white' ? true : false);
+      setWhiteTheme(theme === "white" ? true : false);
     }
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (token && token.access && token.refresh) {
-      dispatch(getAllFavoriteTracks(token.access, token.refresh))
-      .then(() => {
+      dispatch(getAllFavoriteTracks(token.access, token.refresh)).then(() => {
         setIsLoading(false);
-      })
+      });
     }
   }, []);
 
@@ -103,7 +102,9 @@ export function FavoritesTracks({ setIsLogged }) {
                   onChange={handleSearchChange}
                 />
               </S.MainCenterblockSearch>
-              <S.CentralblockH2 whiteTheme={whiteTheme}>Мои треки</S.CentralblockH2>
+              <S.CentralblockH2 whiteTheme={whiteTheme}>
+                Мои треки
+              </S.CentralblockH2>
               <S.CentralblockContent>
                 <S.FContentTitle>
                   <S.FPlaylistTitleCol col="col01">Трек</S.FPlaylistTitleCol>
@@ -142,11 +143,11 @@ export function FavoritesTracks({ setIsLogged }) {
                 <S.PersonalName whiteTheme={whiteTheme}>{email}</S.PersonalName>
                 <S.SidebarIcon whiteTheme={whiteTheme}>
                   <svg alt="logout" onClick={handleResetClick}>
-                  <use
-                        xlinkHref={`${iconSprite}${
-                          whiteTheme ? "#icon-logoutWhite" : "#logout"
-                        }`}
-                      ></use>
+                    <use
+                      xlinkHref={`${iconSprite}${
+                        whiteTheme ? "#icon-logoutWhite" : "#logout"
+                      }`}
+                    ></use>
                   </svg>
                 </S.SidebarIcon>
               </S.PersonalSidebar>

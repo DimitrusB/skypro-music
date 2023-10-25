@@ -13,12 +13,7 @@ export const getAllFavoriteTracks = (token, tokenRefresh) => {
   };
 };
 
-const makeRequestWithTokenRefresh = (
-  url,
-  token,
-  tokenRefresh,
-  dispatch,
-) => {
+const makeRequestWithTokenRefresh = (url, token, tokenRefresh, dispatch) => {
   return fetch(url, {
     method: "GET",
     headers: {
@@ -29,14 +24,17 @@ const makeRequestWithTokenRefresh = (
       if (response.status === 401) {
         // Trying to refresh the token
         return refreshToken(tokenRefresh).then((newToken) => {
-          clientStorage.setTokenUser({access: newToken.access, refresh: newToken.refresh || tokenRefresh})
+          clientStorage.setTokenUser({
+            access: newToken.access,
+            refresh: newToken.refresh || tokenRefresh,
+          });
           makeRequestWithTokenRefresh(
             url,
             newToken.access,
             newToken.refresh || tokenRefresh,
-            dispatch,
-          )
-          });
+            dispatch
+          );
+        });
       }
       if (!response.ok) throw new Error(response.statusText);
       return response.json();

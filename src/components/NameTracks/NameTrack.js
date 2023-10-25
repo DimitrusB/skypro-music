@@ -30,34 +30,32 @@ export function NameTrack({
   const token = clientStorage.getTokenUser();
   const setToken = clientStorage.setTokenUser;
   const { isLoading, setIsLoading } = useContext(UserContext);
-  const trackRef = useRef(null); 
+  const trackRef = useRef(null);
   const { whiteTheme, setWhiteTheme } = useContext(UserContext);
 
   useEffect(() => {
-    if (isPlaying && playing && trackRef.current) { 
+    if (isPlaying && playing && trackRef.current) {
       trackRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
+        behavior: "smooth",
+        block: "nearest",
       });
     }
   }, [isPlaying, playing]);
 
   const handleLike = () => {
     const trackToAdd = tracks.find((track) => track.id === id);
-    
+
     // Проверяем, существует ли уже трек в избранном
     const isTrackAlreadyLiked = favoritetracks.some((track) => track.id === id);
 
-
-    
-    
     if (!isTrackAlreadyLiked) {
-      dispatch(addFavoritesTracks(trackToAdd, token, setToken))
-        .then(() => dispatch(getAllFavoriteTracks(token.access, token.refresh)));
+      dispatch(addFavoritesTracks(trackToAdd, token, setToken)).then(() =>
+        dispatch(getAllFavoriteTracks(token.access, token.refresh))
+      );
     } else {
-      console.log('Трек уже добавлен в избранное.');
+      console.log("Трек уже добавлен в избранное.");
     }
-  }  
+  };
 
   const handleDislike = async () => {
     await dispatch(delFavoritesTracks(id, token, setToken));
@@ -68,39 +66,51 @@ export function NameTrack({
 
   return (
     <S.PlaylistItem ref={trackRef}>
-      <S.PlaylistTrack >
+      <S.PlaylistTrack>
         <S.TrackTitled>
           {isPlaying && playing ? (
             <S.TrackTitleImage whiteTheme={whiteTheme} isLoading={isLoading}>
               <S.Circle isLoading={isLoading} alt="music">
-              <use
-                        xlinkHref={`${iconSprite}${
-                          whiteTheme ? "#icon-noteWhite" : "#icon-note"
-                        }`}
-                      ></use>
+                <use
+                  xlinkHref={`${iconSprite}${
+                    whiteTheme ? "#icon-noteWhite" : "#icon-note"
+                  }`}
+                ></use>
               </S.Circle>
             </S.TrackTitleImage>
           ) : (
             <S.TrackTitleImage whiteTheme={whiteTheme} isLoading={isLoading}>
-              <S.TrackTitleSvg whiteTheme={whiteTheme} isLoading={isLoading} alt="music">
-              <use
-                        xlinkHref={`${iconSprite}${
-                          whiteTheme ? "#icon-noteWhite" : "#icon-note"
-                        }`}
-                      ></use>
+              <S.TrackTitleSvg
+                whiteTheme={whiteTheme}
+                isLoading={isLoading}
+                alt="music"
+              >
+                <use
+                  xlinkHref={`${iconSprite}${
+                    whiteTheme ? "#icon-noteWhite" : "#icon-note"
+                  }`}
+                ></use>
               </S.TrackTitleSvg>
             </S.TrackTitleImage>
           )}
           {isPlaying && playing ? (
             <S.TrackTitleText isLoading={isLoading}>
-              <S.TrackTitleLink whiteTheme={whiteTheme} isLoading={isLoading} onClick={onClick}>
+              <S.TrackTitleLink
+                whiteTheme={whiteTheme}
+                isLoading={isLoading}
+                onClick={onClick}
+              >
                 {track}
                 <S.TrackTitleSpan>{mix}</S.TrackTitleSpan>
               </S.TrackTitleLink>
             </S.TrackTitleText>
           ) : (
-            <S.TrackTitleText  isLoading={isLoading}>
-              <S.TrackTitleLink whiteTheme={whiteTheme} isLoading={isLoading} onClick={onClick}>
+            <S.TrackTitleText isLoading={isLoading}>
+              <S.TrackTitleLink
+                whiteTheme={whiteTheme}
+                isLoading={isLoading}
+                onClick={onClick}
+              >
                 {track}
                 <S.TrackTitleSpan>{mix}</S.TrackTitleSpan>
               </S.TrackTitleLink>
@@ -108,7 +118,11 @@ export function NameTrack({
           )}
         </S.TrackTitled>
         <S.TrackAuthor isLoading={isLoading}>
-          <S.TrackAuthorLink whiteTheme={whiteTheme} isLoading={isLoading} onClick={onClick}>
+          <S.TrackAuthorLink
+            whiteTheme={whiteTheme}
+            isLoading={isLoading}
+            onClick={onClick}
+          >
             {author}
           </S.TrackAuthorLink>
         </S.TrackAuthor>

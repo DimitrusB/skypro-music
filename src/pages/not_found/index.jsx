@@ -3,11 +3,11 @@ import { AudioPlayer } from "../../components/player/Player";
 import * as S from "./404.style";
 import iconSprite from "../../img/icon/sprite.svg";
 import smile from "../../img/crying.png";
-import UserContext from "../../components/UserContext";
-import { useContext } from "react";
+import clientStorage from "../../utils/client-storage";
 
 export function NotFoundPage() {
-  const { email } = useContext(UserContext);
+
+  const email = clientStorage.getEmailUser();
   return (
     <header className="App-header">
       <S.Wrapper>

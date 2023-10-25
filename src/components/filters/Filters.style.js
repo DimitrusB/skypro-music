@@ -8,8 +8,10 @@ export const Choose = styled.div`
   line-height: 24px;
   background: transparent;
   color: white;
-    
-  ${props => props.whiteTheme && `
+
+  ${(props) =>
+    props.whiteTheme &&
+    `
   color: #000;
   
   `}
@@ -52,7 +54,9 @@ export const Button = styled.div`
   padding: 6px 20px;
   position: relative;
 
-  ${props => props.whiteTheme && `
+  ${(props) =>
+    props.whiteTheme &&
+    `
   border: 1px solid #000;
   
   `}
@@ -91,7 +95,9 @@ export const Options = styled.ul`
   z-index: 1;
   margin-top: 10px;
   margin-left: -20px;
-  ${props => props.whiteTheme && `
+  ${(props) =>
+    props.whiteTheme &&
+    `
   background: #F6F5F3;
   `}
 
@@ -117,7 +123,9 @@ export const Option = styled.li`
     color: #b672ff;
     text-decoration: underline;
   }
-  ${props => props.whiteTheme && `
+  ${(props) =>
+    props.whiteTheme &&
+    `
   color: #000;
   background: #F6F5F3;
 

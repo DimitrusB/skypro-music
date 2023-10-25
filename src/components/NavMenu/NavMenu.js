@@ -14,6 +14,7 @@ export function NavMenu({setIsLogged}) {
   const isPlaying = useSelector((state) => state.isPlaying);
   const navigate = useNavigate();
   const { whiteTheme, setWhiteTheme } = useContext(UserContext);
+
   function handleMoreClick() {
     setShowMore(!showMore);
   }

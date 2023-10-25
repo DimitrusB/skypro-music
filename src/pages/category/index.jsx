@@ -17,7 +17,7 @@ import { NameTrack } from "../../components/NameTracks/NameTrack";
 import UserContext from "../../components/UserContext";
 import clientStorage from "../../utils/client-storage";
 
-export function Category({setIsLogged}) {
+export function Category({ setIsLogged }) {
   const params = useParams();
   const dispatch = useDispatch();
   const isPlaying = useSelector((state) => state.isPlaying);
@@ -33,6 +33,15 @@ export function Category({setIsLogged}) {
     (category) => category.id === parseInt(params.id, 10)
   );
   const email = clientStorage.getEmailUser();
+  const { whiteTheme, setWhiteTheme } = useContext(UserContext);
+
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    if (theme) {
+      setWhiteTheme(theme === "white" ? true : false);
+    }
+  }, []);
+
   useEffect(() => {
     if (search === "") {
       setSearchResults(tracks);
@@ -55,8 +64,8 @@ export function Category({setIsLogged}) {
             return { ...item, isFavorite: true };
           }
           return item;
-        })
-  
+        });
+
         setTracks(processedTracks);
         setNameList(response.name);
         setIsLoading(false);
@@ -77,7 +86,6 @@ export function Category({setIsLogged}) {
         );
       });
   }, [dispatch, currentTrackId, category.id]);
-  
 
   if (!category) {
     return <div>Плейлист не найден</div>;
@@ -94,7 +102,7 @@ export function Category({setIsLogged}) {
 
   const handleResetClick = () => {
     clientStorage.clearUserInfo();
-    navigate('/signin');
+    navigate("/signin");
     setIsLogged(null);
   };
 
@@ -104,7 +112,7 @@ export function Category({setIsLogged}) {
         <S.Container>
           <S.Main>
             <NavMenu />
-            <S.MainCenterblock>
+            <S.MainCenterblock whiteTheme={whiteTheme}>
               <S.MainCenterblockSearch>
                 <S.MainSearchSvg>
                   <use xlinkHref={`${iconSprite}#icon-search`}></use>
@@ -117,7 +125,9 @@ export function Category({setIsLogged}) {
                   onChange={handleSearchChange}
                 />
               </S.MainCenterblockSearch>
-              <S.CentralblockH2>{nameList}</S.CentralblockH2>
+              <S.CentralblockH2 whiteTheme={whiteTheme}>
+                {nameList}
+              </S.CentralblockH2>
               <S.CentralblockContent>
                 <S.FContentTitle>
                   <S.FPlaylistTitleCol col="col01">Трек</S.FPlaylistTitleCol>
@@ -149,12 +159,16 @@ export function Category({setIsLogged}) {
               </S.CentralblockContent>
             </S.MainCenterblock>
 
-            <S.MainSidebar>
+            <S.MainSidebar whiteTheme={whiteTheme}>
               <S.PersonalSidebar>
-                <S.PersonalName>{email}</S.PersonalName>
-                <S.SidebarIcon>
+                <S.PersonalName whiteTheme={whiteTheme}>{email}</S.PersonalName>
+                <S.SidebarIcon whiteTheme={whiteTheme}>
                   <svg alt="logout" onClick={handleResetClick}>
-                    <use xlinkHref={`${iconSprite}#logout`}></use>
+                    <use
+                      xlinkHref={`${iconSprite}${
+                        whiteTheme ? "#icon-logoutWhite" : "#logout"
+                      }`}
+                    ></use>
                   </svg>
                 </S.SidebarIcon>
               </S.PersonalSidebar>
