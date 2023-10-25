@@ -4,7 +4,13 @@ import styled from 'styled-components';
 export const MainNav = styled.nav`  
   width: 244px;
   background-color: #181818;
-  padding: 20px 0 20px 36px;`
+  padding: 20px 0 20px 36px;
+
+  ${props => props.whiteTheme && `
+  background-color: #ffffff; 
+
+`}
+  `
 
 export const NavLogo = styled.div` 
   width: 113.33px;
@@ -57,6 +63,13 @@ export const NavMenuLink = styled(NavLink)`
   &:active {
     background-color: #d9d9d9;
   }
+  ${props => props.whiteTheme && `
+  color: #000;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+
+`}
   `
 export const NavMenu = styled.div`
 display: block;

@@ -21,7 +21,8 @@ export const Container = styled.div`
     background-color: #181818;
     
     ${props => props.whiteTheme && `
-        background-color: #ffffff;  /* here you can set your specific color, it is an example  */
+        background-color: #ffffff; 
+
     `}
 `;
 

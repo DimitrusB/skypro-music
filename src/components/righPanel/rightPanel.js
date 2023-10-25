@@ -8,13 +8,14 @@ import clientStorage from "../../utils/client-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { setPlaying } from "../../store/actions/trackActions";
 
+
 export function Panelplaylist({setIsLogged}) {
   // const { email, resetEmail } = useContext(UserContext);
   const email = clientStorage.getEmailUser();
   const navigate = useNavigate();
   const isPlaying = useSelector((state) => state.isPlaying);
   const dispatch = useDispatch();
-
+  const { whiteTheme, setWhiteTheme } = useContext(UserContext);
 
   const handleResetClick = () => {
     if(isPlaying) {
@@ -30,7 +31,11 @@ export function Panelplaylist({setIsLogged}) {
         <S.PersonalName>{email}</S.PersonalName>
         <S.SidebarIcon>
           <svg alt="logout" onClick={handleResetClick}>
-            <use xlinkHref={`${iconSprite}#logout`}></use>
+          <use
+                        xlinkHref={`${iconSprite}${
+                          whiteTheme ? "#icon-logoutWhite" : "#logout"
+                        }`}
+                      ></use>
           </svg>
         </S.SidebarIcon>
       </S.PersonalSidebar>

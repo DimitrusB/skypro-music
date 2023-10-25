@@ -21,10 +21,10 @@ export function MainPage({setIsLogged}) {
   function handleChangeTheme() {
     if(whiteTheme === false){
       setWhiteTheme(true);
-      localStorage.setItem('theme', 'white'); // сохраняем состояние темы в localStorage
+      localStorage.setItem('theme', 'white');
     } else {
       setWhiteTheme(false);
-      localStorage.setItem('theme', 'dark'); // сохраняем состояние темы в localStorage
+      localStorage.setItem('theme', 'dark');
     }
   }
 

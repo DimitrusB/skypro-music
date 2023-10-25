@@ -31,6 +31,7 @@ export function NameTrack({
   const setToken = clientStorage.setTokenUser;
   const { isLoading, setIsLoading } = useContext(UserContext);
   const trackRef = useRef(null); 
+  const { whiteTheme, setWhiteTheme } = useContext(UserContext);
 
   useEffect(() => {
     if (isPlaying && playing && trackRef.current) { 
@@ -67,31 +68,39 @@ export function NameTrack({
 
   return (
     <S.PlaylistItem ref={trackRef}>
-      <S.PlaylistTrack>
+      <S.PlaylistTrack >
         <S.TrackTitled>
           {isPlaying && playing ? (
-            <S.TrackTitleImage isLoading={isLoading}>
+            <S.TrackTitleImage whiteTheme={whiteTheme} isLoading={isLoading}>
               <S.Circle isLoading={isLoading} alt="music">
-                <use xlinkHref={`${iconSprite}#icon-note`}></use>
+              <use
+                        xlinkHref={`${iconSprite}${
+                          whiteTheme ? "#icon-noteWhite" : "#icon-note"
+                        }`}
+                      ></use>
               </S.Circle>
             </S.TrackTitleImage>
           ) : (
-            <S.TrackTitleImage isLoading={isLoading}>
-              <S.TrackTitleSvg isLoading={isLoading} alt="music">
-                <use xlinkHref={`${iconSprite}#icon-note`}></use>
+            <S.TrackTitleImage whiteTheme={whiteTheme} isLoading={isLoading}>
+              <S.TrackTitleSvg whiteTheme={whiteTheme} isLoading={isLoading} alt="music">
+              <use
+                        xlinkHref={`${iconSprite}${
+                          whiteTheme ? "#icon-noteWhite" : "#icon-note"
+                        }`}
+                      ></use>
               </S.TrackTitleSvg>
             </S.TrackTitleImage>
           )}
           {isPlaying && playing ? (
             <S.TrackTitleText isLoading={isLoading}>
-              <S.TrackTitleLink isLoading={isLoading} onClick={onClick}>
+              <S.TrackTitleLink whiteTheme={whiteTheme} isLoading={isLoading} onClick={onClick}>
                 {track}
                 <S.TrackTitleSpan>{mix}</S.TrackTitleSpan>
               </S.TrackTitleLink>
             </S.TrackTitleText>
           ) : (
-            <S.TrackTitleText isLoading={isLoading}>
-              <S.TrackTitleLink isLoading={isLoading} onClick={onClick}>
+            <S.TrackTitleText  isLoading={isLoading}>
+              <S.TrackTitleLink whiteTheme={whiteTheme} isLoading={isLoading} onClick={onClick}>
                 {track}
                 <S.TrackTitleSpan>{mix}</S.TrackTitleSpan>
               </S.TrackTitleLink>
@@ -99,7 +108,7 @@ export function NameTrack({
           )}
         </S.TrackTitled>
         <S.TrackAuthor isLoading={isLoading}>
-          <S.TrackAuthorLink isLoading={isLoading} onClick={onClick}>
+          <S.TrackAuthorLink whiteTheme={whiteTheme} isLoading={isLoading} onClick={onClick}>
             {author}
           </S.TrackAuthorLink>
         </S.TrackAuthor>

@@ -70,6 +70,12 @@ align-items: center;
 justify-content: center;
 margin-right: 17px;
 
+${props => props.whiteTheme && `
+padding: 0;
+background: none;
+align-items: flex-start;
+`}
+
 ${({ isLoading }) =>
 isLoading &&
 `
@@ -84,6 +90,13 @@ width: 18px;
 height: 17px;
 fill: transparent;
 stroke: #4e4e4e;
+
+${props => props.whiteTheme && `
+    width: auto;
+    height: auto;
+    fill: transparent;
+    stroke: none;
+`}
 
 ${({ isLoading }) =>
 isLoading &&
@@ -112,6 +125,11 @@ font-weight: 400;
 font-size: 16px;
 line-height: 24px;
 color: #ffffff;
+
+${props => props.whiteTheme && `
+color: #000;
+
+`}
 
 ${({ isLoading }) =>
 isLoading &&
@@ -150,6 +168,10 @@ font-size: 16px;
 line-height: 24px;
 color: #ffffff;
 text-align: left;
+${props => props.whiteTheme && `
+color: #000;
+
+`} 
 
 ${({ isLoading }) =>
 isLoading &&
