@@ -13,6 +13,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLogged, setIsLogged] = useState(null);
   const email = clientStorage.getEmailUser();
+  const [whiteTheme, setWhiteTheme] = useState(false);
 
   useEffect(() => {
     if (email) {
@@ -35,6 +36,8 @@ function App() {
         setSelectedTracks,
         isLoading,
         setIsLoading,
+        whiteTheme,
+        setWhiteTheme,
       }}
     >
       <BrowserRouter>

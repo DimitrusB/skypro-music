@@ -16,6 +16,8 @@ const UserContext = createContext({
   setSelectedYears: () => {},
   isLoading: true,
   setIsLoading: ()=>{},
+  whiteTheme: false,
+  setWhiteTheme: ()=>{},
 });
 
 export default UserContext;
