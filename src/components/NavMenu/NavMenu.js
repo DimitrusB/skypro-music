@@ -1,14 +1,28 @@
 import { useState } from "react";
 import logo from "../../img/logo.png";
 import * as S from "./NavMenu.Style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import clientStorage from "../../utils/client-storage";
+import { useDispatch, useSelector } from "react-redux";
+import { setPlaying } from "../../store/actions/trackActions";
 
-export function NavMenu() {
+export function NavMenu({setIsLogged}) {
   const [showMore, setShowMore] = useState(false);
+  const dispatch = useDispatch();
+  const isPlaying = useSelector((state) => state.isPlaying);
+  const navigate = useNavigate();
 
   function handleMoreClick() {
     setShowMore(!showMore);
   }
+  const handleResetClick = () => {
+    if(isPlaying) {
+      dispatch(setPlaying(false));
+    }
+    clientStorage.clearUserInfo();
+    setIsLogged(null);
+    navigate('/signin');
+  };
 
   return (
     <S.MainNav>
@@ -30,8 +44,8 @@ export function NavMenu() {
           <S.NavMenuItem>
             <S.NavMenuLink to="/favorites">Мой плейлист</S.NavMenuLink>
           </S.NavMenuItem>
-          <S.NavMenuItem>
-            <S.NavMenuLink to="/signin">Войти</S.NavMenuLink>
+          <S.NavMenuItem onClick={handleResetClick}>
+            <S.NavMenuLink to="/">Выйти</S.NavMenuLink>
           </S.NavMenuItem>
         </S.MenuList>
       </S.NavMenu>

@@ -11,7 +11,7 @@ export function MainPage({setIsLogged}) {
       <S.Wrapper>
         <S.Container>
           <S.Main>
-            <NavMenu />
+            <NavMenu setIsLogged={setIsLogged}/>
             <Center/>
             <Panelplaylist setIsLogged={setIsLogged} />
           </S.Main>
