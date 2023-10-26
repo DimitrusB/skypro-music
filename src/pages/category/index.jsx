@@ -111,7 +111,7 @@ export function Category({ setIsLogged }) {
       <S.Wrapper>
         <S.Container>
           <S.Main>
-            <NavMenu />
+            <NavMenu setIsLogged={setIsLogged}/>
             <S.MainCenterblock whiteTheme={whiteTheme}>
               <S.MainCenterblockSearch>
                 <S.MainSearchSvg>

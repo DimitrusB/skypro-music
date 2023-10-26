@@ -28,13 +28,13 @@ export function MainPage({setIsLogged}) {
     }
   }
 
-  console.log(whiteTheme);
 
   return (
     <header className="App-header">
       <S.Wrapper>
         <S.Container whiteTheme={whiteTheme}>
         <S.ChangeThemeButton  onClick={handleChangeTheme} >
+        <title>{whiteTheme ? "Темная тема" : "Светлая тема"}</title>
         <use
                         xlinkHref={`${iconSprite}${
                           whiteTheme ? "#icon-white" : "#icon-black"

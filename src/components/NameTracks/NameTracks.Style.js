@@ -12,7 +12,7 @@ export const Circle = styled.div`
   background-color: blue;
   animation: pulse 2s infinite;
   box-shadow: 0 0 10px 5px rgba(0, 0, 255, 0.2);
-  filter: blur(3px); //Добавьте это свойство
+  filter: blur(3px);
 
   @keyframes pulse {
     0% {
@@ -25,6 +25,13 @@ export const Circle = styled.div`
       transform: scale(1);
     }
   }
+  ${props => props.whiteTheme && `
+  left: 15px;
+  position: sticky;
+  width: 20px;
+  height: 20px;
+  `}
+
 `;
 export const PlaylistTrack = styled.div`
 display: -webkit-box;
@@ -74,6 +81,7 @@ ${props => props.whiteTheme && `
 padding: 0;
 background: none;
 align-items: flex-start;
+flex-direction: column;
 `}
 
 ${({ isLoading }) =>

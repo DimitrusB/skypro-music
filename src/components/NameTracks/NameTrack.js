@@ -70,7 +70,7 @@ export function NameTrack({
         <S.TrackTitled>
           {isPlaying && playing ? (
             <S.TrackTitleImage whiteTheme={whiteTheme} isLoading={isLoading}>
-              <S.Circle isLoading={isLoading} alt="music">
+              <S.Circle whiteTheme={whiteTheme} isLoading={isLoading} alt="music">
                 <use
                   xlinkHref={`${iconSprite}${
                     whiteTheme ? "#icon-noteWhite" : "#icon-note"
